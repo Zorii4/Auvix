@@ -1,0 +1,73 @@
+:root {
+  --dark: #202226;
+  --easy-dark: #353940;
+  --secondary-dark: rgba(88, 95, 103, 1);
+  --green: #91F49A;
+
+  --grey: #EFF0F4;
+  --border-grey: #dbdee5;
+  --light-grey: #F4F5F8;
+  --extra-light-gray: #F0F2F5;
+  --jack-grey: #5B5E66;
+
+
+  --secondary-grey: #E6E6E6;
+  --secondary-light: #F6F6F6;
+  --black: #222E3C;
+  --secondary: #E9D0AC;
+  --white: #FFF;
+  --success: #349C6A;
+  --hit: #FF5959;
+  --bg-success: #E4F8EE;
+  --bg-error: #FFE2E2;
+  --green-baner: #DDF0ED;
+
+  --wide-max-container-width: 158.4rem;
+  --wide-content-padding: 0.8rem;
+  --max-container-width: 148rem;
+  --content-padding: 2.8rem;
+  --narrow-max-container-width: 98.6rem;
+  --narrow-content-padding: 3rem;
+
+  --primary-color: var(--secondary);
+  --text-color: var(--dark);
+
+  --youtube-icon-color: var(--primary-color);
+}
+
+@media (max-width: 1599px) {
+  :root {
+    --narrow-max-container-width: 81.4rem;
+  }
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --content-padding: 2.4rem;
+    --wide-content-padding: 0.4rem;
+    --narrow-content-padding: 2.4rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --content-padding: 2rem;
+    --narrow-content-padding: 2rem;
+  }
+}
+
+@include breakpoint(mobile) {
+  :root{
+  --content-padding: 2rem;
+    --wide-content-padding: 0.4rem;
+  }
+}
+
+$minWidth: 320;
+$maxWidth: 1600; // Ширина макета
+$base-transition-time: 0.3s;
+$base-transition-easing: ease;
+
+$overlay-color: rgba(0, 0, 0, 0.5);
+
+$modal-bg-color: white;
