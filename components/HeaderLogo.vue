@@ -1,7 +1,7 @@
 <template>
-  <a
+  <NuxtLink
     class="header__logo logo"
-    href="/index.html"
+    to="/"
   >
     <svg
       viewBox="0 0 368 70"
@@ -233,7 +233,7 @@
         </clipPath>
       </defs>
     </svg>
-  </a>
+  </NuxtLink>
 
 </template>
 
@@ -246,7 +246,6 @@ export default {
 <style lang="scss" scoped>
 .header__logo {
   position: relative;
-
   align-self: center;
 
   svg {

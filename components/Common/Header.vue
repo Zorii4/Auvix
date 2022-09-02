@@ -1,41 +1,45 @@
 <template>
-  <div class="header__inner">
-    <div class="header__top">
-      <div class="header__burger">
-        <!-- BURGERS -->
-      </div>
+  <header class="header">
+    <div class="container">
+      <div class="header__inner">
+        <div class="header__top">
+          <div class="header__burger">
+            <!-- BURGERS -->
+          </div>
 
-      <HeaderLogo />
+          <HeaderLogo />
 
-      <div class="header__search">
-        <div class="search">
-          <form
-            class="search__form"
-            name="searchForm"
+          <div class="header__search">
+            <div class="search">
+              <form
+                class="search__form"
+                name="searchForm"
+              >
+                <SearchIcon class="search__icon" />
+                <input
+                  class="search__input"
+                  name="searchInput"
+                  type="text"
+                  placeholder="Поиск"
+                >
+              </form>
+            </div>
+          </div>
+
+          <a
+            class="header__user-navigation"
+            href="#"
           >
-            <SearchIcon class="search__icon" />
-            <input
-              class="search__input"
-              name="searchInput"
-              type="text"
-              placeholder="Поиск"
-            >
-          </form>
+            <UserIcon />
+          </a>
+
+        </div>
+        <div class="header__bottom">
+          <NavMenu />
         </div>
       </div>
-
-      <a
-        class="header__user-navigation"
-        href="#"
-      >
-        <UserIcon />
-      </a>
-
     </div>
-    <div class="header__bottom">
-      <NavMenu />
-    </div>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -43,7 +47,7 @@ import SearchIcon from '@/assets/icons/Search.svg'
 import UserIcon from '@/assets/icons/User.svg'
 
 export default {
-  name: 'IndexPage',
+  name: 'HeaderMain',
   components: {
     SearchIcon,
     UserIcon,
@@ -52,6 +56,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 6;
+
+  background-color: #fff;
+
+  @media (max-width: 767px) {
+    position: relative;
+  }
+
+  &--viewport-outside {
+    position: fixed;
+    transform: translateY(-100%);
+
+    .mobile-navigation.active {
+      height: 100vh;
+    }
+
+    .navigation__item:nth-child(1) {
+      height: 100vh;
+    }
+  }
+}
+
 .header__top {
   display: flex;
   justify-content: space-between;

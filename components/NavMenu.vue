@@ -1,15 +1,15 @@
 <template>
-  <nav class="header__menu swiper-container">
-    <ul class="header__menu-list swiper-wrapper">
+  <nav class="header__menu">
+    <ul class="header__menu-list">
       <li
-        v-for="item in menu"
+        v-for="item in cropMenu"
         :key="item.id"
-        class="header__menu-item swiper-slide"
+        class="header__menu-item"
       >
-        <a
+        <NuxtLink
           class="header__menu-link"
-          href="item.url"
-        >{{item.name}}</a>
+          :to="item.uri"
+        >{{item.name}}</NuxtLink>
       </li>
       <li class="header__menu-scroll"></li>
     </ul>
@@ -17,42 +17,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'NavMenu',
-  data: () => ({
-    menu: [
-      {
-        id: 1,
-        name: 'Каталог оборудования',
-        url: '#',
-      },
-      {
-        id: 2,
-        name: 'Комплексные решения',
-        url: '#',
-      },
-      {
-        id: 3,
-        name: 'Технологические услуги',
-        url: '#',
-      },
-      {
-        id: 4,
-        name: 'Академия экспертов',
-        url: '#',
-      },
-      {
-        id: 5,
-        name: 'О компании',
-        url: '#',
-      },
-      {
-        id: 6,
-        name: 'Стать партнером',
-        url: '#',
-      },
-    ],
-  }),
+
+  computed: {
+    ...mapState({
+      menu: (state) => state.menu.menu,
+    }),
+
+    cropMenu() {
+      return this.menu.data.filter((item) => item.uri !== '/')
+    },
+  },
 }
 </script>
 
