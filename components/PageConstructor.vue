@@ -1,13 +1,15 @@
 <template>
   <div>
     <Banner
+      v-if="pageBanners"
       :pageBanners="pageBanners"
       class="wide-container"
     />
-    <!-- <BlockPages
+    <ModalPage
+      v-if="pageBlocksData"
       :pageBlocksData="pageBlocksData"
       class="container"
-    /> -->
+    />
   </div>
 </template>
 
@@ -23,8 +25,9 @@ export default {
 
   computed: {
     ...mapState({
-      pageBanners: (state) => state.modalPage.pageData.data.config.banners,
-      pageBlocksData: (state) => state.modalPage.pageData.data.config.blocks,
+      pageBanners: (state) => state.modalPage?.pageData?.data?.config?.banners,
+      pageBlocksData: (state) =>
+        state.modalPage?.pageData?.data?.config?.blocks,
     }),
   },
 }

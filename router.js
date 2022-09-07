@@ -11,7 +11,7 @@ export function createRouter() {
     routes: [
       {
         path: '/(.*)',
-        name: 'MyPage',
+        name: 'PageConstructor',
         component: PageConstructor
       }
     ]

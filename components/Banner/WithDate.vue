@@ -11,7 +11,7 @@
       </div>
       <NuxtLink
         class="promotion__button button"
-        to="#"
+        :to="bannerProp.button_link"
       >{{bannerProp.button_title}}</NuxtLink>
     </div>
     <div class="promotion__img-column">

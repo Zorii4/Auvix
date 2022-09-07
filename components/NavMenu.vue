@@ -8,6 +8,7 @@
       >
         <NuxtLink
           class="header__menu-link"
+          v-if="item.is_active"
           :to="item.uri"
         >{{item.name}}</NuxtLink>
       </li>

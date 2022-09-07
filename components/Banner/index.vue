@@ -1,19 +1,66 @@
 <template>
-  <swiper
-    :options="swiperOptions"
-    class="banner-swiper"
-  >
-    <swiper-slide
-      v-for="item of pageBanners"
-      :key="item.id"
-      class="banner-slide"
+  <div class="banner-swiper-container">
+    <swiper
+      :options="swiperOptions"
+      class="banner-swiper"
+      ref="mySwiper"
     >
-      <component
-        :is="bannerTypes[item.type.code]"
-        :bannerProp="item"
-      ></component>
-    </swiper-slide>
-  </swiper>
+      <swiper-slide
+        v-for="item of pageBanners"
+        :key="item.id"
+        class="banner-slide"
+      >
+        <component
+          :is="bannerTypes[item.type.code]"
+          :bannerProp="item"
+        ></component>
+      </swiper-slide>
+    </swiper>
+    <div class="promotion__slider-control">
+      <div class="swiper-pagination promotion__swiper-pagination"></div>
+      <div class="promotion__slider-button-wrapper">
+        <div class="slider-navigation">
+          <button
+            class="slider-button slider-button--prev"
+            title="Листнуть влево"
+          >
+            <svg
+              width="9"
+              height="14"
+              viewBox="0 0 9 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.11959e-07 7L9 14L9 0L6.11959e-07 7Z"
+                fill="#202226"
+              />
+            </svg>
+
+          </button>
+          <button
+            class="slider-button slider-button--next"
+            title="Листнуть вправо"
+          >
+            <svg
+              width="9"
+              height="14"
+              viewBox="0 0 9 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 7L-1.22392e-06 14L0 0L9 7Z"
+                fill="#202226"
+              />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -42,20 +89,51 @@ export default {
       spaceBetween: 10,
       speed: 600,
       navigation: {
-        nextEl: '.banner-slider-button-next',
-        prevEl: '.banner-slider-button-prev',
+        nextEl: '.slider-button--next',
+        prevEl: '.slider-button--prev',
       },
+
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+        clickable: true,
+      },
+      currentSlide: null,
     },
   }),
+
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     this.onSwipe()
+  //   })
+  // },
+
   // computed: {
-  //   bannerDataType() {
-  //     return this.pageData.data.config.banners
+  //   swiper() {
+  //     return this.$refs.mySwiper.$swiper.activeIndex
+  //    },
+
+  //   buttonColorCssVariable() {
+  //     return this.pageBanners.slider_btn_color === 'black'
+  //       ? { '--backgroundColorBtn': '#202226' }
+  //       : { '--backgroundColorBtn': '#fff' }
+  //   },
+  // },
+
+  // methods: {
+  //   onSwipe() {
+  //     console.log(this.$refs.mySwiper.$swiper.activeIndex)
+  //     return this.$refs.mySwiper.$swiper.activeIndex
   //   },
   // },
 }
 </script>
 
 <style lang="scss" scoped>
+.banner-swiper-container {
+  position: relative;
+}
+
 .banner-swiper {
   position: relative;
   border-radius: 2rem;
@@ -82,6 +160,142 @@ export default {
 
   @media (max-width: 1023px) {
     min-height: auto;
+  }
+}
+
+.promotion__slider-control {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5.2rem;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 5.54rem;
+  margin: 0 5.2rem;
+
+  @media (max-width: 1599px) {
+    bottom: 2rem;
+    margin: 0 2rem;
+  }
+
+  @media (max-width: 1599px) {
+    bottom: 1.6rem;
+    margin: 0 1.6rem;
+  }
+}
+
+.promotion__slider-button-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+
+  @media (max-width: 1023px) {
+    top: auto;
+    bottom: calc(33.6rem + 0.4rem);
+  }
+
+  @media (max-width: 767px) {
+    bottom: 0;
+  }
+}
+
+.slider-navigation {
+  position: relative;
+  display: flex;
+  width: 11.6rem;
+  height: 5.6rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    width: 0.2rem;
+    height: 2.6rem;
+    background-color: var(--dark);
+
+    @media (max-width: 1023px) {
+      height: 2.3rem;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    top: auto;
+    bottom: 0;
+    width: 9.8rem;
+    height: 5.2rem;
+  }
+
+  .slider-button {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0 6.6rem 6.6rem 0;
+    border-left: 0;
+    transition: 0.3s;
+
+    &:hover {
+      color: var(--jack-grey);
+    }
+
+    svg {
+      width: 0.9rem;
+      height: 1.4rem;
+
+      @media (max-width: 1023px) {
+        width: 0.8rem;
+        height: 1.2rem;
+      }
+    }
+
+    &--prev {
+      transform: rotate(180deg);
+
+      svg {
+        width: 0.9rem;
+        height: 1.4rem;
+        transform: rotate(180deg);
+
+        @media (max-width: 1023px) {
+          width: 0.8rem;
+          height: 1.2rem;
+        }
+      }
+    }
+  }
+}
+
+.promotion__swiper-pagination {
+  position: static;
+  width: auto !important;
+  padding: 0.4rem;
+  padding-bottom: 0;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+</style>
+
+<style lang="scss">
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  margin-right: 10px !important;
+  border: 1px solid black !important;
+  background-color: transparent !important;
+  cursor: pointer !important;
+
+  &-active {
+    background-color: black !important;
   }
 }
 </style>
