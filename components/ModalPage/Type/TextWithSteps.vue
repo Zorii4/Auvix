@@ -1,5 +1,8 @@
 <template>
-  <section class="partners-single__features">
+  <section
+    class="partners-single__features"
+    style="display:none"
+  >
     <div class="container">
       <div class="partners-single__features-header">
         <div class="section-lead">

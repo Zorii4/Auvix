@@ -68,7 +68,7 @@
             >
               <h3 class="products__item-title">{{item.title}}</h3>
               <span class="products__item-link">
-                {{item.link_name}} Подробнее
+                {{item.link_name}}
                 <svg
                   width="8"
                   height="10"

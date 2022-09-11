@@ -1,6 +1,6 @@
 <template>
-  <section class="dealer__section">
-    <div class="dealer__partner-lead">
+  <section class="dealer__auvix">
+    <div class="dealer__auvix-lead">
       <div class="container">
         <div class="services-single__warranty-header">
           <div class="section-lead">
@@ -21,28 +21,22 @@
         </div>
       </div>
     </div>
+    <TextSwipersBlockSwiper
+      v-if="pageProps.slider_variation_type === 'slider_blocks'"
+      :pageProps="pageProps"
+    />
+    <TextSwipersParagraphsSwiper
+      v-if="pageProps.slider_variation_type === 'slider_photos' && pageProps.variation === 'paragraphs'"
+      :pageProps="pageProps"
+    />
+    <!-- {{> article tags=false swiper=true navigationMod='slider-navigation--dark' mod='article__text-column--grey' articleCategory='Преимущества' titleBottomed=true articleHeader=true articleImg='img/auvix-article.jpg' articleText='Современный, интуитивно понятный интерфейс' articleTitle='Интерфейс' }} -->
 
-    <ul class="dealer__partner-list">
-      <li
-        class="dealer__partner-item-wrapper"
-        v-for="item of pageProps.paragraphs"
-        :key="item.id"
-      >
-        <div class="dealer__partner-item">
-          <div class="dealer__partner-icon">
-            <img :src="item.image_url">
-          </div>
-          <p class="dealer__partner-text">{{item.description}}</p>
-        </div>
-      </li>
-    </ul>
   </section>
 </template>
 
 <script>
 export default {
-  /* eslint-disable */
-  name: 'TextWithIcon',
+  name: 'TextWithSlider',
   props: {
     pageProps: Object,
   },
@@ -50,117 +44,52 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dealer__section {
-  margin-bottom: 50px;
-}
-
 .dealer {
-  &__partner-lead {
-    margin-bottom: 6rem;
+  &__auvix {
+    padding-bottom: 6rem;
 
     @media (max-width: 1599px) {
-      margin-bottom: 5.6rem;
+      padding-bottom: 5.6rem;
     }
 
     @media (max-width: 1199px) {
-      margin-bottom: 5.2rem;
+      padding-bottom: 5.2rem;
     }
 
     @media (max-width: 1023px) {
-      margin-bottom: 4rem;
+      padding-bottom: 4.8rem;
     }
 
     @media (max-width: 767px) {
-      margin-bottom: 3.2rem;
+      padding-bottom: 4rem;
+    }
+
+    .article__text-content p {
+      color: var(--jack-grey);
     }
   }
 
-  &__partner-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4rem 0.4rem;
+  &__auvix-lead {
+    padding-bottom: 6rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 5.6rem;
+    }
 
     @media (max-width: 1199px) {
-      gap: 3.6rem 0.4rem;
+      padding-bottom: 5.2rem;
     }
 
     @media (max-width: 1023px) {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.8rem 0.4rem;
-    }
-
-    @media (max-width: 340px) {
-      grid-template-columns: 1fr;
-      gap: 2.4rem 0.4rem;
-    }
-  }
-
-  &__partner-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-
-    @media (max-width: 767px) {
-      gap: 1.6rem;
-    }
-  }
-
-  &__partner-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 10.4rem;
-    aspect-ratio: 1 / 1;
-
-    border-radius: 50%;
-    background: linear-gradient(212.35deg, #f0f1f5 7.66%, #ffffff 75.91%);
-
-    @media (max-width: 1199px) {
-      width: 8.8rem;
+      padding-bottom: 4rem;
     }
 
     @media (max-width: 767px) {
-      width: 7.2rem;
-    }
-
-    img {
-      width: 5.6rem;
-      aspect-ratio: 1 / 1;
-
-      @media (max-width: 1199px) {
-        width: 4.8rem;
-      }
-
-      @media (max-width: 767px) {
-        width: 4rem;
-      }
-    }
-  }
-
-  &__partner-text {
-    max-width: 33rem;
-    padding-right: 1rem;
-
-    font-size: 1.8rem;
-    line-height: 1.3;
-    color: var(--easy-dark);
-
-    @media (max-width: 1199px) {
-      max-width: 23.1rem;
-
-      font-size: 1.6rem;
-      line-height: 1.25;
-    }
-
-    @media (max-width: 1023px) {
-      max-width: 30rem;
-    }
-
-    @media (max-width: 767px) {
-      font-size: 1.4rem;
+      padding-bottom: 3.2rem;
     }
   }
 }
+
 .section-lead {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
