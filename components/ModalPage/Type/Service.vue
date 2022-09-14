@@ -1,26 +1,15 @@
 <template>
   <section class="services-single__warranty">
     <div
-      class="container"
       v-if="!pageProps.use_slider"
+      class="container"
     >
       <div class="services-single__warranty-header">
-        <div class="section-lead">
-          <div class="section-lead__column">
-            <h2
-              class="section-lead__title section-title"
-              v-if="pageProps.title"
-            >{{pageProps.title}}</h2>
-          </div>
-          <div class="section-lead__column">
-            <div
-              class="section-lead__text"
-              v-if="pageProps.description"
-            >
-              <p> {{pageProps.description}}</p>
-            </div>
-          </div>
-        </div>
+        <SectionLead
+          :title="pageProps.title"
+          :sub_title="pageProps.sub_title"
+          :description="pageProps.description"
+        />
       </div>
     </div>
 
@@ -35,19 +24,19 @@
     />
 
     <div
-      class="products"
       v-if="pageProps.column_type === '4-col'"
+      class="products"
     >
       <div class="products__inner">
 
         <ul
-          class="products__list"
           v-if="!pageProps.use_slider"
+          class="products__list"
         >
           <li
-            class="products__item-wrapper"
             v-for="item of pageProps.service_items"
             :key="item.id"
+            class="products__item-wrapper"
             :style="{backgroundColor: `${item.background_color}`}"
           >
             <NuxtLink
@@ -136,57 +125,7 @@ export default {
     }
   }
 }
-.section-lead {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3.6rem 0.4rem;
 
-  @media (max-width: 1023px) {
-    grid-template-columns: 1fr;
-  }
-
-  @media (max-width: 767px) {
-    gap: 2.4rem;
-  }
-
-  &__title {
-    margin: 0;
-  }
-
-  &__column {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-
-    @media (max-width: 1199px) {
-      gap: 3.2rem;
-    }
-
-    @media (max-width: 1023px) {
-      gap: 2.8rem;
-    }
-
-    @media (max-width: 767px) {
-      gap: 2rem;
-    }
-
-    p {
-      font-size: 2rem;
-      line-height: 1.4;
-      color: var(--easy-dark);
-
-      @media (max-width: 1199px) {
-        font-size: 1.8rem;
-        line-height: 1.3;
-      }
-
-      @media (max-width: 767px) {
-        font-size: 1.6rem;
-        line-height: 1.25;
-      }
-    }
-  }
-}
 .products {
   position: relative;
   margin-bottom: 30px;

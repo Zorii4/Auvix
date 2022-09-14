@@ -9,7 +9,7 @@
       </div>
       <div class="article__text-content">
         <h3 class="article__text-title">{{bannerProp.title}}</h3>
-        <p>{{bannerProp.description}}</p>
+        <p v-html="descriptionReplacer"></p>
       </div>
       <NuxtLink
         class="article__button button"
@@ -29,6 +29,17 @@ export default {
   name: 'BannerDoubleWithTag',
   props: {
     bannerProp: Object,
+  },
+  computed: {
+    descriptionReplacer() {
+      if (
+        this.bannerProp.description &&
+        typeof this.bannerProp.description === 'string'
+      ) {
+        return this.bannerProp.description.replace(/\n/g, '<br>')
+      }
+      return false
+    },
   },
 }
 </script>

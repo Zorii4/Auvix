@@ -2,12 +2,12 @@
   <div class="two-columns-grid">
     <div class="two-columns-grid__left">
       <h2
-        class="two-columns-grid__title section-title"
         v-if="pageProps.use_link"
+        class="two-columns-grid__title section-title"
       >{{pageProps.link_title}}</h2>
       <div
-        class="two-columns-grid__digits"
         v-if="pageProps.content_position === 'left'"
+        class="two-columns-grid__digits"
       >
         <div
           v-for="item of pageProps.numbers"
@@ -27,17 +27,17 @@
         class="two-columns-grid__content"
         :class="{'two-columns-grid__content--bottom-none': pageProps.content_position === 'right'}"
       >
-        <p>{{pageProps.description}}</p>
+        <p v-html="descriptionReplacer"></p>
       </div>
 
       <div
-        class="two-columns-grid__digits"
         v-if="pageProps.content_position === 'right'"
+        class="two-columns-grid__digits"
       >
         <div
-          class="two-columns-grid__digit"
           v-for="item of pageProps.numbers"
           :key="item.id"
+          class="two-columns-grid__digit"
           :style="{backgroundImage: `url(${item.image_url})`}"
         >
           <span class="two-columns-grid__digit-number">{{item.value}}</span>
@@ -45,13 +45,33 @@
         </div>
       </div>
       <div
-        class="two-columns-grid__buttons"
         v-if="pageProps.use_button"
+        class="two-columns-grid__buttons"
       >
-        <a
+        <NuxtLink
+          :to="pageProps.button_link_url"
           class="two-columns-grid__button button button--white"
-          :href="pageProps.button_link_url"
-        >{{pageProps.button_title}}</a>
+        >{{pageProps.button_title}}</NuxtLink>
+        <NuxtLink
+          v-if="pageProps.link_title && pageProps.link_url"
+          :to="pageProps.link_url"
+          class="two-columns-grid__more-button button button--white"
+        >
+          {{pageProps.link_title}} </NuxtLink>
+        <svg
+          v-if="pageProps.link_title && pageProps.link_url"
+          width="8"
+          height="10"
+          viewBox="0 0 8 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+            fill="#202226"
+          />
+        </svg>
+
       </div>
 
     </div>
@@ -63,6 +83,17 @@ export default {
   name: 'WithTwoNumber',
   props: {
     pageProps: Object,
+  },
+  computed: {
+    descriptionReplacer() {
+      if (
+        this.pageProps.description &&
+        typeof this.pageProps.description === 'string'
+      ) {
+        return this.pageProps.description.replace(/\n/g, '<p></p><br>')
+      }
+      return false
+    },
   },
 }
 </script>
@@ -213,7 +244,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 2.8rem;
-    margin-bottom: 6rem;
+    margin-bottom: 2rem;
 
     @media (max-width: 1599px) {
       margin-bottom: 5.6rem;
@@ -244,6 +275,7 @@ export default {
       font-size: 2rem;
       line-height: 1.4;
       color: var(--easy-dark);
+      margin-bottom: 4rem;
 
       @media (max-width: 1199px) {
         font-size: 1.8rem;
@@ -287,6 +319,30 @@ export default {
 
       font-size: 1.6rem;
       line-height: 1.25;
+    }
+  }
+
+  &__more-button {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0;
+
+    border: 0;
+
+    @media (max-width: 1023px) {
+      display: none;
+    }
+
+    &:hover {
+      color: var(--dark) !important;
+      background: transparent;
+      border: 0;
+    }
+
+    svg {
+      width: 0.8rem;
+      height: 1rem;
     }
   }
 }

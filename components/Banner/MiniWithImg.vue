@@ -6,7 +6,10 @@
     <div class="request__text">
       <p :style="{color: `${bannerProp.title_color}`}">{{bannerProp.title}}</p>
     </div>
-    <button class="request__button button">{{bannerProp.button_title}}</button>
+    <NuxtLink
+      :to="bannerProp.button_link"
+      class="request__button button"
+    >{{bannerProp.button_title}}</NuxtLink>
   </div>
 
 </template>

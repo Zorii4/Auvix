@@ -5,24 +5,17 @@
   >
     <div class="container">
       <div class="partners-single__features-header">
-        <div class="section-lead">
-          <div class="section-lead__column">
-            <h2 class="section-lead__title section-title">{{pageProps.title}}</h2>
-          </div>
-          <div class="section-lead__column">
-            <h3 class="section-lead__subtitle">{{pageProps.sub_title}}</h3>
-            <div class="section-lead__text">
-              <p>{{pageProps.description}} </p>
-            </div>
-          </div>
-        </div>
-
+        <SectionLead
+          :title="pageProps.title"
+          :sub_title="pageProps.sub_title"
+          :description="pageProps.description"
+        />
       </div>
       <ol class="digits-row">
         <li
-          class="digits-row__item"
           v-for="item of pageProps.steps"
           :key="item.id"
+          class="digits-row__item"
           :style="{backgroundImage: `url(${item.image_url})`}"
         >
           <p class="digits-row__text">{{item.description}}</p>

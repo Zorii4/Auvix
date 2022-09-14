@@ -7,7 +7,7 @@
       <p class="promotion__caption">{{bannerProp.tag}}</p>
       <div class="promotion__content">
         <h2 class="promotion__title section-title">{{bannerProp.title}}</h2>
-        <p>{{dateFormatStart}} - {{dateFormatFinish}}</p>
+        <p>{{this.bannerProp.date | formatData('fullData')}} - {{this.bannerProp.date_end | formatData('fullData')}}</p>
       </div>
       <NuxtLink
         class="promotion__button button"
@@ -28,26 +28,12 @@
 </template>
 
 <script>
-import { DateTime } from 'luxon'
+// import { DateTime } from 'luxon'
 
 export default {
   name: 'BannerWithDate',
   props: {
     bannerProp: Object,
-  },
-  computed: {
-    dateFormatStart() {
-      const d = new Date(this.bannerProp.date).toISOString()
-      return DateTime.fromISO(d)
-        .setLocale('ru')
-        .toLocaleString(DateTime.DATE_FULL)
-    },
-    dateFormatFinish() {
-      const d = new Date(this.bannerProp.date_end).toISOString()
-      return DateTime.fromISO(d)
-        .setLocale('ru')
-        .toLocaleString(DateTime.DATE_FULL)
-    },
   },
 }
 </script>
@@ -209,6 +195,7 @@ export default {
   justify-content: flex-end;
   flex-grow: 1;
   max-width: 100rem;
+  margin-right: 7rem;
 
   @media (max-width: 1023px) {
     justify-content: center;

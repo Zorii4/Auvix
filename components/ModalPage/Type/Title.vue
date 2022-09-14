@@ -20,5 +20,9 @@ export default {
   line-height: 40px;
   color: #202226;
   margin-bottom: 50px;
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+  }
 }
 </style>

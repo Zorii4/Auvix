@@ -23,7 +23,7 @@
           <div class="article__img-wrapper">
             <img
               :src="item.image_url"
-              :alt="item.image_alt"
+              :alt="item.image_alt|| 'Фото'"
             >
           </div>
         </div>
@@ -32,9 +32,9 @@
     <div class="article__slider-navigation">
       <div class="slider-navigation slider-navigation--dark">
         <button
-          class="slider-button slider-button--prev"
-          title="Листнуть влево"
           ref="sliderPrev"
+          title="Листнуть влево"
+          class="slider-button slider-button--prev"
         >
           <svg
             width="9"
@@ -51,9 +51,9 @@
 
         </button>
         <button
-          class="slider-button slider-button--next"
-          title="Листнуть вправо"
           ref="sliderNext"
+          title="Листнуть вправо"
+          class="slider-button slider-button--next"
         >
           <svg
             width="9"

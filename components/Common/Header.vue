@@ -61,8 +61,7 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 6;
-
+  z-index: 999;
   background-color: #fff;
 
   @media (max-width: 767px) {
@@ -89,7 +88,6 @@ export default {
   align-items: stretch;
   height: 10.5rem;
   padding: 2.4rem 0;
-
   border-bottom: 1px solid var(--border-grey);
 
   @media (max-width: 1024px) {
@@ -110,7 +108,6 @@ export default {
   align-items: center;
   width: 2.4rem;
   height: 2.4rem;
-
   cursor: pointer;
 
   svg:first-child {
@@ -141,7 +138,6 @@ export default {
 
 .header__search {
   position: relative;
-
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -194,7 +190,6 @@ export default {
 
   &__form {
     position: relative;
-
     display: flex;
     flex-grow: 1;
     height: 100%;
@@ -206,7 +201,6 @@ export default {
     left: 2rem;
     top: 50%;
     transform: translateY(-50%);
-
     width: 1.6rem;
     height: 1.6rem;
 
@@ -224,11 +218,9 @@ export default {
     right: 2rem;
     top: 50%;
     transform: translateY(-50%);
-
     display: none;
     width: 3.2rem;
     height: 3.2rem;
-
     cursor: pointer;
 
     &--header {
@@ -244,16 +236,13 @@ export default {
 
   &__input {
     position: relative;
-
     width: 100%;
     height: 100%;
     padding: 1.5rem 6.4rem;
     box-sizing: border-box;
-
     border: 1px solid var(--light-grey);
     border-radius: 12px;
     background: var(--light-grey);
-
     transition: 0.3s;
 
     @media (max-width: 1199px) {
@@ -263,7 +252,6 @@ export default {
     @media (max-width: 767px) {
       padding: 1rem 4rem;
       font-size: 1.6rem;
-
       border-radius: 0.8rem;
 
       &::placeholder {
@@ -279,10 +267,8 @@ export default {
   align-items: center;
   width: 8.8rem;
   margin-left: 2rem;
-
   border: 1px solid rgba(32, 34, 38, 0.2);
   border-radius: 10rem;
-
   transition: 0.4s;
 
   &:hover {

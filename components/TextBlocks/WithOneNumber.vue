@@ -66,10 +66,11 @@ export default {
     padding-bottom: 5rem;
     background-repeat: no-repeat;
     background-size: contain;
-    justify-content: center;
+    justify-content: flex-start;
 
     &.center {
       align-items: flex-end;
+      justify-content: flex-end;
     }
 
     @media (max-width: 1199px) {
@@ -104,7 +105,7 @@ export default {
   }
 
   &__stats-description {
-    max-width: 24.3rem;
+    max-width: 26.5rem;
     font-size: 1.6rem;
     line-height: 1.25;
     color: var(--easy-dark);

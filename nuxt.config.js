@@ -21,7 +21,7 @@ export default {
   css: ["~scss/styles.scss"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['@/filters/formatData.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -38,7 +38,7 @@ export default {
     '@nuxtjs/axios',
     "@nuxtjs/style-resources",
     '@nuxtjs/router',
-    'nuxt-svg-loader'
+    'nuxt-svg-loader',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

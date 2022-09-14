@@ -1,20 +1,23 @@
 <template>
   <div
     class="promotion__inner"
-    :style="{backgroundColor: `${bannerProp.background_color}`}"
+    :style="backgroundColorVariable"
   >
     <div class="promotion__text-column">
       <p class="promotion__caption">{{bannerProp.tag}}</p>
       <div class="promotion__content">
         <h2 class="promotion__title section-title">{{bannerProp.title}}</h2>
-        <p>{{bannerProp.description}}</p>
+        <p v-html="descriptionReplacer"></p>
       </div>
       <NuxtLink
         class="promotion__button button"
         :to="bannerProp.button_link"
       >{{bannerProp.button_title}}</NuxtLink>
     </div>
-    <div class="promotion__img-column">
+    <div
+      class="promotion__img-column"
+      :style="backgroundColorVariable"
+    >
       <div class="promotion__img-wrapper">
         <div class="promotion__img-block">
           <img
@@ -33,6 +36,20 @@ export default {
   props: {
     bannerProp: Object,
   },
+  computed: {
+    descriptionReplacer() {
+      if (
+        this.bannerProp.description &&
+        typeof this.bannerProp.description === 'string'
+      ) {
+        return this.bannerProp.description.replace(/\n/g, '<br>')
+      }
+      return false
+    },
+    backgroundColorVariable() {
+      return { '--BGColor': this.bannerProp.background_color }
+    },
+  },
 }
 </script>
 
@@ -45,6 +62,7 @@ export default {
   height: 100%;
   flex-grow: 1;
   border-radius: 2rem;
+  background-color: var(--BGColor);
 
   @media (max-width: 1599px) {
     padding: 2rem;
@@ -54,8 +72,7 @@ export default {
     flex-direction: column;
     gap: 0.4rem;
     padding: 0;
-
-    background-color: transparent;
+    background-color: transparent !important;
   }
 }
 
@@ -67,7 +84,6 @@ export default {
   @media (max-width: 1023px) {
     padding: 1.6rem;
     min-height: 33.6rem;
-
     background-color: var(--green);
     border-radius: 1.6rem;
   }
@@ -81,18 +97,15 @@ export default {
   display: flex;
   align-items: center;
   margin: 0 0 5.2rem;
-
   font-size: 1.8rem;
   line-height: 1.3;
   color: var(--jack-grey);
 
   &::before {
     content: '';
-
     width: 1.2rem;
     height: 1.2rem;
     margin-right: 1.2rem;
-
     background-color: var(--jack-grey);
     border-radius: 50%;
   }
@@ -175,7 +188,6 @@ export default {
 .promotion__button {
   position: relative;
   z-index: 2;
-
   display: inline-block;
   justify-self: flex-end;
   padding: 1.6rem 4rem;
@@ -189,10 +201,11 @@ export default {
 
 .promotion__img-column {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
   flex-grow: 1;
   max-width: 100rem;
+  margin-top: 7rem;
 
   @media (max-width: 1023px) {
     justify-content: center;
@@ -200,9 +213,9 @@ export default {
     max-width: none;
     padding: 1.6rem;
     height: 33.6rem;
-
-    background-color: var(--green);
     border-radius: 1.6rem;
+    margin-top: 0;
+    background-color: var(--BGColor);
   }
 
   @media (max-width: 767px) {
@@ -217,29 +230,25 @@ export default {
 .promotion__img-block {
   object-fit: cover;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-start;
   width: 100%;
   height: 100%;
 
-  @media (max-width: 1599px) {
-    width: 20rem;
-    height: 20rem;
-  }
-
   @media (max-width: 1199px) {
-    width: 16rem;
-    height: 16rem;
+    width: 80%;
+    height: 80%;
   }
 
   @media (max-width: 1023px) {
-    width: 18rem;
-    height: 18rem;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
   }
 
   img {
     width: 100%;
-    max-width: 80%;
+    max-width: 90%;
     max-height: 60%;
   }
 }

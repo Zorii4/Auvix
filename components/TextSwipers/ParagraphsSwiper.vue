@@ -1,29 +1,12 @@
 <template>
   <section class="career">
     <div class="container">
-      <div class="career__culture-header">
-        <div class="section-lead">
-          <div class="section-lead__column">
-            <h2 class="section-lead__title section-title">{{pageProps.title}}</h2>
-          </div>
-          <div class="section-lead__column">
-            <h3 class="section-lead__subtitle">{{pageProps.sub_title}}</h3>
-            <div
-              class="section-lead__text"
-              v-if="pageProps.description"
-            >
-              <p> {{pageProps.description}}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="career__culture-wrapper">
         <ul class="career__culture-list">
           <li
-            class="career__culture-item"
             v-for="item of pageProps.paragraphs"
             :key="item.id"
+            class="career__culture-item"
           >
             <h3 class="career__culture-item-title">{{item.title}}</h3>
             <p class="career__culture-item-text">{{item.description}}</p>
@@ -37,16 +20,16 @@
           >
             <img
               :src="elem.image_url"
-              :alt="image_alt"
+              :alt="elem.image_alt || 'Фото'"
             >
           </swiper-slide>
         </swiper>
         <div class="career__culture-navigation">
           <div class="slider-navigation slider-navigation--dark">
             <button
-              class="slider-button slider-button--prev"
+              ref="sliderPrevPh"
               title="Листнуть влево"
-              ref="sliderPrev"
+              class="slider-button slider-button--prevPh"
             >
               <svg
                 width="9"
@@ -63,9 +46,9 @@
 
             </button>
             <button
-              class="slider-button slider-button--next"
+              ref="sliderNextPh"
               title="Листнуть вправо"
-              ref="sliderNext"
+              class="slider-button slider-button--nextPh"
             >
               <svg
                 width="9"
@@ -104,14 +87,14 @@ export default {
       spaceBetween: 10,
       speed: 600,
       navigation: {
-        nextEl: '.slider-button--next',
-        prevEl: '.slider-button--prev',
+        nextEl: '.slider-button--nextPh',
+        prevEl: '.slider-button--prevPh',
       },
     },
   }),
   mounted() {
-    this.swiperOptions.navigation.nextEl = this.$refs.sliderNext
-    this.swiperOptions.navigation.prevEl = this.$refs.sliderPrev
+    this.swiperOptions.navigation.nextEl = this.$refs.sliderNextPh
+    this.swiperOptions.navigation.prevEl = this.$refs.sliderPrevPh
     this.sliderLoad = true
   },
 }
@@ -392,7 +375,7 @@ export default {
       }
     }
 
-    &--prev {
+    &--prevPh {
       transform: rotate(180deg);
     }
   }

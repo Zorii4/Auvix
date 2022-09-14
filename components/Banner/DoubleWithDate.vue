@@ -5,7 +5,7 @@
       :style="{backgroundColor: `${bannerProp.background_color}`}"
     >
       <div class="article__text-header">
-        <p class="article__text-date">{{dateFormat}}</p>
+        <p class="article__text-date">{{this.bannerProp.date | formatData('toFormat')}}</p>
         <span>{{bannerProp.time}} /мск</span>
         <span class="article__category">{{bannerProp.tag}}</span>
       </div>
@@ -26,21 +26,14 @@
 </template>
 
 <script>
-import { DateTime } from 'luxon'
-
 export default {
   name: 'BannerDoubleWithDate',
   props: {
     bannerProp: Object,
   },
-  computed: {
-    dateFormat() {
-      const d = new Date(this.bannerProp.date).toISOString()
-      return DateTime.fromISO(d).setLocale('ru').toFormat('dd MMMM, EEEE')
-    },
-  },
 }
 </script>
+
 <style lang="scss" scoped>
 .article__inner {
   display: flex;

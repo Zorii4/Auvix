@@ -1,11 +1,7 @@
 <template>
-  <div class="banner-swiper-container">
-    <swiper
-      :options="swiperOptions"
-      class="banner-swiper"
-      ref="mySwiper"
-    >
-      <swiper-slide
+  <section>
+    <div v-if="pageBanners.length === 1">
+      <div
         v-for="item of pageBanners"
         :key="item.id"
         class="banner-slide"
@@ -14,53 +10,77 @@
           :is="bannerTypes[item.type.code]"
           :bannerProp="item"
         ></component>
-      </swiper-slide>
-    </swiper>
-    <div class="promotion__slider-control">
-      <div class="swiper-pagination promotion__swiper-pagination"></div>
-      <div class="promotion__slider-button-wrapper">
-        <div class="slider-navigation">
-          <button
-            class="slider-button slider-button--prev"
-            title="Листнуть влево"
-          >
-            <svg
-              width="9"
-              height="14"
-              viewBox="0 0 9 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.11959e-07 7L9 14L9 0L6.11959e-07 7Z"
-                fill="#202226"
-              />
-            </svg>
-
-          </button>
-          <button
-            class="slider-button slider-button--next"
-            title="Листнуть вправо"
-          >
-            <svg
-              width="9"
-              height="14"
-              viewBox="0 0 9 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 7L-1.22392e-06 14L0 0L9 7Z"
-                fill="#202226"
-              />
-            </svg>
-          </button>
-        </div>
-
       </div>
     </div>
 
-  </div>
+    <div
+      class="banner-swiper-container"
+      v-if="pageBanners.length > 1"
+    >
+      <swiper
+        :options="swiperOptions"
+        class="banner-swiper"
+        ref="mySwiper"
+        @slide-change="onSwipe"
+      >
+        <swiper-slide
+          v-for="item of pageBanners"
+          :key="item.id"
+          class="banner-slide"
+        >
+          <component
+            :is="bannerTypes[item.type.code]"
+            :bannerProp="item"
+          ></component>
+        </swiper-slide>
+      </swiper>
+      <div class="promotion__slider-control">
+        <div
+          class="swiper-pagination promotion__swiper-pagination"
+          :style="paginationColorCssVariable"
+        ></div>
+        <div class="promotion__slider-button-wrapper">
+          <div
+            class="slider-navigation"
+            :style="buttonColorCssVariable"
+          >
+
+            <button
+              class="slider-button slider-button--prev"
+              title="Листнуть влево"
+              :style="buttonColorCssVariable"
+            >
+              <svg
+                width="9"
+                height="14"
+                viewBox="0 0 9 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M6.11959e-07 7L9 14L9 0L6.11959e-07 7Z" />
+              </svg>
+
+            </button>
+            <button
+              class="slider-button slider-button--next"
+              title="Листнуть вправо"
+            >
+              <svg
+                width="9"
+                height="14"
+                viewBox="0 0 9 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M9 7L-1.22392e-06 14L0 0L9 7Z" />
+              </svg>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -98,34 +118,41 @@ export default {
         type: 'bullets',
         clickable: true,
       },
-      currentSlide: null,
     },
+    currentSlide: null,
   }),
 
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     this.onSwipe()
-  //   })
-  // },
+  mounted() {
+    this.$nextTick(() => {
+      this.onSwipe()
+    })
+  },
 
-  // computed: {
-  //   swiper() {
-  //     return this.$refs.mySwiper.$swiper.activeIndex
-  //    },
+  computed: {
+    buttonColorCssVariable() {
+      return this.pageBanners[this.currentSlide]?.slider_btn_color === 'black'
+        ? { '--backgroundColorBtn': '#202226' }
+        : { '--backgroundColorBtn': '#fff' }
+    },
 
-  //   buttonColorCssVariable() {
-  //     return this.pageBanners.slider_btn_color === 'black'
-  //       ? { '--backgroundColorBtn': '#202226' }
-  //       : { '--backgroundColorBtn': '#fff' }
-  //   },
-  // },
+    paginationColorCssVariable() {
+      return this.pageBanners[this.currentSlide]?.slider_pagination_color ===
+        'black'
+        ? { '--backgroundColorPagination': '#202226' }
+        : { '--backgroundColorPagination': '#fff' }
+    },
+  },
 
-  // methods: {
-  //   onSwipe() {
-  //     console.log(this.$refs.mySwiper.$swiper.activeIndex)
-  //     return this.$refs.mySwiper.$swiper.activeIndex
-  //   },
-  // },
+  methods: {
+    onSwipe() {
+      if (this.pageBanners.length > 1) {
+        const index = this.$refs.mySwiper.$swiper.activeIndex
+        this.currentSlide = index
+        return
+      }
+      this.currentSlide = 0
+    },
+  },
 }
 </script>
 
@@ -168,7 +195,6 @@ export default {
   left: 0;
   right: 0;
   bottom: 5.2rem;
-
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -217,7 +243,7 @@ export default {
     z-index: 5;
     width: 0.2rem;
     height: 2.6rem;
-    background-color: var(--dark);
+    background-color: var(--backgroundColorBtn);
 
     @media (max-width: 1023px) {
       height: 2.3rem;
@@ -226,7 +252,7 @@ export default {
 
   @media (max-width: 1023px) {
     top: auto;
-    bottom: 0;
+    bottom: 3rem;
     width: 9.8rem;
     height: 5.2rem;
   }
@@ -237,10 +263,13 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-color: var(--backgroundColorBtn);
+    border-width: 1px;
     border-radius: 0 6.6rem 6.6rem 0;
     border-left: 0;
     transition: 0.3s;
+    opacity: 0.8;
 
     &:hover {
       color: var(--jack-grey);
@@ -249,6 +278,7 @@ export default {
     svg {
       width: 0.9rem;
       height: 1.4rem;
+      fill: var(--backgroundColorBtn);
 
       @media (max-width: 1023px) {
         width: 0.8rem;
@@ -290,12 +320,14 @@ export default {
   width: 10px !important;
   height: 10px !important;
   margin-right: 10px !important;
-  border: 1px solid black !important;
+  border-style: solid !important;
+  border-color: var(--backgroundColorPagination) !important;
+  border-width: 1px !important;
   background-color: transparent !important;
   cursor: pointer !important;
 
   &-active {
-    background-color: black !important;
+    background-color: var(--backgroundColorPagination) !important;
   }
 }
 </style>

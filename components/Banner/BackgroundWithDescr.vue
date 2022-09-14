@@ -10,7 +10,10 @@
           class="promotion__title section-title"
           :style="{color: `${bannerProp.title_color}`}"
         >{{bannerProp.title}}</h2>
-        <p :style="{color: `${bannerProp.description_color}`}">{{bannerProp.description}}</p>
+        <p
+          :style="{color: `${bannerProp.description_color}`}"
+          v-html="descriptionReplacer"
+        ></p>
       </div>
       <NuxtLink
         class="promotion__button button"
@@ -36,6 +39,17 @@ export default {
   props: {
     bannerProp: Object,
   },
+  computed: {
+    descriptionReplacer() {
+      if (
+        this.bannerProp.description &&
+        typeof this.bannerProp.description === 'string'
+      ) {
+        return this.bannerProp.description.replace(/\n/g, '<br>')
+      }
+      return false
+    },
+  },
 }
 </script>
 
@@ -48,6 +62,8 @@ export default {
   height: 100%;
   flex-grow: 1;
   border-radius: 2rem;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   @media (max-width: 1599px) {
     padding: 2rem;
@@ -57,7 +73,6 @@ export default {
     flex-direction: column;
     gap: 0.4rem;
     padding: 0;
-
     background-color: transparent;
   }
 }
@@ -70,8 +85,6 @@ export default {
   @media (max-width: 1023px) {
     padding: 1.6rem;
     min-height: 33.6rem;
-
-    background-color: var(--green);
     border-radius: 1.6rem;
   }
 
@@ -188,8 +201,6 @@ export default {
     max-width: none;
     padding: 1.6rem;
     height: 33.6rem;
-
-    background-color: var(--green);
     border-radius: 1.6rem;
   }
 
