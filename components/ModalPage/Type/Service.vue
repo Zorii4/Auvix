@@ -1,9 +1,6 @@
 <template>
   <section class="services-single__warranty">
-    <div
-      v-if="!pageProps.use_slider"
-      class="container"
-    >
+    <div v-if="!pageProps.use_slider">
       <div class="services-single__warranty-header">
         <SectionLead
           :title="pageProps.title"
@@ -39,9 +36,10 @@
             class="products__item-wrapper"
             :style="{backgroundColor: `${item.background_color}`}"
           >
-            <NuxtLink
-              class="products__item"
-              to="#"
+            <CommonAnchor
+              :className="'service-card-item'"
+              :to="item.link_url"
+              class="service__anchor-link"
             >
               <h3 class="products__item-title">{{item.title}}</h3>
               <span class="products__item-link">
@@ -61,10 +59,10 @@
               </span>
               <div
                 class="products__decor"
-                :style="{backgroundImage: `url(${item.image_url})`}"
+                :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
               >
               </div>
-            </NuxtLink>
+            </CommonAnchor>
           </li>
         </ul>
 
@@ -106,7 +104,7 @@ export default {
   }
 
   &__warranty-header {
-    margin-bottom: 4rem;
+    margin-bottom: 6rem;
 
     @media (max-width: 1599px) {
       margin-bottom: 3.6rem;
@@ -285,6 +283,24 @@ export default {
 
     @media (max-width: 767px) {
       bottom: calc(100% + 2rem);
+    }
+  }
+
+  .service__anchor-link {
+    &:hover {
+      opacity: 1;
+
+      span {
+        padding-left: 10px;
+      }
+    }
+
+    div {
+      transition: 0.4s;
+    }
+
+    &:hover div {
+      transform: scale(1.2);
     }
   }
 }

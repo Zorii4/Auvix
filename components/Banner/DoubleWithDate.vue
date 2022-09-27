@@ -2,7 +2,7 @@
   <div class="article__inner">
     <div
       class="article__text-column"
-      :style="{backgroundColor: `${bannerProp.background_color}`}"
+      :style="backgroundColorVariable"
     >
       <div class="article__text-header">
         <p class="article__text-date">{{this.bannerProp.date | formatData('toFormat')}}</p>
@@ -12,14 +12,16 @@
       <div class="article__text-content">
         <h3 class="article__text-title">{{bannerProp.title}}</h3>
       </div>
-      <NuxtLink
-        class="article__button button"
+      <CommonAnchor
         :to="bannerProp.button_link"
-      >{{bannerProp.button_title}}</NuxtLink>
+        :className="'banner__button button'"
+        :color="btnTextColor"
+        class="banner__link"
+      >{{bannerProp.button_title}}</CommonAnchor>
     </div>
     <div class="article__img-column">
       <div class="article__img-wrapper">
-        <img :src="bannerProp.cover_image">
+        <img :src="$config.baseURLImg + bannerProp.cover_image">
       </div>
     </div>
   </div>
@@ -31,6 +33,16 @@ export default {
   props: {
     bannerProp: Object,
   },
+  computed: {
+    btnTextColor() {
+      return this.bannerProp.button_color === 'white'
+        ? { '--textColor': 'black', '--btnColor': 'white' }
+        : { '--textColor': 'white', '--btnColor': 'black' }
+    },
+    backgroundColorVariable() {
+      return { '--BGColor': this.bannerProp.background_color }
+    },
+  },
 }
 </script>
 
@@ -41,16 +53,11 @@ export default {
   gap: 0.4rem;
   min-height: 48rem;
 
-  @media (max-width: 1599px) {
-    min-height: 42rem;
-  }
-
-  @media (max-width: 1199px) {
-    min-height: 35.2rem;
-  }
-
   @media (max-width: 1023px) {
-    min-height: 28rem;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0;
+    background-color: transparent;
   }
 
   @media (max-width: 767px) {
@@ -65,6 +72,7 @@ export default {
   width: 50%;
   padding: 5.2rem;
   border-radius: 2rem;
+  background-color: var(--BGColor);
 
   @media (max-width: 1599px) {
     padding: 2rem;
@@ -72,6 +80,10 @@ export default {
 
   @media (max-width: 1023px) {
     padding: 1.6rem;
+    min-height: 33.6rem;
+    background-color: var(--BGColor);
+    border-radius: 1.6rem;
+    width: initial;
   }
 
   @media (max-width: 767px) {
@@ -94,19 +106,8 @@ export default {
   max-width: 47.5rem;
   margin-bottom: 5.2rem;
 
-  @media (max-width: 1599px) {
-    max-width: 41.1rem;
-    margin-bottom: 4.8rem;
-  }
-
   @media (max-width: 1199px) {
-    max-width: 33.4rem;
     margin-bottom: 4rem;
-  }
-
-  @media (max-width: 1023px) {
-    max-width: 27.2rem;
-    margin-bottom: 2.4rem;
   }
 
   @media (max-width: 767px) {
@@ -144,8 +145,6 @@ export default {
   }
 
   @media (max-width: 1199px) {
-    width: 1rem;
-    height: 1rem;
     margin-right: 0.8rem;
   }
 }
@@ -183,21 +182,6 @@ export default {
   @extend %fs-h3;
 }
 
-.article__button {
-  position: relative;
-  z-index: 2;
-  width: fit-content;
-  display: inline-block;
-  justify-self: flex-end;
-  padding: 1.6rem 4rem;
-  margin-top: auto;
-
-  @media (max-width: 1023px) {
-    padding: 1.6rem 3.2rem;
-    font-size: 1.6rem;
-  }
-}
-
 .article__img-column {
   position: relative;
   width: 50%;
@@ -205,12 +189,18 @@ export default {
   background: #ccc;
   overflow: hidden;
 
+  @media (max-width: 1023px) {
+    justify-content: center;
+    align-items: center;
+    max-width: none;
+    height: 36.8rem;
+    border-radius: 1.6rem;
+    margin-right: 0;
+    width: initial;
+  }
+
   @media (max-width: 767px) {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 28rem;
-    border-radius: 1.2rem;
+    display: none;
   }
 }
 
@@ -220,6 +210,10 @@ export default {
   align-items: center;
   position: relative;
   height: 100%;
+
+  @media (max-width: 1023px) {
+    object-fit: cover;
+  }
 
   img {
     position: absolute;
@@ -232,5 +226,9 @@ export default {
       align-self: stretch;
     }
   }
+}
+
+.banner__link {
+  margin-top: auto;
 }
 </style>

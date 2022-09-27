@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section class="news__section">
     <div class="academy__news">
-      <div class="container">
+      <div>
         <div class="academy__news-header">
           <div class="section-header">
             <h2 class="section-header__title section-title">
@@ -16,9 +16,9 @@
             :key="news.id"
           >
 
-            <a
+            <router-link
               class="news__item"
-              href="/news-single.html"
+              :to="`news/${news.code}`"
             >
               <div class="news__item-content">
                 <!-- {{#if photoCount }}<div class="news__item-header">{{/if}} -->
@@ -35,7 +35,7 @@
                   alt="Фото новости"
                 >
               </div> -->
-            </a>
+            </router-link>
             <!-- {{#if this.photoLink }}
             <button
               class="news__item-button"
@@ -81,6 +81,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.news__section {
+  margin-bottom: 50px;
+}
+
 .academy__news {
   padding-top: 5.2rem;
 

@@ -1,33 +1,31 @@
 <template>
   <section class="dealer__article">
     <div class="wide-container">
-      <div class="article">
-        <div class="article__container">
-          <div class="article__inner">
-            <div
-              class="article__text-column"
-              :style="{backgroundColor: `${pageProps.background_color}`}"
-            >
-              <div class="article__text-content article__text-content--text-bottomed">
-                <h3
-                  class="article__text-title"
-                  :style="{color:`${pageProps.title_color}`}"
-                >{{pageProps.title}}</h3>
-                <p
-                  v-if="!pageProps.use_button"
-                  :style="{color:`${pageProps.description_color}`}"
-                >{{pageProps.description}}</p>
-                <NuxtLink
-                  v-if="pageProps.use_button"
-                  class="article__button button"
-                  :to="pageProps.button_link_url"
-                >{{pageProps.button_title}}</NuxtLink>
-              </div>
+      <div class="article__container">
+        <div class="article__inner">
+          <div
+            class="article__text-column"
+            :style="{backgroundColor: `${pageProps.background_color}`}"
+          >
+            <div class="article__text-content article__text-content--text-bottomed">
+              <h3
+                class="article__text-title"
+                :style="{color:`${pageProps.title_color}`}"
+              >{{pageProps.title}}</h3>
+              <p
+                v-if="!pageProps.use_button"
+                :style="{color:`${pageProps.description_color}`}"
+              >{{pageProps.description}}</p>
+              <CommonAnchor
+                v-if="pageProps.use_button"
+                :to="pageProps.button_link_url"
+                :className="'accent-photo-button button'"
+              >{{pageProps.button_title}}</CommonAnchor>
             </div>
-            <div class="article__img-column">
-              <div class="article__img-wrapper">
-                <img :src="pageProps.image_url">
-              </div>
+          </div>
+          <div class="article__img-column">
+            <div class="article__img-wrapper">
+              <img :src="$config.baseURLImg + pageProps.image_url">
             </div>
           </div>
         </div>
@@ -158,7 +156,6 @@ export default {
 
     &--text-bottomed {
       flex-grow: 1;
-      margin-bottom: 0;
 
       p {
         margin-top: auto;
@@ -194,37 +191,6 @@ export default {
       @media (max-width: 767px) {
         align-self: stretch;
       }
-    }
-  }
-
-  &__button {
-    align-self: flex-start;
-    padding: 1.6rem 4rem;
-
-    border-radius: 1.2rem;
-
-    font-size: 1.8rem;
-    line-height: 1.3;
-
-    @media (max-width: 1599px) {
-    }
-
-    @media (max-width: 1199px) {
-    }
-
-    @media (max-width: 1023px) {
-      padding: 1.6rem 3.2rem;
-
-      border-radius: 0.8rem;
-
-      font-size: 1.6rem;
-      line-height: 1.25;
-    }
-
-    @media (max-width: 767px) {
-      align-self: stretch;
-      justify-content: center;
-      padding: 1.6rem;
     }
   }
 }

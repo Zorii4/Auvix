@@ -19,7 +19,7 @@
     </div>
     <div class="services-single__img">
       <img
-        :src="pageProps.image_url"
+        :src="$config.baseURLImg + pageProps.image_url"
         :alt="pageProps.image_alt || 'Фото'"
       >
     </div>

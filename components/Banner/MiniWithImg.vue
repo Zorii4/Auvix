@@ -1,15 +1,17 @@
 <template>
   <div
     class="request"
-    :style="{backgroundImage: `url(${bannerProp.cover_image})`}"
+    :style="{backgroundImage: `url(${$config.baseURLImg}`+`${bannerProp.cover_image})`}"
   >
     <div class="request__text">
       <p :style="{color: `${bannerProp.title_color}`}">{{bannerProp.title}}</p>
     </div>
-    <NuxtLink
+    <CommonAnchor
       :to="bannerProp.button_link"
-      class="request__button button"
-    >{{bannerProp.button_title}}</NuxtLink>
+      :className="'mini-banner__button button'"
+      :color="btnTextColor"
+      class="banner__link"
+    >{{bannerProp.button_title}}</CommonAnchor>
   </div>
 
 </template>
@@ -19,6 +21,13 @@ export default {
   name: 'BannerMiniWithImg',
   props: {
     bannerProp: Object,
+  },
+  computed: {
+    btnTextColor() {
+      return this.bannerProp.button_color === 'white'
+        ? { '--textColor': 'black', '--btnColor': 'white' }
+        : { '--textColor': 'white', '--btnColor': 'black' }
+    },
   },
 }
 </script>
@@ -73,25 +82,6 @@ export default {
     @media (max-width: 767px) {
       text-align: center;
     }
-  }
-}
-
-.request__button {
-  padding: 1.6rem 4rem;
-
-  @media (max-width: 1023px) {
-    padding: 1.6rem 3.2rem;
-  }
-
-  @media (max-width: 767px) {
-    width: 100%;
-    padding: 1.6rem 3.4rem;
-
-    justify-content: center;
-  }
-
-  @media (max-width: 359px) {
-    padding: 1.4rem;
   }
 }
 </style>

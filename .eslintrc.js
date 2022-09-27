@@ -13,7 +13,20 @@ module.exports = {
   // add your custom rules here
   rules: {
     "vue/multi-word-component-names": ["error", {
-      "ignores": ['News', 'Title', 'Text', 'Service']
+      "ignores": [
+        'News', 
+        'Title', 
+        'Text', 
+        'Service', 
+        'Description', 
+        'List',
+        'Quote', 
+        'Callout', 
+        'Videos', 
+        'Numbers', 
+        'Steps',
+        'Persons'
+      ]
     }]
   },
 }

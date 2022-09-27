@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import PageConstructor from '@/components/PageConstructor'
+import MainPage from '@/views/main-page.vue'
+import NewsPage from '@/views/news-page.vue'
 
 Vue.use(Router)
 
@@ -10,9 +11,14 @@ export function createRouter() {
     mode: 'history',
     routes: [
       {
+        path:'/news/:code',
+        name:'NewsPage',
+        component: NewsPage
+      },
+      {
         path: '/(.*)',
-        name: 'PageConstructor',
-        component: PageConstructor
+        name: 'MainPage',
+        component: MainPage
       }
     ]
   })

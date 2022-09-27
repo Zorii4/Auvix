@@ -11,14 +11,16 @@
         <h3 class="article__text-title">{{bannerProp.title}}</h3>
         <p v-html="descriptionReplacer"></p>
       </div>
-      <NuxtLink
-        class="article__button button"
+      <CommonAnchor
         :to="bannerProp.button_link"
-      >{{bannerProp.button_title}}</NuxtLink>
+        :className="'banner__button button'"
+        :color="btnTextColor"
+        class="banner__link"
+      >{{bannerProp.button_title}}</CommonAnchor>
     </div>
     <div class="article__img-column">
       <div class="article__img-wrapper">
-        <img :src="bannerProp.cover_image">
+        <img :src="$config.baseURLImg + bannerProp.cover_image">
       </div>
     </div>
   </div>
@@ -40,6 +42,11 @@ export default {
       }
       return false
     },
+    btnTextColor() {
+      return this.bannerProp.button_color === 'white'
+        ? { '--textColor': 'black', '--btnColor': 'white' }
+        : { '--textColor': 'white', '--btnColor': 'black' }
+    },
   },
 }
 </script>
@@ -51,16 +58,11 @@ export default {
   gap: 0.4rem;
   min-height: 48rem;
 
-  @media (max-width: 1599px) {
-    min-height: 42rem;
-  }
-
-  @media (max-width: 1199px) {
-    min-height: 35.2rem;
-  }
-
   @media (max-width: 1023px) {
-    min-height: 28rem;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0;
+    background-color: transparent;
   }
 
   @media (max-width: 767px) {
@@ -82,6 +84,10 @@ export default {
 
   @media (max-width: 1023px) {
     padding: 1.6rem;
+    min-height: 33.6rem;
+    background-color: var(--BGColor);
+    border-radius: 1.6rem;
+    width: initial;
   }
 
   @media (max-width: 767px) {
@@ -154,8 +160,6 @@ export default {
   }
 
   @media (max-width: 1199px) {
-    width: 1rem;
-    height: 1rem;
     margin-right: 0.8rem;
   }
 }
@@ -215,12 +219,18 @@ export default {
   background: #ccc;
   overflow: hidden;
 
+  @media (max-width: 1023px) {
+    justify-content: center;
+    align-items: center;
+    max-width: none;
+    height: 36.8rem;
+    border-radius: 1.6rem;
+    margin-right: 0;
+    width: initial;
+  }
+
   @media (max-width: 767px) {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 28rem;
-    border-radius: 1.2rem;
+    display: none;
   }
 }
 
@@ -242,5 +252,9 @@ export default {
       align-self: stretch;
     }
   }
+}
+
+.banner__link {
+  margin-top: auto;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="container">
+    <div>
       <div class="services-single__warranty-header">
         <h2
           class="section-lead__title section-title"
@@ -84,7 +84,7 @@
               </span>
               <div
                 class="products__decor"
-                :style="{backgroundImage: `url(${item.image_url})`}"
+                :style="{backgroundImage:`url(${$config.baseURLImg}`+`${item.image_url})`}"
               >
               </div>
             </NuxtLink>

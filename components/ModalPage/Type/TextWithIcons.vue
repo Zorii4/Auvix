@@ -1,7 +1,7 @@
 <template>
   <section class="dealer__section">
     <div class="dealer__partner-lead">
-      <div class="container">
+      <div>
         <div class="services-single__warranty-header">
           <SectionLead
             :title="pageProps.title"
@@ -20,7 +20,7 @@
       >
         <div class="dealer__partner-item">
           <div class="dealer__partner-icon">
-            <img :src="item.image_url">
+            <img :src="$config.baseURLImg + item.image_url">
           </div>
           <p class="dealer__partner-text">{{item.description}}</p>
         </div>

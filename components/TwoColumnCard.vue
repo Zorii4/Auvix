@@ -37,7 +37,7 @@
         >{{item.description}}</p>
         <img
           class="services-list__item-img"
-          :src="item.image_url"
+          :src="$config.baseURLImg + item.image_url"
           :alt="`Услуга ${item.image_alt}`"
         >
       </li>

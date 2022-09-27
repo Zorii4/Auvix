@@ -1,7 +1,7 @@
 <template>
   <section class="dealer__auvix">
     <div class="dealer__auvix-lead">
-      <div class="container">
+      <div>
         <div class="services-single__warranty-header">
           <SectionLead
             :title="pageProps.title"

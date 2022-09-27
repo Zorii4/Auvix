@@ -1,29 +1,30 @@
 <template>
   <div>
+    <div v-if="pageData.length === 0">Новостей нет</div>
     <div
+      v-else
       v-for="item of typeToPageIndentificator"
       :key="item.id"
     >
-      <!-- {{item.componentName}} -->
       <component
         :is="item.componentType + item.componentName"
         :pageProps="item.componentData"
-      ></component>
+      >
+      </component>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  /* eslint-disable */
-  name: 'ModalPage',
+  name: 'ModalContent',
   props: {
-    pageBlocksData: Array,
+    pageData: Array,
   },
   computed: {
     typeToPageIndentificator() {
-      if (this.pageBlocksData.length > 0) {
-        return this.pageBlocksData
+      if (this.pageData.length > 0) {
+        return this.pageData
           .filter((el) => !Array.isArray(el.data))
           .map((item) => ({
             componentName: item.data.type
@@ -42,5 +43,3 @@ export default {
   },
 }
 </script>
-
-      

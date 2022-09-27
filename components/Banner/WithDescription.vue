@@ -9,10 +9,12 @@
         <h2 class="promotion__title section-title">{{bannerProp.title}}</h2>
         <p v-html="descriptionReplacer"></p>
       </div>
-      <NuxtLink
-        class="promotion__button button"
+      <CommonAnchor
         :to="bannerProp.button_link"
-      >{{bannerProp.button_title}}</NuxtLink>
+        :className="'banner__button button'"
+        :color="btnTextColor"
+        class="banner__link"
+      >{{bannerProp.button_title}}</CommonAnchor>
     </div>
     <div
       class="promotion__img-column"
@@ -21,7 +23,7 @@
       <div class="promotion__img-wrapper">
         <div class="promotion__img-block">
           <img
-            :src="bannerProp.equipment_image"
+            :src="$config?.baseURLImg + bannerProp.equipment_image"
             class="promotion__img"
           >
         </div>
@@ -48,6 +50,11 @@ export default {
     },
     backgroundColorVariable() {
       return { '--BGColor': this.bannerProp.background_color }
+    },
+    btnTextColor() {
+      return this.bannerProp.button_color === 'white'
+        ? { '--textColor': 'black', '--btnColor': 'white' }
+        : { '--textColor': 'white', '--btnColor': 'black' }
     },
   },
 }
@@ -84,7 +91,7 @@ export default {
   @media (max-width: 1023px) {
     padding: 1.6rem;
     min-height: 33.6rem;
-    background-color: var(--green);
+    background-color: var(--BGColor);
     border-radius: 1.6rem;
   }
 
@@ -185,20 +192,6 @@ export default {
   }
 }
 
-.promotion__button {
-  position: relative;
-  z-index: 2;
-  display: inline-block;
-  justify-self: flex-end;
-  padding: 1.6rem 4rem;
-  margin-top: auto;
-
-  @media (max-width: 1023px) {
-    padding: 1.6rem 3.2rem;
-    font-size: 1.6rem;
-  }
-}
-
 .promotion__img-column {
   display: flex;
   align-items: flex-start;
@@ -206,6 +199,7 @@ export default {
   flex-grow: 1;
   max-width: 100rem;
   margin-top: 7rem;
+  margin-right: 10rem;
 
   @media (max-width: 1023px) {
     justify-content: center;
@@ -215,6 +209,7 @@ export default {
     height: 33.6rem;
     border-radius: 1.6rem;
     margin-top: 0;
+    margin-right: 0;
     background-color: var(--BGColor);
   }
 
@@ -235,20 +230,13 @@ export default {
   width: 100%;
   height: 100%;
 
-  @media (max-width: 1199px) {
-    width: 80%;
-    height: 80%;
-  }
-
   @media (max-width: 1023px) {
-    width: 100%;
-    height: 100%;
     justify-content: center;
   }
 
   img {
     width: 100%;
-    max-width: 90%;
+    max-width: 85%;
     max-height: 60%;
   }
 }
@@ -274,5 +262,9 @@ export default {
     max-width: 24rem;
     max-height: 17rem;
   }
+}
+
+.banner__link {
+  margin-top: auto !important;
 }
 </style>

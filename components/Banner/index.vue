@@ -257,6 +257,10 @@ export default {
     height: 5.2rem;
   }
 
+  @media (max-width: 767px) {
+    bottom: 0;
+  }
+
   .slider-button {
     flex-grow: 1;
     display: flex;

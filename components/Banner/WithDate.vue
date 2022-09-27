@@ -1,7 +1,7 @@
 <template>
   <div
     class="promotion__inner"
-    :style="{backgroundColor: `${bannerProp.background_color}`}"
+    :style="backgroundColorVariable"
   >
     <div class="promotion__text-column">
       <p class="promotion__caption">{{bannerProp.tag}}</p>
@@ -9,16 +9,21 @@
         <h2 class="promotion__title section-title">{{bannerProp.title}}</h2>
         <p>{{this.bannerProp.date | formatData('fullData')}} - {{this.bannerProp.date_end | formatData('fullData')}}</p>
       </div>
-      <NuxtLink
-        class="promotion__button button"
+      <CommonAnchor
         :to="bannerProp.button_link"
-      >{{bannerProp.button_title}}</NuxtLink>
+        :className="'banner__button button'"
+        :color="btnTextColor"
+        class="banner__link"
+      >{{bannerProp.button_title}}</CommonAnchor>
     </div>
-    <div class="promotion__img-column">
+    <div
+      class="promotion__img-column"
+      :style="backgroundColorVariable"
+    >
       <div class="promotion__img-wrapper">
         <div class="promotion__img-block">
           <img
-            :src="bannerProp.equipment_image"
+            :src="$config.baseURLImg + bannerProp.equipment_image"
             class="promotion__img"
           >
         </div>
@@ -28,12 +33,20 @@
 </template>
 
 <script>
-// import { DateTime } from 'luxon'
-
 export default {
   name: 'BannerWithDate',
   props: {
     bannerProp: Object,
+  },
+  computed: {
+    btnTextColor() {
+      return this.bannerProp.button_color === 'white'
+        ? { '--textColor': 'black', '--btnColor': 'white' }
+        : { '--textColor': 'white', '--btnColor': 'black' }
+    },
+    backgroundColorVariable() {
+      return { '--BGColor': this.bannerProp.background_color }
+    },
   },
 }
 </script>
@@ -47,6 +60,7 @@ export default {
   height: 100%;
   flex-grow: 1;
   border-radius: 2rem;
+  background-color: var(--BGColor);
 
   @media (max-width: 1599px) {
     padding: 2rem;
@@ -56,7 +70,6 @@ export default {
     flex-direction: column;
     gap: 0.4rem;
     padding: 0;
-
     background-color: transparent;
   }
 }
@@ -69,8 +82,7 @@ export default {
   @media (max-width: 1023px) {
     padding: 1.6rem;
     min-height: 33.6rem;
-
-    background-color: var(--green);
+    background-color: var(--BGColor);
     border-radius: 1.6rem;
   }
 
@@ -90,11 +102,9 @@ export default {
 
   &::before {
     content: '';
-
     width: 1.2rem;
     height: 1.2rem;
     margin-right: 1.2rem;
-
     background-color: var(--jack-grey);
     border-radius: 50%;
   }
@@ -174,28 +184,13 @@ export default {
   }
 }
 
-.promotion__button {
-  position: relative;
-  z-index: 2;
-
-  display: inline-block;
-  justify-self: flex-end;
-  padding: 1.6rem 4rem;
-  margin-top: auto;
-
-  @media (max-width: 1023px) {
-    padding: 1.6rem 3.2rem;
-    font-size: 1.6rem;
-  }
-}
-
 .promotion__img-column {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-grow: 1;
   max-width: 100rem;
-  margin-right: 7rem;
+  margin-right: 8rem;
 
   @media (max-width: 1023px) {
     justify-content: center;
@@ -203,9 +198,9 @@ export default {
     max-width: none;
     padding: 1.6rem;
     height: 33.6rem;
-
-    background-color: var(--green);
     border-radius: 1.6rem;
+    background-color: var(--BGColor);
+    margin-right: 0;
   }
 
   @media (max-width: 767px) {
@@ -225,19 +220,8 @@ export default {
   width: 100%;
   height: 100%;
 
-  @media (max-width: 1599px) {
-    width: 20rem;
-    height: 20rem;
-  }
-
-  @media (max-width: 1199px) {
-    width: 16rem;
-    height: 16rem;
-  }
-
   @media (max-width: 1023px) {
-    width: 18rem;
-    height: 18rem;
+    justify-content: center;
   }
 
   img {
@@ -253,10 +237,6 @@ export default {
   max-height: 90%;
 
   @media (max-width: 1599px) {
-    margin-right: 8.1rem;
-  }
-
-  @media (max-width: 1199px) {
     margin-right: 0;
   }
 
@@ -268,6 +248,10 @@ export default {
     max-width: 24rem;
     max-height: 17rem;
   }
+}
+
+.banner__link {
+  margin-top: auto;
 }
 </style>
 

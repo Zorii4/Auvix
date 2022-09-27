@@ -6,16 +6,16 @@
     >
       <h2 class="section-lead__title section-title">{{title}}</h2>
     </div>
-    <div
-      v-if="sub_title"
-      class="section-lead__column"
-    >
-      <h3 class="section-lead__subtitle">{{sub_title}}</h3>
+    <div class="section-lead__column">
+      <h3
+        v-if="sub_title"
+        class="section-lead__subtitle"
+      >{{sub_title}}</h3>
       <div
         v-if="description"
         class="section-lead__text"
       >
-        <p> {{description}}</p>
+        <p>{{description}}</p>
       </div>
     </div>
   </div>

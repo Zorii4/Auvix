@@ -1,7 +1,7 @@
 <template>
   <div
     class="promotion__inner"
-    :style="{backgroundImage: `url(${bannerProp.cover_image})`}"
+    :style="{backgroundImage: `url(${$config.baseURLImg}`+`${bannerProp.cover_image})`}"
   >
     <div class="promotion__text-column">
       <p class="promotion__caption">{{bannerProp.tag}}</p>
@@ -11,20 +11,12 @@
           :style="{color: `${bannerProp.title_color}`}"
         >{{bannerProp.title}}</h2>
       </div>
-      <NuxtLink
-        class="promotion__button button"
+      <CommonAnchor
         :to="bannerProp.button_link"
-      >{{bannerProp.button_title}}</NuxtLink>
-    </div>
-    <div class="promotion__img-column">
-      <div class="promotion__img-wrapper">
-        <div class="promotion__img-block">
-          <img
-            :src="bannerProp.equipment_image"
-            class="promotion__img"
-          >
-        </div>
-      </div>
+        :className="'banner__button button'"
+        :color="btnTextColor"
+        class="banner__link"
+      >{{bannerProp.button_title}}</CommonAnchor>
     </div>
   </div>
 </template>
@@ -34,6 +26,13 @@ export default {
   name: 'BannerBackgroundWithoutDescr',
   props: {
     bannerProp: Object,
+  },
+  computed: {
+    btnTextColor() {
+      return this.bannerProp.button_color === 'white'
+        ? { '--textColor': 'black', '--btnColor': 'white' }
+        : { '--textColor': 'white', '--btnColor': 'black' }
+    },
   },
 }
 </script>
@@ -70,8 +69,6 @@ export default {
   @media (max-width: 1023px) {
     padding: 1.6rem;
     min-height: 33.6rem;
-
-    background-color: var(--green);
     border-radius: 1.6rem;
   }
 
@@ -160,98 +157,7 @@ export default {
   }
 }
 
-.promotion__button {
-  position: relative;
-  z-index: 2;
-
-  display: inline-block;
-  justify-self: flex-end;
-  padding: 1.6rem 4rem;
+.banner__link {
   margin-top: auto;
-
-  @media (max-width: 1023px) {
-    padding: 1.6rem 3.2rem;
-    font-size: 1.6rem;
-  }
-}
-
-.promotion__img-column {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-grow: 1;
-  max-width: 100rem;
-
-  @media (max-width: 1023px) {
-    justify-content: center;
-    align-items: center;
-    max-width: none;
-    padding: 1.6rem;
-    height: 33.6rem;
-
-    background-color: var(--green);
-    border-radius: 1.6rem;
-  }
-
-  @media (max-width: 767px) {
-    display: none;
-  }
-}
-
-.promotion__img-wrapper {
-  display: flex;
-}
-
-.promotion__img-block {
-  object-fit: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-
-  @media (max-width: 1599px) {
-    width: 20rem;
-    height: 20rem;
-  }
-
-  @media (max-width: 1199px) {
-    width: 16rem;
-    height: 16rem;
-  }
-
-  @media (max-width: 1023px) {
-    width: 18rem;
-    height: 18rem;
-  }
-
-  img {
-    width: 100%;
-    max-width: 80%;
-    max-height: 60%;
-  }
-}
-
-.promotion__img {
-  max-width: 50rem;
-  width: 100%;
-  max-height: 90%;
-
-  @media (max-width: 1599px) {
-    margin-right: 8.1rem;
-  }
-
-  @media (max-width: 1199px) {
-    margin-right: 0;
-  }
-
-  @media (max-width: 1023px) {
-    max-width: 36rem;
-  }
-
-  @media (max-width: 767px) {
-    max-width: 24rem;
-    max-height: 17rem;
-  }
 }
 </style>

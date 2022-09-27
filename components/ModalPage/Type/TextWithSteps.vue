@@ -1,9 +1,6 @@
 <template>
-  <section
-    class="partners-single__features"
-    style="display:none"
-  >
-    <div class="container">
+  <section class="partners-single__features">
+    <div v-if="pageProps.variation !== 'icons'">
       <div class="partners-single__features-header">
         <SectionLead
           :title="pageProps.title"
@@ -11,18 +8,36 @@
           :description="pageProps.description"
         />
       </div>
+      <div
+        v-if="pageProps.paragraphs"
+        class="services-single__warranty-wrapper"
+      >
+        <ul class="services-single__warranty-list">
+          <li
+            v-for="item of pageProps.paragraphs"
+            :key="item.id"
+            class="services-single__warranty-item"
+          >
+            <h3 class="services-single__warranty-title">{{item.title}}</h3>
+            <p class="services-single__warranty-text">{{item.description}}</p>
+          </li>
+        </ul>
+      </div>
       <ol class="digits-row">
         <li
           v-for="item of pageProps.steps"
           :key="item.id"
           class="digits-row__item"
-          :style="{backgroundImage: `url(${item.image_url})`}"
+          :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
         >
           <p class="digits-row__text">{{item.description}}</p>
         </li>
       </ol>
-
     </div>
+    <TextBlocksWithStepsAndIcons
+      v-if="pageProps.variation === 'icons'"
+      :pageProps="pageProps"
+    />
   </section>
 
 </template>
@@ -235,6 +250,84 @@ export default {
       font-size: 1.6rem;
       line-height: 1.25;
     }
+  }
+}
+
+.services-single__warranty-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem;
+  margin-bottom: 4rem;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.services-single__warranty-list {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.8rem 0.4rem;
+
+  @media (max-width: 1599px) {
+  }
+
+  @media (max-width: 1199px) {
+    gap: 2.4rem 0.4rem;
+  }
+
+  @media (max-width: 1023px) {
+    grid-column: 1 / -1;
+    gap: 2rem 0.4rem;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.services-single__warranty-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  @media (max-width: 767px) {
+    gap: 0.4rem;
+  }
+}
+
+.services-single__warranty-title {
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1.4;
+  color: var(--easy-dark);
+
+  @media (max-width: 1199px) {
+    font-size: 1.8rem;
+    line-height: 1.3;
+  }
+}
+
+.services-single__warranty-text {
+  padding-right: 3rem;
+
+  font-size: 1.6rem;
+  line-height: 1.25;
+  color: var(--jack-grey);
+
+  @media (max-width: 1599px) {
+    padding-right: 0;
+  }
+
+  @media (max-width: 1199px) {
+    font-size: 1.6rem;
+    line-height: 1.25;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 1.4rem;
+    line-height: 1.1;
   }
 }
 </style>

@@ -13,7 +13,7 @@
           v-for="item of pageProps.numbers"
           :key="item.id"
           class="two-columns-grid__digit"
-          :style="{backgroundImage: `url(${item.image_url})`}"
+          :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
         >
           <span class="two-columns-grid__digit-number">{{item.value}}</span>
           <p class="two-columns-grid__digit-text">{{item.description}}</p>
@@ -38,42 +38,37 @@
           v-for="item of pageProps.numbers"
           :key="item.id"
           class="two-columns-grid__digit"
-          :style="{backgroundImage: `url(${item.image_url})`}"
+          :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
         >
           <span class="two-columns-grid__digit-number">{{item.value}}</span>
           <p class="two-columns-grid__digit-text">{{item.description}}</p>
         </div>
       </div>
-      <div
-        v-if="pageProps.use_button"
-        class="two-columns-grid__buttons"
-      >
-        <NuxtLink
+      <div class="two-columns-grid__buttons">
+        <CommonAnchor
+          v-if="pageProps.use_button"
           :to="pageProps.button_link_url"
-          class="two-columns-grid__button button button--white"
-        >{{pageProps.button_title}}</NuxtLink>
-        <NuxtLink
-          v-if="pageProps.link_title && pageProps.link_url"
+          :className="'two-number-button button button--white'"
+        >{{pageProps.button_title}}</CommonAnchor>
+        <CommonAnchor
+          v-if="pageProps.use_link"
           :to="pageProps.link_url"
-          class="two-columns-grid__more-button button button--white"
-        >
-          {{pageProps.link_title}} </NuxtLink>
-        <svg
-          v-if="pageProps.link_title && pageProps.link_url"
-          width="8"
-          height="10"
-          viewBox="0 0 8 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8 5L-8.74228e-07 10L0 0L8 5Z"
-            fill="#202226"
-          />
-        </svg>
-
+          :className="'two-number-button__more button button--white'"
+        >{{pageProps.link_title}}
+          <svg
+            width="8"
+            height="10"
+            viewBox="0 0 8 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+              fill="#202226"
+            />
+          </svg>
+        </CommonAnchor>
       </div>
-
     </div>
   </div>
 </template>
@@ -240,6 +235,7 @@ export default {
       }
     }
   }
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -286,6 +282,7 @@ export default {
       }
     }
   }
+
   &__buttons {
     display: flex;
     align-items: center;
@@ -293,56 +290,6 @@ export default {
 
     @media (max-width: 1599px) {
       gap: 3.2rem;
-    }
-  }
-
-  &__button {
-    padding: 1.6rem 4.8rem;
-
-    border: 1px solid var(--border-grey);
-    border-radius: 1.2rem;
-
-    font-size: 1.8rem;
-    line-height: 1.3;
-    color: var(--easy-dark);
-
-    @media (max-width: 1599px) {
-      padding: 1.6rem 4rem;
-    }
-
-    @media (max-width: 1023px) {
-      padding: 1.4rem 3.6rem;
-    }
-
-    @media (max-width: 767px) {
-      padding: 1.6rem;
-
-      font-size: 1.6rem;
-      line-height: 1.25;
-    }
-  }
-
-  &__more-button {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding: 0;
-
-    border: 0;
-
-    @media (max-width: 1023px) {
-      display: none;
-    }
-
-    &:hover {
-      color: var(--dark) !important;
-      background: transparent;
-      border: 0;
-    }
-
-    svg {
-      width: 0.8rem;
-      height: 1rem;
     }
   }
 }

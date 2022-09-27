@@ -1,17 +1,20 @@
 <template>
   <nav class="header__menu">
     <ul class="header__menu-list">
-      <li
-        v-for="item in cropMenu"
-        :key="item.id"
-        class="header__menu-item"
-      >
-        <NuxtLink
-          class="header__menu-link"
-          v-if="item.is_active"
-          :to="item.uri"
-        >{{item.name}}</NuxtLink>
-      </li>
+      <swiper :options="swiperOptions">
+        <swiper-slide
+          v-for="item in cropMenu"
+          :key="item.id"
+        >
+          <li class="header__menu-item">
+            <NuxtLink
+              class="header__menu-link"
+              v-if="item.is_active"
+              :to="item.uri"
+            >{{item.name}}</NuxtLink>
+          </li>
+        </swiper-slide>
+      </swiper>
       <li class="header__menu-scroll"></li>
     </ul>
   </nav>
@@ -19,9 +22,23 @@
 
 <script>
 import { mapState } from 'vuex'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 
 export default {
   name: 'NavMenu',
+
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+
+  data: () => ({
+    swiperOptions: {
+      slidesPerView: 6,
+      spaceBetween: 10,
+      speed: 600,
+    },
+  }),
 
   computed: {
     ...mapState({
@@ -37,6 +54,7 @@ export default {
 
 <style lang="scss" scoped>
 .header__menu {
+  width: 100%;
   @media (max-width: 767px) {
     position: absolute;
     left: 0;
@@ -48,10 +66,9 @@ export default {
 
 .header__menu-list {
   position: relative;
-
+  white-space: nowrap;
   display: flex;
   align-items: center;
-
   @media (max-width: 767px) {
     display: none;
   }

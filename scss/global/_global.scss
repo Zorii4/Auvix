@@ -53,8 +53,11 @@ body {
 main {
     padding-top: 185px !important;
     display: block;
-}
 
+    @media (max-width: 767px) {
+        padding-top: 0 !important;
+  }
+}
 ul,
 ol {
     list-style: none;

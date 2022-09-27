@@ -17,7 +17,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'PageConstructor',
+  name: 'MainPage',
 
   fetch() {
     return this.$store.dispatch('modalPage/getModalPage', this.$route.path)

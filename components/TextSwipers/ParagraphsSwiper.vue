@@ -1,6 +1,6 @@
 <template>
   <section class="career">
-    <div class="container">
+    <div>
       <div class="career__culture-wrapper">
         <ul class="career__culture-list">
           <li
@@ -19,7 +19,7 @@
             class="career__culture-img"
           >
             <img
-              :src="elem.image_url"
+              :src="$config.baseURLImg + elem.image_url"
               :alt="elem.image_alt || 'Фото'"
             >
           </swiper-slide>
@@ -109,27 +109,27 @@ export default {
     grid-template-columns: repeat(2, 1fr);
     gap: 4rem 0.4rem;
     align-items: flex-end;
-    padding-bottom: 6rem;
+    margin-bottom: 6rem;
     position: relative;
     border-bottom: 1px solid var(--border-grey);
 
     @media (max-width: 1599px) {
-      padding-bottom: 5.6rem;
+      margin-bottom: 5.6rem;
     }
 
     @media (max-width: 1199px) {
-      padding-bottom: 5.2rem;
+      margin-bottom: 5.2rem;
     }
 
     @media (max-width: 1023px) {
       grid-template-columns: 1fr;
       align-items: stretch;
-      padding-bottom: 4.8rem;
+      margin-bottom: 4.8rem;
     }
 
     @media (max-width: 767px) {
       gap: 3.2rem;
-      padding-bottom: 4rem;
+      margin-bottom: 4rem;
     }
   }
 
@@ -217,7 +217,7 @@ export default {
   &__culture-navigation {
     position: absolute;
     right: 5.2rem;
-    bottom: 9.5rem;
+    bottom: 4.5rem;
     z-index: 1;
 
     @media (max-width: 1599px) {

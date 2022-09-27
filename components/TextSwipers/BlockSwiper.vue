@@ -22,7 +22,7 @@
         <div class="article__img-column">
           <div class="article__img-wrapper">
             <img
-              :src="item.image_url"
+              :src="$config.baseURLImg + item.image_url"
               :alt="item.image_alt|| 'Фото'"
             >
           </div>
@@ -140,7 +140,7 @@ export default {
   &__text-column {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 43%;
     padding: 5.2rem;
     border-radius: 0 2rem 2rem 0;
     background: var(--extra-light-gray);
@@ -212,11 +212,11 @@ export default {
 
     &::before {
       content: '';
-      width: 1.2rem;
-      height: 1.2rem;
-      margin-right: 1.2rem;
+      width: 1.3rem;
+      height: 1.3rem;
+      margin-right: 1.1rem;
       border-radius: 50%;
-      border: 1px solid var(--easy-dark);
+      background-color: var(--easy-dark);
 
       @media (max-width: 1199px) {
         width: 1rem;
