@@ -6,8 +6,14 @@
     <div class="promotion__text-column">
       <p class="promotion__caption">{{bannerProp.tag}}</p>
       <div class="promotion__content">
-        <h2 class="promotion__title section-title">{{bannerProp.title}}</h2>
-        <p v-html="descriptionReplacer"></p>
+        <h2
+          class="promotion__title section-title"
+          :style="{color: `${bannerProp.title_color}`}"
+        >{{bannerProp.title}}</h2>
+        <p
+          v-html="descriptionReplacer"
+          :style="{color: `${bannerProp.description_color}`}"
+        ></p>
       </div>
       <CommonAnchor
         :to="bannerProp.button_link"
@@ -66,10 +72,11 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   padding: 5.2rem;
-  height: 100%;
   flex-grow: 1;
   border-radius: 2rem;
   background-color: var(--BGColor);
+  height: 480px;
+  box-sizing: border-box;
 
   @media (max-width: 1599px) {
     padding: 2rem;
@@ -79,7 +86,16 @@ export default {
     flex-direction: column;
     gap: 0.4rem;
     padding: 0;
+    height: 676px;
     background-color: transparent !important;
+  }
+
+  @media (max-width: 767px) {
+    height: 352px;
+  }
+
+  @media (max-width: 479px) {
+    height: 280px;
   }
 }
 
@@ -90,13 +106,14 @@ export default {
 
   @media (max-width: 1023px) {
     padding: 1.6rem;
-    min-height: 33.6rem;
+    height: 50%;
     background-color: var(--BGColor);
     border-radius: 1.6rem;
   }
 
   @media (max-width: 767px) {
-    min-height: 28rem;
+    min-height: 100%;
+    border-radius: 1.2rem;
   }
 }
 
@@ -206,7 +223,7 @@ export default {
     align-items: center;
     max-width: none;
     padding: 1.6rem;
-    height: 33.6rem;
+    height: 50%;
     border-radius: 1.6rem;
     margin-top: 0;
     margin-right: 0;

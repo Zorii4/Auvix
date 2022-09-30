@@ -40,6 +40,12 @@ export default {
   overflow: hidden;
   color: #fff;
   background-repeat: no-repeat;
+  background-size: cover;
+  height: 258px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   @media (max-width: 1599px) {
     padding: 4.4rem 4rem 4rem;
@@ -54,26 +60,21 @@ export default {
   }
 
   @media (max-width: 767px) {
+    height: 192px;
+  }
+
+  @media (max-width: 359px) {
     padding: 1.6rem;
+    height: 160px;
   }
 }
 
 .request__text {
-  max-width: 55.2rem;
-  margin-bottom: 4rem;
-
-  @media (max-width: 1599px) {
-    margin-bottom: 3.2rem;
-  }
-
-  @media (max-width: 1199px) {
-    margin-bottom: 2.8rem;
-  }
+  max-width: 60rem;
 
   @media (max-width: 767px) {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1.6rem;
   }
 
   p {

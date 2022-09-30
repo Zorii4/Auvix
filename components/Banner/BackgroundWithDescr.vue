@@ -56,11 +56,12 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   padding: 5.2rem;
-  height: 100%;
   flex-grow: 1;
   border-radius: 2rem;
   background-repeat: no-repeat;
   background-size: cover;
+  height: 480px;
+  box-sizing: border-box;
 
   @media (max-width: 1599px) {
     padding: 2rem;
@@ -69,8 +70,17 @@ export default {
   @media (max-width: 1023px) {
     flex-direction: column;
     gap: 0.4rem;
+    height: 336px;
     padding: 0;
     background-color: transparent;
+  }
+
+  @media (max-width: 767px) {
+    height: 352px;
+  }
+
+  @media (max-width: 479px) {
+    height: 280px;
   }
 }
 
@@ -81,12 +91,14 @@ export default {
 
   @media (max-width: 1023px) {
     padding: 1.6rem;
-    min-height: 33.6rem;
+    height: 33.6rem;
     border-radius: 1.6rem;
   }
 
   @media (max-width: 767px) {
-    min-height: 28rem;
+    width: 100%;
+    min-height: 100%;
+    border-radius: 1.2rem;
   }
 }
 

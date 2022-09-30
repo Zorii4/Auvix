@@ -39,44 +39,47 @@
           class="swiper-pagination promotion__swiper-pagination"
           :style="paginationColorCssVariable"
         ></div>
-        <div class="promotion__slider-button-wrapper">
-          <div
-            class="slider-navigation"
+      </div>
+      <div
+        class="promotion__slider-button-wrapper"
+        :class="{'small' : isSmallBanner}"
+      >
+        <div
+          class="slider-navigation"
+          :style="buttonColorCssVariable"
+        >
+
+          <button
+            class="slider-button slider-button--prev"
+            title="Листнуть влево"
             :style="buttonColorCssVariable"
           >
-
-            <button
-              class="slider-button slider-button--prev"
-              title="Листнуть влево"
-              :style="buttonColorCssVariable"
+            <svg
+              width="9"
+              height="14"
+              viewBox="0 0 9 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                width="9"
-                height="14"
-                viewBox="0 0 9 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M6.11959e-07 7L9 14L9 0L6.11959e-07 7Z" />
-              </svg>
+              <path d="M6.11959e-07 7L9 14L9 0L6.11959e-07 7Z" />
+            </svg>
+          </button>
 
-            </button>
-            <button
-              class="slider-button slider-button--next"
-              title="Листнуть вправо"
+          <button
+            class="slider-button slider-button--next"
+            title="Листнуть вправо"
+          >
+            <svg
+              width="9"
+              height="14"
+              viewBox="0 0 9 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                width="9"
-                height="14"
-                viewBox="0 0 9 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M9 7L-1.22392e-06 14L0 0L9 7Z" />
-              </svg>
-            </button>
+              <path d="M9 7L-1.22392e-06 14L0 0L9 7Z" />
+            </svg>
+          </button>
 
-          </div>
         </div>
       </div>
     </div>
@@ -108,6 +111,7 @@ export default {
       slidesPerView: 1,
       spaceBetween: 10,
       speed: 600,
+      autoHeight: true,
       navigation: {
         nextEl: '.slider-button--next',
         prevEl: '.slider-button--prev',
@@ -141,6 +145,12 @@ export default {
         ? { '--backgroundColorPagination': '#202226' }
         : { '--backgroundColorPagination': '#fff' }
     },
+
+    isSmallBanner() {
+      return this.pageBanners.map(
+        (item) => item.type.code === 'mini_with_cover_image'
+      )[this.currentSlide]
+    },
   },
 
   methods: {
@@ -157,6 +167,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.swiper-container-autoheight {
+  .swiper-slide {
+    @media (max-width: 1023px) {
+      height: initial !important;
+    }
+  }
+}
+
 .banner-swiper-container {
   position: relative;
 }
@@ -173,21 +191,9 @@ export default {
 }
 
 .banner-slide {
-  min-height: 48rem;
+  // min-height: 48rem;
   display: flex;
   flex-direction: column;
-
-  @media (max-width: 1599px) {
-    min-height: 42rem;
-  }
-
-  @media (max-width: 1199px) {
-    min-height: 40rem;
-  }
-
-  @media (max-width: 1023px) {
-    min-height: auto;
-  }
 }
 
 .promotion__slider-control {
@@ -205,26 +211,51 @@ export default {
     bottom: 2rem;
     margin: 0 2rem;
   }
-
-  @media (max-width: 1599px) {
-    bottom: 1.6rem;
-    margin: 0 1.6rem;
-  }
 }
 
 .promotion__slider-button-wrapper {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 50px;
+  top: 37rem;
   z-index: 2;
 
+  @media (max-width: 1599px) {
+    top: 40rem;
+    right: 20px;
+  }
+
   @media (max-width: 1023px) {
-    top: auto;
-    bottom: calc(33.6rem + 0.4rem);
+    top: 26.5rem;
   }
 
   @media (max-width: 767px) {
-    bottom: 0;
+    top: 28.5rem;
+  }
+
+  @media (max-width: 479px) {
+    top: 21rem;
+  }
+
+  &.small {
+    right: 50px;
+    top: 16.5rem;
+
+    @media (max-width: 1599px) {
+      right: 40px;
+      top: 18rem;
+    }
+
+    @media (max-width: 1023px) {
+      top: 19rem;
+    }
+
+    @media (max-width: 767px) {
+      top: 12rem;
+    }
+
+    @media (max-width: 479px) {
+      display: none;
+    }
   }
 }
 
@@ -252,7 +283,6 @@ export default {
 
   @media (max-width: 1023px) {
     top: auto;
-    bottom: 3rem;
     width: 9.8rem;
     height: 5.2rem;
   }

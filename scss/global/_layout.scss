@@ -208,25 +208,25 @@
     }
 }
 
-.slider-bullets {
-    display: inline-block;
-    width: 0.8rem;
-    height: 0.8rem;
-    margin-right: 1.2rem;
+// .slider-bullets {
+//     display: inline-block;
+//     width: 0.8rem;
+//     height: 0.8rem;
+//     margin-right: 1.2rem;
 
-    border: 1px solid rgba(32, 34, 38, .2);
-    border-radius: 50%;
+//     border: 1px solid rgba(32, 34, 38, .2);
+//     border-radius: 50%;
 
-    transition: transform .3s;
+//     transition: transform .3s;
 
-    &:hover {
-        transform: scale(1.4);
-    }
+//     &:hover {
+//         transform: scale(1.4);
+//     }
 
-    &--active {
-        background-color: var(--dark);
-    }
-}
+//     &--active {
+//         background-color: var(--dark);
+//     }
+// }
 
 .button {
     padding: 1.6rem 1rem;

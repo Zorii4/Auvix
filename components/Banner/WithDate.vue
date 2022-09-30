@@ -6,7 +6,10 @@
     <div class="promotion__text-column">
       <p class="promotion__caption">{{bannerProp.tag}}</p>
       <div class="promotion__content">
-        <h2 class="promotion__title section-title">{{bannerProp.title}}</h2>
+        <h2
+          class="promotion__title section-title"
+          :style="{color: `${bannerProp.title_color}`}"
+        >{{bannerProp.title}}</h2>
         <p>{{this.bannerProp.date | formatData('fullData')}} - {{this.bannerProp.date_end | formatData('fullData')}}</p>
       </div>
       <CommonAnchor
@@ -57,10 +60,11 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   padding: 5.2rem;
-  height: 100%;
   flex-grow: 1;
   border-radius: 2rem;
   background-color: var(--BGColor);
+  height: 480px;
+  box-sizing: border-box;
 
   @media (max-width: 1599px) {
     padding: 2rem;
@@ -69,8 +73,17 @@ export default {
   @media (max-width: 1023px) {
     flex-direction: column;
     gap: 0.4rem;
+    height: 676px;
     padding: 0;
     background-color: transparent;
+  }
+
+  @media (max-width: 767px) {
+    height: 352px;
+  }
+
+  @media (max-width: 479px) {
+    height: 280px;
   }
 }
 
@@ -81,13 +94,13 @@ export default {
 
   @media (max-width: 1023px) {
     padding: 1.6rem;
-    min-height: 33.6rem;
+    height: 50%;
     background-color: var(--BGColor);
     border-radius: 1.6rem;
   }
 
   @media (max-width: 767px) {
-    min-height: 28rem;
+    min-height: 100%;
   }
 }
 
@@ -197,7 +210,7 @@ export default {
     align-items: center;
     max-width: none;
     padding: 1.6rem;
-    height: 33.6rem;
+    height: 50%;
     border-radius: 1.6rem;
     background-color: var(--BGColor);
     margin-right: 0;

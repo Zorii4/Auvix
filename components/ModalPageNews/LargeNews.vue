@@ -1,140 +1,60 @@
 <template>
-  <section class="news__section">
-    <div class="academy__news">
-      <div>
-        <div class="academy__news-header">
-          <div class="section-header">
-            <h2 class="section-header__title section-title">
-              {{pageProps.title}}
-            </h2>
-          </div>
+  <ul class="news">
+    <li
+      class="news__item-wrapper"
+      v-for="news of newsData?.data.slice(0, pageProps.limit)"
+      :key="news.id"
+    >
+      <router-link
+        class="news__item"
+        :to="`news/${news.code}`"
+      >
+        <div class="news__item-content">
+          <time class="news__item-time">{{news.last_published_at | formatData('fullData')}}</time>
+          <p>{{news.title}}</p>
         </div>
-        <ul class="news">
-          <li
-            class="news__item-wrapper"
-            v-for="news of newsData.data"
-            :key="news.id"
+        <div
+          v-if="news.preview_image_url"
+          class="news__item-img"
+        >
+          <img
+            :src="($config?.baseURLImg + news.preview_image_url) || '~/assets/img/default.png'"
+            alt="Фото новости"
           >
-
-            <router-link
-              class="news__item"
-              :to="`news/${news.code}`"
-            >
-              <div class="news__item-content">
-                <!-- {{#if photoCount }}<div class="news__item-header">{{/if}} -->
-                <div class="news__item-time">{{news.last_published_at | formatData('fullData')}}</div>
-                <!-- {{#if photoCount }}<span class="news__item-photo-count">{{photoCount}} фото</span>{{/if}} -->
-                <!-- {{#if photoCount }} -->
-                <!-- </div> -->
-                <!-- {{/if}} -->
-                <p>{{news.title}}</p>
-              </div>
-              <!-- <div class="news__item-img">
-                <img
-                  src="{{this.image}}"
-                  alt="Фото новости"
-                >
-              </div> -->
-            </router-link>
-            <!-- {{#if this.photoLink }}
+        </div>
+        <div
+          v-if="!news.preview_image_url"
+          class="news__item-img"
+        >
+          <img
+            src="~/assets/img/default.png"
+            alt="Фото новости"
+          >
+        </div>
+      </router-link>
+      <!-- {{#if this.photoLink }}
             <button
               class="news__item-button"
               data-fancybox
               data-src="{{this.imageLarge}}"
             ></button>
             {{/if}}
-            {{#if this.videoLink }}
-            <button
-              class="news__item-button news__item-button--video"
-              data-fancybox
-              data-src="https://www.youtube.com/embed/Y8yo6fzmEFg?rel=0"
-            ></button>
-            {{/if}} -->
-          </li>
-        </ul>
-
-      </div>
-    </div>
-  </section>
+            -->
+    </li>
+  </ul>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
-  name: 'ModalPageNews',
+  name: 'LargeNews',
   props: {
+    newsData: Object,
     pageProps: Object,
-  },
-  fetch() {
-    return this.$store.dispatch(
-      'interactive/getInteractiveData',
-      this.pageProps.id
-    )
-  },
-  computed: {
-    ...mapState({
-      newsData: (state) => state.interactive?.interactiveData,
-    }),
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.news__section {
-  margin-bottom: 50px;
-}
-
-.academy__news {
-  padding-top: 5.2rem;
-
-  @media (max-width: 1599px) {
-    padding-top: 4.8rem;
-  }
-
-  @media (max-width: 1199px) {
-    padding-top: 4rem;
-  }
-
-  @media (max-width: 1023px) {
-    padding-top: 3.6rem;
-  }
-
-  @media (max-width: 767px) {
-    padding-top: 3.2rem;
-  }
-}
-
-.academy__news-header {
-  padding: 0 0 4rem;
-
-  @media (max-width: 1599px) {
-    padding-bottom: 3.6rem;
-  }
-
-  @media (max-width: 1199px) {
-    padding-bottom: 3.2rem;
-  }
-
-  @media (max-width: 1023px) {
-    padding-bottom: 2.8rem;
-  }
-
-  @media (max-width: 767px) {
-    padding-bottom: 2rem;
-  }
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-
-  &__title {
-    margin: 0;
-  }
-}
-
 .news {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -158,14 +78,11 @@ export default {
   &__item-wrapper {
     display: flex;
     flex-direction: column;
+    position: relative;
 
     @media (max-width: 1023px) {
       grid-column: span 2;
     }
-  }
-
-  &__item-wrapper {
-    position: relative;
   }
 
   &__item {
@@ -356,56 +273,6 @@ export default {
     }
   }
 
-  &__item-header {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin-bottom: auto;
-
-    @media (max-width: 1599px) {
-      gap: 1rem;
-    }
-
-    @media (max-width: 1199px) {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-
-  &__item-photo-count {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-
-    font-size: 1.8rem;
-    line-height: 1.3;
-    color: var(--easy-dark);
-
-    @media (max-width: 1199px) {
-      gap: 0.8rem;
-      font-size: 1.7rem;
-    }
-
-    @media (max-width: 767px) {
-      font-size: 1.4rem;
-    }
-
-    &::before {
-      content: '';
-
-      width: 1.2rem;
-      height: 1.2rem;
-
-      border-radius: 50%;
-      background-color: var(--jack-grey);
-
-      @media (max-width: 1199px) {
-        width: 1rem;
-        height: 1rem;
-      }
-    }
-  }
-
   &__item-img {
     overflow: hidden;
     border-radius: 1.6rem;
@@ -440,11 +307,6 @@ export default {
 
     @media (max-width: 767px) {
       display: none;
-    }
-
-    &--video {
-      // background-image: url('../img/icons/slider-arrow.svg');
-      background-size: 1.3rem 1.3rem;
     }
   }
 

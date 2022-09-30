@@ -65,20 +65,24 @@ export default {
 
 .mini-banner__button {
   padding: 1.6rem 4rem;
+  color: var(--textColor) !important;
+  background-color: var(--btnColor);
+  border: none;
 
   @media (max-width: 1023px) {
     padding: 1.6rem 3.2rem;
   }
 
   @media (max-width: 767px) {
-    width: 100%;
     padding: 1.6rem 3.4rem;
-
     justify-content: center;
   }
 
-  @media (max-width: 359px) {
+  @media (max-width: 479px) {
+    display: block;
+    width: 100%;
     padding: 1.4rem;
+    text-align: center;
   }
 }
 
@@ -87,7 +91,6 @@ export default {
 
   border: 1px solid var(--border-grey);
   border-radius: 1.2rem;
-
   font-size: 1.8rem;
   line-height: 1.3;
   color: var(--easy-dark);

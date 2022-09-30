@@ -8,8 +8,14 @@
         <span class="article__category">{{bannerProp.tag}}</span>
       </div>
       <div class="article__text-content">
-        <h3 class="article__text-title">{{bannerProp.title}}</h3>
-        <p v-html="descriptionReplacer"></p>
+        <h3
+          class="article__text-title"
+          :style="{color: `${bannerProp.title_color}`}"
+        >{{bannerProp.title}}</h3>
+        <p
+          v-html="descriptionReplacer"
+          :style="{color: `${bannerProp.description_color}`}"
+        ></p>
       </div>
       <CommonAnchor
         :to="bannerProp.button_link"
@@ -56,18 +62,23 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 0.4rem;
-  min-height: 48rem;
+  height: 480px;
+  box-sizing: border-box;
 
   @media (max-width: 1023px) {
     flex-direction: column;
     gap: 0.4rem;
+    height: 676px;
     padding: 0;
     background-color: transparent;
   }
 
   @media (max-width: 767px) {
-    min-height: auto;
-    flex-direction: column;
+    height: 352px;
+  }
+
+  @media (max-width: 479px) {
+    height: 280px;
   }
 }
 
@@ -84,7 +95,7 @@ export default {
 
   @media (max-width: 1023px) {
     padding: 1.6rem;
-    min-height: 33.6rem;
+    height: 50%;
     background-color: var(--BGColor);
     border-radius: 1.6rem;
     width: initial;
@@ -92,14 +103,8 @@ export default {
 
   @media (max-width: 767px) {
     width: 100%;
-    min-height: 28rem;
+    min-height: 100%;
     border-radius: 1.2rem;
-  }
-
-  &--title-bottomed {
-    @media (max-width: 767px) {
-      min-height: 15.2rem;
-    }
   }
 }
 
@@ -126,7 +131,7 @@ export default {
   }
 
   @media (max-width: 767px) {
-    max-width: 24.2rem;
+    max-width: initial;
     margin-bottom: 1.6rem;
   }
 }
@@ -223,7 +228,7 @@ export default {
     justify-content: center;
     align-items: center;
     max-width: none;
-    height: 36.8rem;
+    height: 50%;
     border-radius: 1.6rem;
     margin-right: 0;
     width: initial;
