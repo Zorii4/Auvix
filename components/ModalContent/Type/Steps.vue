@@ -15,12 +15,6 @@
             :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
             class="digits__icon"
           ></svg>
-          <!-- <svg class="digits__icon">
-            <use xlink:href="#{{svg1}}"></use>
-        </svg> 
-        
-        ТУТ ПОКА ЧТО НЕПРАВИЛЬНЫЙ URL НА КАРТИНКУ!!! -->
-
         </li>
       </ol>
     </div>

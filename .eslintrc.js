@@ -27,7 +27,11 @@ module.exports = {
         'Steps',
         'Persons',
         'Table',
-        'Photos'
+        'Photos',
+        'Awards',
+        'Events',
+        'Persons',
+        'Places'
       ]
     }]
   },
