@@ -6,6 +6,7 @@
       v-for="item of typeToPageIndentificator"
       :key="item.id"
     >
+      {{item.componentName}}
       <component
         :is="item.componentType + item.componentName"
         :pageProps="item.componentData"

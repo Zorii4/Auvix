@@ -88,6 +88,11 @@ export default {
       },
     },
   }),
+  mounted() {
+    this.swiperOptions.navigation.nextEl = this.$refs.sliderNext
+    this.swiperOptions.navigation.prevEl = this.$refs.sliderPrev
+    this.sliderLoad = true
+  },
 }
 </script>
 
@@ -95,7 +100,6 @@ export default {
 .scope-single {
   &__post-img-slider {
     margin: 8rem 0;
-    position: relative;
 
     @media (max-width: 1599px) {
       margin: 7.2rem 0;
@@ -118,6 +122,7 @@ export default {
 .post-img-slider {
   max-width: 123.1rem;
   margin: 0 auto;
+  position: relative;
 
   &__container {
     position: relative;
@@ -192,18 +197,17 @@ export default {
 
 .article__slider-navigation {
   position: absolute;
-  right: 17rem;
-  bottom: 4rem;
+  right: 5.2rem;
+  bottom: 5.2rem;
   z-index: 1;
-
-  @media (max-width: 1599px) {
-    right: 2rem;
-    bottom: 2rem;
-  }
 
   @media (max-width: 1023px) {
     right: 1.6rem;
     bottom: 1.6rem;
+  }
+
+  @media (max-width: 479px) {
+    display: none;
   }
 }
 
