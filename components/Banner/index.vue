@@ -4,7 +4,7 @@
       <div
         v-for="item of pageBanners"
         :key="item.id"
-        class="banner-slide"
+        class="banner-slide one-slide"
       >
         <component
           :is="bannerTypes[item.type.code]"
@@ -183,10 +183,14 @@ export default {
   position: relative;
   border-radius: 2rem;
   overflow: hidden;
-  margin-bottom: 60px;
+  margin-bottom: 5rem;
 
   @media (max-width: 1023px) {
     border-radius: 0;
+  }
+
+  @media (max-width: 479px) {
+    margin-bottom: 3rem;
   }
 }
 
@@ -194,13 +198,21 @@ export default {
   // min-height: 48rem;
   display: flex;
   flex-direction: column;
+
+  &.one-slide {
+    margin-bottom: 5rem;
+
+    @media (max-width: 479px) {
+      margin-bottom: 3rem;
+    }
+  }
 }
 
 .promotion__slider-control {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 5.2rem;
+  bottom: 5rem;
   display: flex;
   align-items: flex-end;
   justify-content: center;

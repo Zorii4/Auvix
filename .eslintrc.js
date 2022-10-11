@@ -25,7 +25,9 @@ module.exports = {
         'Videos', 
         'Numbers', 
         'Steps',
-        'Persons'
+        'Persons',
+        'Table',
+        'Photos'
       ]
     }]
   },

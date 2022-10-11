@@ -196,4 +196,19 @@ export default {
     padding: 1.6rem;
   }
 }
+
+.services-list__item-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 4rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+}
 </style>

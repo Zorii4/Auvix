@@ -1,7 +1,7 @@
 <template>
   <section class="news__section">
     <div class="academy__news">
-      <div>
+      <div class="container">
         <div class="academy__news-header">
           <div class="section-header">
             <h2 class="section-header__title section-title">

@@ -1,26 +1,31 @@
 <template>
   <section class="dealer__auvix">
-    <div class="dealer__auvix-lead">
-      <div>
-        <div class="services-single__warranty-header">
-          <SectionLead
-            :title="pageProps.title"
-            :sub_title="pageProps.sub_title"
-            :description="pageProps.description"
-          />
+    <div class="wide-container">
+      <div class="dealer__auvix-lead">
+        <div>
+          <div class="services-single__warranty-header">
+            <SectionLead
+              :title="pageProps.title"
+              :sub_title="pageProps.sub_title"
+              :description="pageProps.description"
+            />
+          </div>
         </div>
       </div>
+      <TextSwipersBlockSwiper
+        v-if="pageProps.slider_variation_type === 'slider_blocks'"
+        :pageProps="pageProps"
+      />
+      <TextSwipersParagraphsSwiper
+        v-if="pageProps.slider_variation_type === 'slider_photos' && pageProps.variation === 'paragraphs'"
+        :pageProps="pageProps"
+      />
+      <TextSwipersIconsSwiper
+        v-if="pageProps.slider_variation_type === 'slider_photos' && pageProps.variation === 'inp'"
+        :pageProps="pageProps"
+      />
+      <!-- {{> article tags=false swiper=true navigationMod='slider-navigation--dark' mod='article__text-column--grey' articleCategory='Преимущества' titleBottomed=true articleHeader=true articleImg='img/auvix-article.jpg' articleText='Современный, интуитивно понятный интерфейс' articleTitle='Интерфейс' }} -->
     </div>
-    <TextSwipersBlockSwiper
-      v-if="pageProps.slider_variation_type === 'slider_blocks'"
-      :pageProps="pageProps"
-    />
-    <TextSwipersParagraphsSwiper
-      v-if="pageProps.slider_variation_type === 'slider_photos' && pageProps.variation === 'paragraphs'"
-      :pageProps="pageProps"
-    />
-    <!-- {{> article tags=false swiper=true navigationMod='slider-navigation--dark' mod='article__text-column--grey' articleCategory='Преимущества' titleBottomed=true articleHeader=true articleImg='img/auvix-article.jpg' articleText='Современный, интуитивно понятный интерфейс' articleTitle='Интерфейс' }} -->
-
   </section>
 </template>
 

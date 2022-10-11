@@ -140,10 +140,11 @@ export default {
   &__text-column {
     display: flex;
     flex-direction: column;
-    width: 43%;
+    width: 50%;
     padding: 5.2rem;
     border-radius: 0 2rem 2rem 0;
     background: var(--extra-light-gray);
+    box-sizing: border-box;
 
     @media (max-width: 1599px) {
       padding: 2rem;

@@ -1,43 +1,49 @@
 <template>
   <section class="partners-single__features">
-    <div v-if="pageProps.variation !== 'icons'">
-      <div class="partners-single__features-header">
-        <SectionLead
-          :title="pageProps.title"
-          :sub_title="pageProps.sub_title"
-          :description="pageProps.description"
-        />
-      </div>
-      <div
-        v-if="pageProps.paragraphs"
-        class="services-single__warranty-wrapper"
-      >
-        <ul class="services-single__warranty-list">
-          <li
-            v-for="item of pageProps.paragraphs"
-            :key="item.id"
-            class="services-single__warranty-item"
-          >
-            <h3 class="services-single__warranty-title">{{item.title}}</h3>
-            <p class="services-single__warranty-text">{{item.description}}</p>
-          </li>
-        </ul>
-      </div>
-      <ol class="digits-row">
-        <li
-          v-for="item of pageProps.steps"
-          :key="item.id"
-          class="digits-row__item"
-          :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
+    <div class="container">
+      <div v-if="pageProps.variation === 'in-four-col'">
+        <div class="partners-single__features-header">
+          <SectionLead
+            :title="pageProps.title"
+            :sub_title="pageProps.sub_title"
+            :description="pageProps.description"
+          />
+        </div>
+        <div
+          v-if="pageProps.paragraphs"
+          class="services-single__warranty-wrapper"
         >
-          <p class="digits-row__text">{{item.description}}</p>
-        </li>
-      </ol>
+          <ul class="services-single__warranty-list">
+            <li
+              v-for="item of pageProps.paragraphs"
+              :key="item.id"
+              class="services-single__warranty-item"
+            >
+              <h3 class="services-single__warranty-title">{{item.title}}</h3>
+              <p class="services-single__warranty-text">{{item.description}}</p>
+            </li>
+          </ul>
+        </div>
+        <ol class="digits-row">
+          <li
+            v-for="item of pageProps.steps"
+            :key="item.id"
+            class="digits-row__item"
+            :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
+          >
+            <p class="digits-row__text">{{item.description}}</p>
+          </li>
+        </ol>
+      </div>
+      <TextBlocksWithStepsAndIcons
+        v-if="pageProps.variation === 'icons'"
+        :pageProps="pageProps"
+      />
+      <TextBlocksWithStepsTiles
+        v-if="pageProps.variation === 'tiles'"
+        :pageProps="pageProps"
+      />
     </div>
-    <TextBlocksWithStepsAndIcons
-      v-if="pageProps.variation === 'icons'"
-      :pageProps="pageProps"
-    />
   </section>
 
 </template>
@@ -95,73 +101,6 @@ export default {
   }
 }
 
-.section-lead {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3.6rem 0.4rem;
-
-  @media (max-width: 1023px) {
-    grid-template-columns: 1fr;
-  }
-
-  @media (max-width: 767px) {
-    gap: 2.4rem;
-  }
-
-  &__title {
-    margin: 0;
-  }
-
-  &__column {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-
-    @media (max-width: 1199px) {
-      gap: 3.2rem;
-    }
-
-    @media (max-width: 1023px) {
-      gap: 2.8rem;
-    }
-
-    @media (max-width: 767px) {
-      gap: 2rem;
-    }
-
-    p {
-      font-size: 2rem;
-      line-height: 1.4;
-      color: var(--easy-dark);
-
-      @media (max-width: 1199px) {
-        font-size: 1.8rem;
-        line-height: 1.3;
-      }
-
-      @media (max-width: 767px) {
-        font-size: 1.6rem;
-        line-height: 1.25;
-      }
-    }
-  }
-
-  &__subtitle {
-    font-weight: 400;
-    font-size: 2.8rem;
-    line-height: 1.3;
-
-    @media (max-width: 1199px) {
-      font-size: 2.4rem;
-      line-height: 1.2;
-    }
-
-    @media (max-width: 767px) {
-      font-size: 2rem;
-    }
-  }
-}
-
 .digits-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -182,7 +121,7 @@ export default {
   &__item {
     display: flex;
     gap: 2.4rem;
-    padding: 1.6rem 1rem 7.4rem 4rem;
+    padding: 1.6rem 1rem 6.5rem 4rem;
 
     background-position: 0 0;
     background-size: contain;
@@ -190,7 +129,7 @@ export default {
 
     @media (max-width: 1599px) {
       gap: 1.6rem;
-      padding: 1.6rem 1rem 7.2rem 2.4rem;
+      padding: 1.6rem 1rem 5.5rem 2.4rem;
     }
 
     @media (max-width: 1199px) {
@@ -199,7 +138,7 @@ export default {
     }
 
     @media (max-width: 1023px) {
-      padding: 1.6rem 1rem 7.4rem 1.6rem;
+      padding: 1.6rem 1rem 5rem 1.6rem;
     }
 
     @media (max-width: 767px) {
@@ -268,18 +207,15 @@ export default {
   grid-column: 2 / -1;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2.8rem 0.4rem;
-
-  @media (max-width: 1599px) {
-  }
+  gap: 2.8rem 1.5rem;
 
   @media (max-width: 1199px) {
-    gap: 2.4rem 0.4rem;
+    gap: 2.4rem 1.5rem;
   }
 
   @media (max-width: 1023px) {
     grid-column: 1 / -1;
-    gap: 2rem 0.4rem;
+    gap: 2rem 1.5rem;
   }
 
   @media (max-width: 767px) {

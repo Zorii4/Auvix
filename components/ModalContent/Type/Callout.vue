@@ -1,5 +1,5 @@
   <template>
-  <div>
+  <section class="callout-section">
     <div
       v-if="pageProps.callout_background === 'off'"
       class="articles-single__emphasis"
@@ -18,7 +18,7 @@
         <p>{{pageProps.textarea_description}}</p>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -31,6 +31,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.callout-section {
+  margin-bottom: 5rem;
+}
+
 .articles-single {
   margin-bottom: 4rem;
   &__emphasis {

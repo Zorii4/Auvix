@@ -24,7 +24,6 @@
                 fill="#202226"
               />
             </svg>
-
           </button>
           <button
             class="slider-button slider-button--next"

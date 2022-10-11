@@ -47,6 +47,7 @@ export default {
   border-radius: 2rem;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center center;
   height: 480px;
   box-sizing: border-box;
 
@@ -95,7 +96,6 @@ export default {
   margin: 0 0 5.2rem;
   font-size: 1.8rem;
   line-height: 1.3;
-  color: var(--jack-grey);
   padding: 5px 25px;
   background-color: #fff;
   border-radius: 16px;
@@ -115,6 +115,7 @@ export default {
 
   @media (max-width: 767px) {
     margin-bottom: 1.6rem;
+    padding: 3px 12px;
     font-size: 1.4rem;
   }
 }

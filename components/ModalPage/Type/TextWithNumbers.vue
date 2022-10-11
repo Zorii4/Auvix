@@ -1,13 +1,15 @@
 <template>
   <section>
-    <TextBlocksWithOneNumber
-      v-if="pageProps.variation === 'one_number'"
-      :pageProps="pageProps"
-    />
-    <TextBlocksWithTwoNumber
-      v-if="pageProps.variation === 'two_numbers'"
-      :pageProps="pageProps"
-    />
+    <div class="container">
+      <TextBlocksWithOneNumber
+        v-if="pageProps.variation === 'one_number'"
+        :pageProps="pageProps"
+      />
+      <TextBlocksWithTwoNumber
+        v-if="pageProps.variation === 'two_numbers'"
+        :pageProps="pageProps"
+      />
+    </div>
   </section>
 </template>
 

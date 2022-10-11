@@ -11,7 +11,10 @@
           <div class="digits__item-content">
             <span class="digits__text">{{item.description}}</span>
           </div>
-
+          <svg
+            :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
+            class="digits__icon"
+          ></svg>
           <!-- <svg class="digits__icon">
             <use xlink:href="#{{svg1}}"></use>
         </svg> 
@@ -37,6 +40,7 @@ export default {
 .stocks-single {
   &__event-schedule {
     margin-top: 6rem;
+    margin-bottom: 5rem;
 
     @media (max-width: 1599px) {
       margin-top: 5.6rem;
@@ -177,6 +181,8 @@ export default {
     left: 0;
     top: 0;
     z-index: -1;
+    background-repeat: no-repeat;
+    background-size: contain;
 
     @media (max-width: 767px) {
       display: none;

@@ -2,7 +2,7 @@
   <ul class="news">
     <li
       class="news__item-wrapper"
-      v-for="news of newsData?.data.slice(0, pageProps.limit)"
+      v-for="news of newsData?.data?.slice(0, pageProps?.limit)"
       :key="news.id"
     >
       <router-link

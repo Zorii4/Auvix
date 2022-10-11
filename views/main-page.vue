@@ -8,7 +8,6 @@
     <ModalPage
       v-if="pageBlocksData"
       :pageBlocksData="pageBlocksData"
-      class="container"
     />
   </div>
 </template>
