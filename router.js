@@ -13,7 +13,6 @@ export function createRouter() {
     mode: 'history',
     routes: [
       {
-<<<<<<< HEAD
         path: '/catalog/brands',
         name: 'AllBrands',
         component: AllBrands,
@@ -24,8 +23,6 @@ export function createRouter() {
         component: BrandItem,
       },
       {
-=======
->>>>>>> master
         path: '/news/:code',
         name: 'NewsPage',
         component: NewsPage,
@@ -36,8 +33,6 @@ export function createRouter() {
         component: MainPage,
       },
     ],
-<<<<<<< HEAD
-=======
     scrollBehavior(_to, _from, savedPosition) {
       return new Promise((resolve) => {
         if (savedPosition) {
@@ -49,6 +44,5 @@ export function createRouter() {
         }
       })
     },
->>>>>>> master
   })
 }
