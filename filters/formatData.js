@@ -11,6 +11,12 @@ Vue.filter('formatData', function (date, formatType) {
     case 'toFormat':
       return DateTime.fromISO(new Date(date).toISOString()).setLocale('ru').toFormat('dd MMMM, EEEE')
 
+    case 'toHour':
+      return DateTime.fromISO(new Date(date).toISOString()).setLocale('ru').toLocaleString(DateTime.TIME_24_SIMPLE)
+
+    case 'toYear':
+      return DateTime.fromISO(new Date(date).toISOString()).setLocale('ru').toFormat('yyyy')
+
     default: return false
   }
 })

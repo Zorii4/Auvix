@@ -17,16 +17,17 @@
         <p class="features-section__item-text">{{item.description}}</p>
       </li>
     </ul>
-    <div
-      v-for="item of pageProps.image_cards"
-      :key="item.id"
-      class="features-section__img"
-    >
-      <img
-        v-if="pageProps.image_cards.length === 1"
-        :src="$config.baseURLImg + item.image_url"
-        alt="Персонал"
+    <div v-if="pageProps.image_cards.length === 1">
+      <div
+        v-for="item of pageProps.image_cards"
+        :key="item.id"
+        class="features-section__img"
       >
+        <img
+          :src="$config.baseURLImg + item.image_url"
+          alt="Персонал"
+        >
+      </div>
     </div>
     <swiper
       v-if="pageProps.image_cards.length > 1"
