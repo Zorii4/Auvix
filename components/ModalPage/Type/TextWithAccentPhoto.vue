@@ -26,6 +26,17 @@
           <div class="article__img-column">
             <div class="article__img-wrapper">
               <img :src="$config.baseURLImg + pageProps.image_url">
+              <div
+                class="article__logo"
+                v-if="pageProps.logo_url"
+              >
+                <div class="article__image-wrapper">
+                  <img
+                    :src="$config.baseURLImg + pageProps.logo_url"
+                    :alt="pageProps.image_alt"
+                  >
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -191,6 +202,27 @@ export default {
       @media (max-width: 767px) {
         align-self: stretch;
       }
+    }
+  }
+  &__logo {
+    position: absolute;
+    top: 5rem;
+    right: 5rem;
+    width: 15rem;
+    height: 9rem;
+    padding: 2.8rem 2rem;
+    border-radius: 2rem;
+    background-color: #fcfeff;
+  }
+  &__image-wrapper {
+    width: 100%;
+    height: 100%;
+    img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
     }
   }
 }

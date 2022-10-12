@@ -18,57 +18,83 @@
       <div class="container">
         <div class="partners__filter-inner">
           <div class="partners__filter-tabs">
-            <button class="partners__filter-tab">Все</button>
             <button
-              class="partners__filter-tab"
-              data-href="tab-content-2"
-            >A-Z</button>
-            <button
+              @click="resetWords"
+              :class="{'active' : pickedWords.length === 0}"
+              class="partners__filter-label"
+            >Все</button>
+            <label
+              v-for="word of alphabet"
+              :key="word"
+              class="partners__filter-label"
+              :class="{'active' : pickedWords.includes(word)}"
+            >
+              <span>{{ word }}</span>
+              <input
+                type="checkbox"
+                :value="word"
+                v-model="pickedWords"
+                class="partners__filter-tab"
+                data-href="tab-content-2"
+              />
+            </label>
+            <input
               class="partners__filter-tab"
               data-href="tab-content-1"
-            >А-Я</button>
-            <button class="partners__filter-tab">0-9</button>
+            />
           </div>
-          <div class="partners__filter-content">
-            <div
-              id="tab-content-1"
-              class="partners__filter-row"
+
+          <div class="partners__filter-tabs">
+            <label
+              class="partners__filter-label"
+              v-for="word of rusAlphabet"
+              :key="word"
+              :class="{'active' : pickedWords.includes(word)}"
             >
-              <!-- {{#each filterTop }} -->
-              <!-- <button class="partners__filter-button">{{this}}</button> -->
-              <!-- {{/each}} -->
-            </div>
-            <div
-              id="tab-content-2"
-              class="partners__filter-row"
-            >
-              <!-- {{#each filterBottom }} -->
-              <!-- <button class="partners__filter-button">{{this}}</button> -->
-              <!-- {{/each}} -->
-            </div>
+              <span>{{ word }}</span>
+              <input
+                type="checkbox"
+                :value="word"
+                v-model="pickedWords"
+                class="partners__filter-tab"
+                data-href="tab-content-2"
+              />
+            </label>
+            <input
+              class="partners__filter-tab"
+              data-href="tab-content-1"
+            />
           </div>
         </div>
       </div>
     </div>
     <div class="container">
       <ul class="partners__list">
-        <li
-          v-for="brand in allBrands"
-          :key="brand.id"
-          class="partners__item"
-        >
-          <nuxt-link
-            class="partners__link"
-            :to="{name: 'BrandItem', params: {id: brand.id}}"
+        <template v-if="filteredBrands.length > 0">
+          <li
+            v-for="brand in filteredBrands"
+            :key="brand.id"
+            class="partners__item"
+            :title="brand.title"
           >
-            <div class="partners__img">
-              <img
-                :src="$config.baseURLImg + brand.img"
-                :alt="brand.title"
-              >
-            </div>
-          </nuxt-link>
-        </li>
+            <nuxt-link
+              class="partners__link"
+              :to="{name: 'BrandItem', params: {id: brand.id}}"
+            >
+              <div class="partners__img">
+                <img
+                  :src="$config.baseURLImg + brand.img"
+                  :alt="brand.title"
+                >
+              </div>
+            </nuxt-link>
+          </li>
+        </template>
+        <template v-if="filteredBrands.length === 0">
+          <div class="partners__empty">
+            Брендов не найдено
+          </div>
+        </template>
       </ul>
     </div>
   </section>
@@ -78,11 +104,76 @@
 import { fetchBrands } from '@/API-services/brandsService'
 
 export default {
-  name: 'AllBrands',
+  name: 'AllBrandsPage',
 
   data() {
     return {
       allBrands: [],
+      alphabet: [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+        '0-9',
+      ],
+      rusAlphabet: [
+        'А',
+        'Б',
+        'В',
+        'Г',
+        'Д',
+        'Е',
+        'Ё',
+        'Ж',
+        'З',
+        'И',
+        'Й',
+        'К',
+        'Л',
+        'М',
+        'Н',
+        'О',
+        'П',
+        'Р',
+        'С',
+        'Т',
+        'У',
+        'Ф',
+        'Х',
+        'Ц',
+        'Ч',
+        'Ш',
+        'Щ',
+        'Ъ',
+        'Ы',
+        'Ь',
+        'Э',
+        'Ю',
+        'Я',
+      ],
+      pickedWords: [],
     }
   },
 
@@ -99,6 +190,21 @@ export default {
   computed: {
     computedAllBrandsLength() {
       return this.allBrands.length
+    },
+
+    filteredBrands() {
+      if (this.pickedWords.length > 0) {
+        const pattern = `[${this.pickedWords.join('')}]`
+        const regExp = new RegExp(pattern, 'gi')
+        return this.allBrands.filter((el) => el.title.match(regExp))
+      }
+      return this.allBrands
+    },
+  },
+
+  methods: {
+    resetWords() {
+      this.pickedWords = []
     },
   },
 }
@@ -144,6 +250,10 @@ export default {
     margin: 0;
   }
 
+  &__empty {
+    font-size: 22px;
+  }
+
   &__count {
     font-size: 2rem;
     line-height: 1.2;
@@ -187,19 +297,28 @@ export default {
     }
   }
 
-  &__filter-content {
+  &__filter-tabs {
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    column-gap: 1rem;
+    &:first-child {
+      margin-bottom: 2rem;
+    }
   }
 
-  &__filter-tabs {
-    display: none;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-
-    @media (max-width: 767px) {
-      display: flex;
+  &__filter-label {
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 100%;
+    font-weight: 400;
+    border-radius: 4px;
+    padding: 4px 8px;
+    white-space: nowrap;
+    &.active {
+      background-color: #eff0f4;
+    }
+    input {
+      position: absolute;
+      visibility: hidden;
     }
   }
 
@@ -207,47 +326,13 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.4rem;
-    padding: 0 0.8rem;
-
     border-radius: 0.4rem;
-
     font-size: 1.4rem;
     line-height: 1.1;
-
     transition: 0.3s;
 
     &.active {
       background-color: var(--grey);
-    }
-  }
-
-  &__filter-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem 0.4rem;
-
-    @media (max-width: 767px) {
-      display: none;
-      margin-top: 2rem;
-    }
-
-    &:first-of-type {
-      .partners__filter-button:first-child {
-        @media (max-width: 767px) {
-          display: none;
-        }
-      }
-
-      .partners__filter-button:last-child {
-        @media (max-width: 767px) {
-          display: none;
-        }
-      }
-    }
-
-    &.active {
-      display: flex;
     }
   }
 
