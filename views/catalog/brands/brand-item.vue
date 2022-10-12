@@ -14,15 +14,8 @@
             :pageProps="brandTopBenefits"
           />
         </div>
-        <!-- {{> digits-row data=features }} -->
       </div>
     </section>
-    <!-- <section class="partners-single__categories">
-            <div class="container">
-                <h2 class="partners-single__categories-title section-title">Категории бренда</h2>
-                {{> categories-list data=categoriesData }}
-            </div>
-        </section> -->
   </div>
 </template>
 

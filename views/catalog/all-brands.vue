@@ -9,63 +9,10 @@
         >{{ computedAllBrandsLength }}</span>
       </div>
     </div>
-    <!-- <div class="partners__partner-poster">
-                <div class="wide-container">
-                    {{> partner-poster }}
-                </div>
-            </div> -->
+    <!-- TODO Добавить баннер для брендов -->
     <div class="partners__filter">
       <div class="container">
-        <div class="partners__filter-inner">
-          <div class="partners__filter-tabs">
-            <button
-              @click="resetWords"
-              :class="{'active' : pickedWords.length === 0}"
-              class="partners__filter-label"
-            >Все</button>
-            <label
-              v-for="word of alphabet"
-              :key="word"
-              class="partners__filter-label"
-              :class="{'active' : pickedWords.includes(word)}"
-            >
-              <span>{{ word }}</span>
-              <input
-                type="checkbox"
-                :value="word"
-                v-model="pickedWords"
-                class="partners__filter-tab"
-                data-href="tab-content-2"
-              />
-            </label>
-            <input
-              class="partners__filter-tab"
-              data-href="tab-content-1"
-            />
-          </div>
-
-          <div class="partners__filter-tabs">
-            <label
-              class="partners__filter-label"
-              v-for="word of rusAlphabet"
-              :key="word"
-              :class="{'active' : pickedWords.includes(word)}"
-            >
-              <span>{{ word }}</span>
-              <input
-                type="checkbox"
-                :value="word"
-                v-model="pickedWords"
-                class="partners__filter-tab"
-                data-href="tab-content-2"
-              />
-            </label>
-            <input
-              class="partners__filter-tab"
-              data-href="tab-content-1"
-            />
-          </div>
-        </div>
+        <FiltersWordsPicker v-model="pickedWords" />
       </div>
     </div>
     <div class="container">
@@ -109,70 +56,6 @@ export default {
   data() {
     return {
       allBrands: [],
-      alphabet: [
-        'A',
-        'B',
-        'C',
-        'D',
-        'E',
-        'F',
-        'G',
-        'H',
-        'I',
-        'J',
-        'K',
-        'L',
-        'M',
-        'N',
-        'O',
-        'P',
-        'Q',
-        'R',
-        'S',
-        'T',
-        'U',
-        'V',
-        'W',
-        'X',
-        'Y',
-        'Z',
-        '0-9',
-      ],
-      rusAlphabet: [
-        'А',
-        'Б',
-        'В',
-        'Г',
-        'Д',
-        'Е',
-        'Ё',
-        'Ж',
-        'З',
-        'И',
-        'Й',
-        'К',
-        'Л',
-        'М',
-        'Н',
-        'О',
-        'П',
-        'Р',
-        'С',
-        'Т',
-        'У',
-        'Ф',
-        'Х',
-        'Ц',
-        'Ч',
-        'Ш',
-        'Щ',
-        'Ъ',
-        'Ы',
-        'Ь',
-        'Э',
-        'Ю',
-        'Я',
-      ],
       pickedWords: [],
     }
   },
@@ -199,12 +82,6 @@ export default {
         return this.allBrands.filter((el) => el.title.match(regExp))
       }
       return this.allBrands
-    },
-  },
-
-  methods: {
-    resetWords() {
-      this.pickedWords = []
     },
   },
 }
