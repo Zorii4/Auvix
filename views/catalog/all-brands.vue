@@ -79,7 +79,7 @@
           >
             <nuxt-link
               class="partners__link"
-              :to="{name: 'BrandItem', params: {id: brand.id}}"
+              :to="{name: 'BrandItem', params: {slug: brand.slug}}"
             >
               <div class="partners__img">
                 <img

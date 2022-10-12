@@ -1,9 +1,28 @@
 <template>
-  <div>
-    <ModalPageTypeTextWithAccentPhoto
-      v-if="brandTopSliderData"
-      :pageProps="brandTopSliderData"
-    />
+  <div class="partners-single">
+    <section class="partners-single__lead">
+      <ModalPageTypeTextWithAccentPhoto
+        v-if="brandTopSliderData"
+        :pageProps="brandTopSliderData"
+      />
+    </section>
+    <section class="partners-single__features">
+      <div class="container">
+        <div class="partners-single__features-header">
+          <ModalPageTypeTextWithSteps
+            v-if="brandTopBenefits"
+            :pageProps="brandTopBenefits"
+          />
+        </div>
+        <!-- {{> digits-row data=features }} -->
+      </div>
+    </section>
+    <!-- <section class="partners-single__categories">
+            <div class="container">
+                <h2 class="partners-single__categories-title section-title">Категории бренда</h2>
+                {{> categories-list data=categoriesData }}
+            </div>
+        </section> -->
   </div>
 </template>
 
@@ -12,9 +31,9 @@ import { fetchBrandById } from '@/API-services/brandsService'
 export default {
   name: 'DetailBrandPage',
   async fetch() {
-    const id = this.$route.params.id
-    if (id) {
-      const [err, brand] = await fetchBrandById(id)
+    const slug = this.$route.params.slug
+    if (slug) {
+      const [err, brand] = await fetchBrandById(slug)
       if (brand) {
         this.currentBrand = brand
         return brand
@@ -54,9 +73,107 @@ export default {
       }
       return null
     },
+    brandTopBenefits() {
+      if (this.currentBrand) {
+        return {
+          variation: 'in-four-col',
+          id: this.currentBrand.id || null,
+          title: this.currentBrand.header_2 || null,
+          sub_title: this.currentBrand.text_2 || null,
+          description: this.currentBrand.description || null,
+          paragraphs: [],
+          steps: this.benefitSteps,
+        }
+      }
+      return null
+    },
+    benefitSteps() {
+      if (this.currentBrand) {
+        const values = Object.keys(this.currentBrand).filter((el) =>
+          el.match(/value_\d/gi)
+        )
+        return values.map((el) => ({
+          description: this.currentBrand[el],
+        }))
+      }
+      return null
+    },
   },
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.partners-single {
+  &__lead {
+    padding-bottom: 6rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 4rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 3.2rem;
+    }
+  }
+
+  &__features {
+    padding-bottom: 6rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 4rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 3.2rem;
+    }
+  }
+
+  &__categories {
+    padding-bottom: 6rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 4rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 3.2rem;
+    }
+
+    .categories-list__item {
+      @media (max-width: 767px) {
+        min-height: 6rem;
+      }
+    }
+
+    .categories-list__header {
+      @media (max-width: 767px) {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
 </style>
