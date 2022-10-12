@@ -11,15 +11,26 @@ export function createRouter() {
     mode: 'history',
     routes: [
       {
-        path:'/news/:code',
-        name:'NewsPage',
-        component: NewsPage
+        path: '/news/:code',
+        name: 'NewsPage',
+        component: NewsPage,
       },
       {
         path: '/(.*)',
         name: 'MainPage',
-        component: MainPage
-      }
-    ]
+        component: MainPage,
+      },
+    ],
+    scrollBehavior(_to, _from, savedPosition) {
+      return new Promise((resolve) => {
+        if (savedPosition) {
+          setTimeout(() => {
+            resolve(savedPosition)
+          }, 400)
+        } else {
+          resolve({ x: 0, y: 0 })
+        }
+      })
+    },
   })
 }
