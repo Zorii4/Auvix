@@ -12,6 +12,7 @@ module.exports = {
   plugins: [],
 
   rules: {
-    'vue/multi-word-component-names': ['error', 'never'],
+    'vue/multi-word-component-names': 'off',
+    'vue/attribute-hyphenation': ['error', 'never'],
   },
 }
