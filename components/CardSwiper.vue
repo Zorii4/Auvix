@@ -131,7 +131,6 @@ export default {
   margin-bottom: 30px;
 
   &__item-wrapper {
-    width: 36.7rem;
     border-radius: 1.6rem;
 
     @media (max-width: 1599px) {
@@ -160,6 +159,7 @@ export default {
     padding: 4rem 2.8rem 2.8rem;
     border-radius: 1.6rem;
     overflow: hidden;
+    box-sizing: border-box;
 
     @media (max-width: 1599px) {
       min-height: 40.8rem;

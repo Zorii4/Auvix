@@ -9,12 +9,12 @@
             </h2>
           </div>
         </div>
-        <ModalPageNewsSmallNews
+        <NewsBlocksSmallNews
           v-if="pageProps.size === 'small'"
           :newsData="newsData"
         />
 
-        <ModalPageNewsLargeNews
+        <NewsBlocksLargeNews
           v-if="pageProps.size === 'large'"
           :newsData="newsData"
           :pageProps="pageProps"
@@ -28,7 +28,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'ModalPageNews',
+  name: 'News',
   props: {
     pageProps: Object,
   },

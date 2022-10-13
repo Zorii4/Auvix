@@ -30,7 +30,9 @@ module.exports = {
         'Photos',
         'Awards',
         'Events',
-        'Places'
+        'Places',
+        'Articles',
+        'Tags'
       ]
     }]
   },
