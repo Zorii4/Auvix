@@ -34,8 +34,9 @@ export default {
 
   data: () => ({
     swiperOptions: {
-      slidesPerView: 6,
-      spaceBetween: 10,
+      slidesPerView: 'auto',
+      spaceBetween: 30,
+      freeMode: true,
       speed: 600,
     },
   }),
@@ -61,6 +62,9 @@ export default {
     right: 0;
     top: 100%;
     z-index: 99;
+  }
+  .swiper-slide {
+    width: auto;
   }
 }
 

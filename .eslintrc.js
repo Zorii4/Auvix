@@ -10,8 +10,9 @@ module.exports = {
   },
   extends: ['@nuxtjs', 'plugin:nuxt/recommended', 'prettier'],
   plugins: [],
-  // add your custom rules here
+
   rules: {
+<<<<<<< HEAD
     "vue/multi-word-component-names": ["error", {
       "ignores": [
         'News', 
@@ -35,5 +36,9 @@ module.exports = {
         'Tags'
       ]
     }]
+=======
+    'vue/multi-word-component-names': 'off',
+    'vue/attribute-hyphenation': ['error', 'never'],
+>>>>>>> a75840d2e67651c411f478b564228ba8d2f39b44
   },
 }

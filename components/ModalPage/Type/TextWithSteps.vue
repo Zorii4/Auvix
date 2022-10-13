@@ -26,10 +26,10 @@
         </div>
         <ol class="digits-row">
           <li
-            v-for="item of pageProps.steps"
+            v-for="(item, idx) in pageProps.steps"
             :key="item.id"
             class="digits-row__item"
-            :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
+            :style="item.image_url ? {backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`} : {backgroundImage: `url(/images/steps-img/${idx + 1}.svg`}"
           >
             <p class="digits-row__text">{{item.description}}</p>
           </li>
