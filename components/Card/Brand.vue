@@ -28,7 +28,7 @@ export default {
       required: true,
     },
     logoImgAlt: {
-      type: String.apply,
+      type: String,
       default: '',
     },
   },
