@@ -2,10 +2,10 @@ import axios from 'axios'
 
 // TODO Переписать роуты в services на относительные пути
 
-export async function fetchBrands() {
+export async function fetchCategories() {
   try {
     const { data } = await axios.get(
-      'http://auvix-back.bikdev.ru/api/v1/catalog/brand'
+      'http://auvix-back.bikdev.ru/api/v1/catalog/category'
     )
     return [null, data.data]
   } catch (err) {
@@ -13,13 +13,12 @@ export async function fetchBrands() {
   }
 }
 
-export async function fetchBrandById(slug) {
+export async function fetchCategoryById(id) {
   try {
     const { data } = await axios.get(
-      'http://auvix-back.bikdev.ru/api/v1/catalog/brand'
+      `http://auvix-back.bikdev.ru/api/v1/catalog/category/${id}`
     )
-    const brand = data.data.find((el) => el.slug === slug)
-    return [null, brand]
+    return [null, data]
   } catch (err) {
     return [err, null]
   }
