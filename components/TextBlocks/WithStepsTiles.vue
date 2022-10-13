@@ -55,22 +55,10 @@ export default {
   }
 
   &__features-header {
-    margin-bottom: 6rem;
-
-    @media (max-width: 1599px) {
-      margin-bottom: 5.6rem;
-    }
-
-    @media (max-width: 1199px) {
-      margin-bottom: 5.2rem;
-    }
+    margin-bottom: 4rem;
 
     @media (max-width: 1023px) {
-      margin-bottom: 4rem;
-    }
-
-    @media (max-width: 767px) {
-      margin-bottom: 3.2rem;
+      margin-bottom: 0;
     }
   }
 }
@@ -109,12 +97,13 @@ export default {
 
     @media (max-width: 767px) {
       min-width: 400px;
+      height: 150px;
       margin: 0 auto;
     }
 
     @media (max-width: 450px) {
+      width: 100%;
       min-width: initial;
-      margin: 0 auto;
     }
 
     &::before {
@@ -148,6 +137,7 @@ export default {
     @media (max-width: 767px) {
       font-size: 1.6rem;
       line-height: 1.25;
+      margin-top: 5rem;
     }
   }
 }
@@ -161,5 +151,10 @@ export default {
   background-position: 0 0;
   background-size: contain;
   background-repeat: no-repeat;
+
+  @media (max-width: 767px) {
+    width: 80px;
+    height: 80px;
+  }
 }
 </style>

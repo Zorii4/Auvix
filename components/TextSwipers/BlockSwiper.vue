@@ -1,10 +1,40 @@
 <template>
   <div class="article">
+    <div
+      v-for="item of pageProps.image_cards"
+      :key="item.id"
+      class="article__container"
+    >
+      <div
+        v-if="pageProps.image_cards.length === 1"
+        :key="item.id"
+        class="article__inner"
+      >
+        <div class="article__text-column article__text-column--title-bottomed">
+          <div class="article__text-header">
+            <span class="article__category">{{item.tag}}</span>
+          </div>
+          <div class="article__text-content article__text-content--title-bottomed">
+            <h3 class="article__text-title">{{item.name}}</h3>
+            <p>{{item.description}}</p>
+          </div>
+        </div>
+        <div class="article__img-column">
+          <div class="article__img-wrapper">
+            <img
+              :src="$config.baseURLImg + item.image_url"
+              :alt="item.image_alt|| 'Фото'"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
     <swiper
+      v-if="pageProps.image_cards.length > 1"
       :options="swiperOptions"
       class="article__container"
     >
-
       <swiper-slide
         v-for="item of pageProps.image_cards"
         :key="item.id"
@@ -29,7 +59,10 @@
         </div>
       </swiper-slide>
     </swiper>
-    <div class="article__slider-navigation">
+    <div
+      v-if="pageProps.image_cards.length > 1"
+      class="article__slider-navigation"
+    >
       <div class="slider-navigation slider-navigation--dark">
         <button
           ref="sliderPrev"
