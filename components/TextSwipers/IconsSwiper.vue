@@ -143,8 +143,9 @@ export default {
   }
 
   @media (max-width: 1023px) {
-    grid-template-columns: 1fr;
-    align-items: stretch;
+    // grid-template-columns: 1fr;
+    // align-items: stretch;
+    display: block;
     padding-bottom: 4.8rem;
   }
 
@@ -164,6 +165,7 @@ export default {
 
     @media (max-width: 1023px) {
       gap: 2rem 0.4rem;
+      margin-bottom: 5rem;
     }
 
     @media (max-width: 767px) {

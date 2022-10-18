@@ -1,47 +1,46 @@
 <template>
-  <ul class="news">
-    <li
-      class="news__item-wrapper"
-      v-for="news of newsData?.data?.slice(0, pageProps?.limit)"
-      :key="news.id"
-    >
-      <router-link
-        class="news__item"
-        :to="`news/${news.code}`"
+  <section>
+    <ul class="news">
+      <li
+        class="news__item-wrapper"
+        v-for="news of newsData?.data?.slice(0, pageProps?.limit)"
+        :key="news.id"
       >
-        <div class="news__item-content">
-          <time class="news__item-time">{{news.last_published_at | formatData('fullData')}}</time>
-          <p>{{news.title}}</p>
-        </div>
-        <div
-          v-if="news.preview_image_url"
-          class="news__item-img"
+        <router-link
+          class="news__item"
+          :to="`news/${news.code}`"
         >
-          <img
-            :src="($config?.baseURLImg + news.preview_image_url) || '~/assets/img/default.png'"
-            alt="Фото новости"
+          <div class="news__item-content">
+            <time class="news__item-time">{{news.last_published_at | formatData('fullData')}}</time>
+            <p>{{news.title}}</p>
+          </div>
+          <div
+            v-if="news.preview_image_url"
+            class="news__item-img"
           >
-        </div>
-        <div
-          v-if="!news.preview_image_url"
-          class="news__item-img"
-        >
-          <img
-            src="~/assets/img/default.png"
-            alt="Фото новости"
+            <img
+              :src="($config?.baseURLImg + news.preview_image_url) || '~/assets/img/default.png'"
+              alt="Фото новости"
+            >
+          </div>
+          <div
+            v-if="!news.preview_image_url"
+            class="news__item-img"
           >
-        </div>
-      </router-link>
-      <!-- {{#if this.photoLink }}
-            <button
-              class="news__item-button"
-              data-fancybox
-              data-src="{{this.imageLarge}}"
-            ></button>
-            {{/if}}
-            -->
-    </li>
-  </ul>
+            <img
+              src="~/assets/img/default.png"
+              alt="Фото новости"
+            >
+          </div>
+        </router-link>
+      </li>
+    </ul>
+    <button
+      v-if="pageProps.show_more_button"
+      class="more-button"
+      @click="fetchMore"
+    >Показать еще <span>&nbsp; {{pageProps.limit}}</span></button>
+  </section>
 </template>
 
 <script>
@@ -397,6 +396,23 @@ export default {
         }
       }
     }
+  }
+}
+
+.more-button {
+  width: 100%;
+  justify-content: center;
+  padding: 1.6rem;
+  margin-top: 1.2rem;
+
+  border: 1px solid var(--border-grey);
+  border-radius: 1.2rem;
+
+  font-size: 1.8rem;
+  line-height: 1.3;
+
+  @media (max-width: 1023px) {
+    font-size: 1.6rem;
   }
 }
 </style>

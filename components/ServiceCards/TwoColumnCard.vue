@@ -3,7 +3,7 @@
     <ul class="services-list">
       <li
         class="services-list__item"
-        v-for="item of pageProps.service_items"
+        v-for="item of pageProps?.service_items.slice(0, counter)"
         :key="item.id"
         :style="{backgroundColor: `${item.background_color}`}"
       >
@@ -41,6 +41,11 @@
         >
       </li>
     </ul>
+    <button
+      v-if="pageProps.show_more_button && moreCounter"
+      @click="cardCounter"
+      class="more-button"
+    >Показать еще <span>&nbsp; {{moreButtonCounter}}</span></button>
   </div>
 
 </template>
@@ -50,6 +55,36 @@ export default {
   name: 'TwoColumnCard',
   props: {
     pageProps: Object,
+  },
+  data: () => ({
+    counter: 0,
+  }),
+
+  computed: {
+    moreButtonCounter() {
+      const res = this.pageProps.service_items.length - this.counter
+      return res < this.pageProps.number_cards_before_btn
+        ? res
+        : this.pageProps.number_cards_before_btn
+    },
+    moreCounter() {
+      return (
+        Math.ceil(
+          this.pageProps.service_items.length /
+            this.pageProps.number_cards_before_btn
+        ) >
+        this.counter / this.pageProps.number_cards_before_btn
+      )
+    },
+  },
+  mounted() {
+    this.counter = this.pageProps.number_cards_before_btn
+  },
+
+  methods: {
+    cardCounter() {
+      return (this.counter += this.pageProps.number_cards_before_btn)
+    },
   },
 }
 </script>
@@ -225,6 +260,23 @@ export default {
 
       bottom: 0;
     }
+  }
+}
+
+.more-button {
+  width: 100%;
+  justify-content: center;
+  padding: 1.6rem;
+  margin-top: 1.2rem;
+
+  border: 1px solid var(--border-grey);
+  border-radius: 1.2rem;
+
+  font-size: 1.8rem;
+  line-height: 1.3;
+
+  @media (max-width: 1023px) {
+    font-size: 1.6rem;
   }
 }
 </style>
