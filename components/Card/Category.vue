@@ -14,7 +14,7 @@
           </div>
 
           <h3 class="card-category__title">
-            <nuxt-link :to="{name: 'Catalog'}">{{category.name}}</nuxt-link>
+            <nuxt-link :to="{name: 'CatalogByCategory', params: {category: category.id}}">{{category.name}}</nuxt-link>
             <!-- <button class="card-category__button">
                       <svg>
                         <use xlink:href="#slider-arrow"></use>
@@ -32,7 +32,7 @@
               :key="subCategory.id"
               class="card-category__subcategory"
             >
-              <nuxt-link :to="{name: 'Catalog'}">{{ subCategory.name }}<span v-if="subCategory.count">{{ subCategory.count }}</span></nuxt-link>
+              <nuxt-link :to="{name: 'CatalogByCategory', params: {category: subCategory.id}}">{{ subCategory.name }}<span v-if="subCategory.count">{{ subCategory.count }}</span></nuxt-link>
             </li>
           </ul>
           <span
