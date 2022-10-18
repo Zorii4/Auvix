@@ -72,7 +72,7 @@ export default {
       if (this.pickedWords.length > 0) {
         const pattern = `[${this.pickedWords.join('')}]`
         const regExp = new RegExp(pattern, 'gi')
-        return this.allBrands.filter((el) => el.title.match(regExp))
+        return this.allBrands.filter((el) => el.title.charAt(0).match(regExp))
       }
       return this.allBrands
     },
