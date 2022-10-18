@@ -2,7 +2,7 @@
   <section class="dealer__auvix">
     <div class="wide-container">
       <div class="dealer__auvix-lead">
-        <div>
+        <div class="container">
           <div class="services-single__warranty-header">
             <SectionLead
               :title="pageProps.title"

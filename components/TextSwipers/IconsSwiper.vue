@@ -1,6 +1,6 @@
 <template>
   <div class="features-section">
-    <ul class="features-section__list">
+    <ul class="features-section__list container">
       <li
         v-for="item of pageProps.paragraphs"
         :key="item.id"
@@ -241,13 +241,12 @@ export default {
     }
 
     @media (max-width: 1023px) {
-      height: 33.6rem;
       border-radius: 1.6rem;
     }
 
     @media (max-width: 767px) {
-      height: 20rem;
       border-radius: 1.2rem;
+      object-position: center center;
     }
 
     img {
