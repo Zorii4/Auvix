@@ -210,7 +210,7 @@ export default {
     right: 5rem;
     width: 15rem;
     height: 9rem;
-    padding: 2.8rem 2rem;
+    padding: 1.8rem 1rem;
     border-radius: 2rem;
     background-color: #fcfeff;
   }
