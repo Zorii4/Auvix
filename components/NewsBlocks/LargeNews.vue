@@ -38,11 +38,10 @@
         </router-link>
       </li>
     </ul>
-    <button
+    <!-- <button
       v-if="pageProps.show_more_button"
       class="more-button"
-      @click="fetchMore"
-    >Показать еще <span>&nbsp; {{pageProps.limit}}</span></button>
+    >Показать еще <span>&nbsp; {{pageProps.limit}}</span></button> -->
   </section>
 </template>
 

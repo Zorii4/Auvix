@@ -2,10 +2,23 @@
   <div class="scope-single__post-img-slider">
     <div class="container">
       <div class="post-img-slider">
-        <div v-if="pageProps.image_cards">
-
+        <div
+          v-if="pageProps.image_cards.length === 1"
+          class="post-img-slider__container"
+        >
+          <div
+            v-for="item of pageProps.image_cards"
+            :key="item.id"
+            class="post-img-slider__slide"
+          >
+            <img
+              :src="$config?.baseURLImg + item.image_url"
+              alt="Фото"
+            >
+          </div>
         </div>
         <swiper
+          v-if="pageProps.image_cards.length > 1"
           :options="swiperOptions"
           class="post-img-slider__container"
         >
@@ -23,7 +36,10 @@
             </div>
           </swiper-slide>
         </swiper>
-        <div class="article__slider-navigation">
+        <div
+          v-if="pageProps.image_cards.length > 1"
+          class="article__slider-navigation"
+        >
           <div class="slider-navigation slider-navigation--dark">
             <button
               ref="sliderPrev"
