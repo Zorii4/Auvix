@@ -5,7 +5,10 @@
     </div>
     <div class="wide-container">
       <table class="contacts__requisites-table">
-        <tr class="contacts__requisites-row">
+        <tr
+          class="contacts__requisites-row"
+          :style="{'grid-template-columns': `repeat(${pageProps.table_data.cols.length}, 1fr)`}"
+        >
           <td
             v-for="col of pageProps.table_data.cols"
             :key="col.id"
@@ -15,6 +18,7 @@
           v-for="row of pageProps.table_data.rows"
           :key="row.id"
           class="contacts__requisites-row"
+          :style="{'grid-template-columns': `repeat(${pageProps.table_data.cols.length}, 1fr)`}"
         >
           <td
             v-for="el of row"
@@ -90,7 +94,7 @@ export default {
 
   &__requisites-row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    // grid-template-columns: repeat(2, 1fr);
     gap: 0.4rem;
     padding: 2.8rem 5.2rem;
 

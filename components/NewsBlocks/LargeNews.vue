@@ -1,6 +1,9 @@
 <template>
   <section>
-    <ul class="news">
+    <ul
+      class="news"
+      :class="{'large-reversed':pageProps.accent_news === 'right' }"
+    >
       <li
         class="news__item-wrapper"
         v-for="news of newsData?.data?.slice(0, pageProps?.limit)"
@@ -64,7 +67,7 @@ export default {
     flex-direction: column;
   }
 
-  &--large-reversed {
+  &.large-reversed {
     li:nth-child(-n + 3) {
       order: -2;
     }

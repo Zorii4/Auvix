@@ -1,5 +1,4 @@
 <template>
-
   <div class="narrow-container">
     <div class="text-container">
       <div

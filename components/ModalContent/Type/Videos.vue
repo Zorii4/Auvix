@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="narrow-container">
     <div
       v-for="video of pageProps.video_cards"
       :key="video.id"

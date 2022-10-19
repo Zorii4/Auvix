@@ -2,6 +2,9 @@
   <div class="scope-single__post-img-slider">
     <div class="container">
       <div class="post-img-slider">
+        <div v-if="pageProps.image_cards">
+
+        </div>
         <swiper
           :options="swiperOptions"
           class="post-img-slider__container"

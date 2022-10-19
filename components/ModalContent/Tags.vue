@@ -6,7 +6,7 @@
           <ul class="post-footer__tags">
             <li
               v-for="item of pageProps.tags"
-              :key=item.id
+              :key="item.id"
             >
               <a
                 class="post-footer__tag"
