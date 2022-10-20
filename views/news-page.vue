@@ -4,7 +4,6 @@
     <ModalContent
       v-if="newData"
       :pageData="newData"
-      class="container"
     />
   </div>
 

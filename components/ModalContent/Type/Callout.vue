@@ -1,21 +1,23 @@
   <template>
   <section class="callout-section">
-    <div
-      v-if="pageProps.callout_background === 'off'"
-      class="articles-single__emphasis"
-    >
-      <div class="emphasis">
-        <p>
-          {{pageProps.textarea_description}}
-        </p>
+    <div class="narrow-container">
+      <div
+        v-if="pageProps.callout_background === 'off'"
+        class="articles-single__emphasis"
+      >
+        <div class="emphasis">
+          <p>
+            {{pageProps.textarea_description}}
+          </p>
+        </div>
       </div>
-    </div>
-    <div
-      v-if="pageProps.callout_background === 'on'"
-      class="articles-single__notation"
-    >
-      <div class="notation">
-        <p>{{pageProps.textarea_description}}</p>
+      <div
+        v-if="pageProps.callout_background === 'on'"
+        class="articles-single__notation"
+      >
+        <div class="notation">
+          <p>{{pageProps.textarea_description}}</p>
+        </div>
       </div>
     </div>
   </section>

@@ -18,7 +18,7 @@ html {
     padding-top: var(--js-header-height);
 
     box-sizing: border-box;
-    font-size: 10px;
+    font-size: 10px !important;
     -webkit-text-size-adjust: 100%;
 
     @media (max-width: 767px) {

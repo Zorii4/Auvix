@@ -1,7 +1,6 @@
 <template>
   <div class="narrow-container">
     <div class="stocks-single__event-schedule">
-      <h3 class="stocks-single__event-schedule-title"></h3>
       <ol class="digits">
         <li
           v-for="item of pageProps.steps"
@@ -93,7 +92,6 @@ export default {
 
   &__item {
     position: relative;
-
     padding-left: 4rem;
     min-height: 14.6rem;
 
@@ -171,9 +169,11 @@ export default {
   }
 
   &__icon {
+    width: 21.7rem;
+    height: 20.5rem;
     position: absolute;
     left: 0;
-    top: 0;
+    top: -1.5rem;
     z-index: -1;
     background-repeat: no-repeat;
     background-size: contain;

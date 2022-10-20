@@ -4,7 +4,10 @@
       <div class="container">
         <div class="academy__news-header">
           <div class="section-header">
-            <h2 class="section-header__title section-title">
+            <h2
+              v-if="pageProps.use_title"
+              class="section-header__title section-title"
+            >
               {{pageProps.title}}
             </h2>
           </div>

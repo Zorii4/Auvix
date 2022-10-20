@@ -23,6 +23,13 @@
 import { fetchBrandById } from '@/API-services/brandsService'
 export default {
   name: 'DetailBrandPage',
+
+  data() {
+    return {
+      currentBrand: null,
+    }
+  },
+
   async fetch() {
     const slug = this.$route.params.slug
     if (slug) {
@@ -35,12 +42,6 @@ export default {
       console.error(err)
     }
     // TODO Сделать редирект на страницу ошибки, если нет id
-  },
-
-  data() {
-    return {
-      currentBrand: null,
-    }
   },
 
   computed: {
@@ -58,8 +59,9 @@ export default {
           button_title: null,
           button_link_url: null,
           image_url:
-            '/storage/2022/9/30/bXfksojw3Fm3fwK3BlJEi7SLE22kDf6EicGIWebQ.jpg' ||
-            null,
+            this.currentBrand.slider.length > 0
+              ? this.currentBrand.slider.map((el) => el.url)
+              : null,
           image_alt: this.currentBrand.title || null,
           logo_url: this.currentBrand.img || null,
         }

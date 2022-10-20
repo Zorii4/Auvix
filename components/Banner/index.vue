@@ -14,13 +14,13 @@
     </div>
 
     <div
-      class="banner-swiper-container"
       v-if="pageBanners.length > 1"
+      class="banner-swiper-container"
     >
       <swiper
+        ref="mySwiper"
         :options="swiperOptions"
         class="banner-swiper"
-        ref="mySwiper"
         @slide-change="onSwipe"
       >
         <swiper-slide
@@ -95,7 +95,10 @@ export default {
     SwiperSlide,
   },
   props: {
-    pageBanners: Array,
+    pageBanners: {
+      type: Array,
+      required: true,
+    },
   },
   data: () => ({
     bannerTypes: {
@@ -126,12 +129,6 @@ export default {
     currentSlide: null,
   }),
 
-  mounted() {
-    this.$nextTick(() => {
-      this.onSwipe()
-    })
-  },
-
   computed: {
     buttonColorCssVariable() {
       return this.pageBanners[this.currentSlide]?.slider_btn_color === 'black'
@@ -151,6 +148,12 @@ export default {
         (item) => item.type.code === 'mini_with_cover_image'
       )[this.currentSlide]
     },
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.onSwipe()
+    })
   },
 
   methods: {
