@@ -25,16 +25,71 @@
           </div>
           <div class="article__img-column">
             <div class="article__img-wrapper">
-              <img :src="$config.baseURLImg + pageProps.image_url">
               <div
-                class="article__logo"
                 v-if="pageProps.logo_url"
+                class="article__logo"
               >
-                <div class="article__image-wrapper">
-                  <img
-                    :src="$config.baseURLImg + pageProps.logo_url"
-                    :alt="pageProps.image_alt"
+                <img
+                  :src="$config.baseURLImg + pageProps.logo_url"
+                  :alt="pageProps.image_alt"
+                >
+              </div>
+              <div
+                v-if="pageProps.image_url && pageProps.image_url.length > 0"
+                class="article__image-wrapper"
+              >
+                <swiper
+                  :options="swiperOptions"
+                  class="card-swiper"
+                >
+                  <swiper-slide
+                    v-for="item of pageProps.image_url"
+                    :key="item.id"
+                    class="card-slide"
                   >
+                    <img
+                      :src="$config.baseURLImg + item"
+                      alt=""
+                    >
+                  </swiper-slide>
+                </swiper>
+                <div class="slider-navigation">
+                  <button
+                    ref="sliderPrev"
+                    class="slider-button slider-button--prev"
+                    title="Листнуть влево"
+                  >
+                    <svg
+                      width="9"
+                      height="14"
+                      viewBox="0 0 9 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6.11959e-07 7L9 14L9 0L6.11959e-07 7Z"
+                        fill="#ffffff"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    ref="sliderNext"
+                    class="slider-button slider-button--next"
+                    title="Листнуть вправо"
+                  >
+                    <svg
+                      width="9"
+                      height="14"
+                      viewBox="0 0 9 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 7L-1.22392e-06 14L0 0L9 7Z"
+                        fill="#ffffff"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
@@ -46,10 +101,34 @@
 </template>
 
 <script>
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'TextWithAccentPhoto',
+
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+
   props: {
-    pageProps: Object,
+    pageProps: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      swiperOptions: {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        speed: 600,
+        navigation: {
+          nextEl: '.slider-button--next',
+          prevEl: '.slider-button--prev',
+        },
+      },
+    }
   },
 }
 </script>
@@ -213,16 +292,93 @@ export default {
     padding: 1.8rem 1rem;
     border-radius: 2rem;
     background-color: #fcfeff;
+    z-index: 10;
+    img {
+      position: relative;
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
   }
   &__image-wrapper {
     width: 100%;
     height: 100%;
     img {
+      max-height: 480px;
       position: relative;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center center;
+    }
+  }
+  .card-slide {
+    max-height: 100%;
+  }
+}
+
+.slider-navigation {
+  background-color: #0f0f10;
+  border-radius: 6.6rem;
+  position: absolute;
+  bottom: 5.2rem;
+  right: 5.2rem;
+  display: flex;
+  width: 11.6rem;
+  height: 5.6rem;
+  z-index: 10;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    width: 0.2rem;
+    height: 2.6rem;
+    background-color: #fff;
+
+    @media (max-width: 1023px) {
+      height: 2.3rem;
+    }
+  }
+}
+.slider-button {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  border-radius: 0 6.6rem 6.6rem 0;
+  border-left: 0;
+  transition: 0.3s;
+  opacity: 0.8;
+
+  svg {
+    width: 0.9rem;
+    height: 1.4rem;
+    fill: #fff;
+
+    @media (max-width: 1023px) {
+      width: 0.8rem;
+      height: 1.2rem;
+    }
+  }
+
+  &--prev {
+    transform: rotate(180deg);
+
+    svg {
+      width: 0.9rem;
+      height: 1.4rem;
+      transform: rotate(180deg);
+
+      @media (max-width: 1023px) {
+        width: 0.8rem;
+        height: 1.2rem;
+      }
     }
   }
 }

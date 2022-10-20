@@ -38,7 +38,7 @@
           <span
             v-if="category.count"
             class="card-category__count"
-          ><span>{{ category.count }}</span> товаров</span>
+          >{{ category.count | numberWord(['товар', 'товара', 'товаров']) }}</span>
         </div>
       </div>
     </div>
