@@ -1,11 +1,7 @@
 <template>
   <div class="two-columns-grid">
     <div class="two-columns-grid__left">
-      <h2
-        v-if="pageProps.use_link"
-        class="two-columns-grid__title section-title"
-      ></h2> <!-- Ждём данных с бекенда -->
-
+      <h2 class="two-columns-grid__title section-title">{{pageProps.title}}</h2>
       <div
         v-if="pageProps.content_position === 'left'"
         class="two-columns-grid__digits"

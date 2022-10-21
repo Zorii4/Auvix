@@ -43,7 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 .dealer__section {
-  margin-bottom: 50px;
+  margin-bottom: 5rem;
 }
 
 .dealer {

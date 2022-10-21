@@ -1,6 +1,6 @@
 <template>
   <section class="career">
-    <div>
+    <div class="container">
       <div class="career__culture-wrapper">
         <ul class="career__culture-list">
           <li
@@ -12,7 +12,22 @@
             <p class="career__culture-item-text">{{item.description}}</p>
           </li>
         </ul>
-        <swiper :options="swiperOptions">
+        <div v-if="pageProps.image_cards.length === 1">
+          <div
+            v-for="item of pageProps.image_cards"
+            :key="item.id"
+            class="career__culture-img"
+          >
+            <img
+              :src="$config.baseURLImg + item.image_url"
+              alt='Фото'
+            >
+          </div>
+        </div>
+        <swiper
+          v-if="pageProps.image_cards.length > 1"
+          :options="swiperOptions"
+        >
           <swiper-slide
             v-for="elem of pageProps.image_cards"
             :key="elem.id"
@@ -24,7 +39,10 @@
             >
           </swiper-slide>
         </swiper>
-        <div class="career__culture-navigation">
+        <div
+          v-if="pageProps.image_cards.length > 1"
+          class="career__culture-navigation"
+        >
           <div class="slider-navigation slider-navigation--dark">
             <button
               ref="sliderPrevPh"
@@ -111,7 +129,6 @@ export default {
     align-items: flex-end;
     margin-bottom: 6rem;
     position: relative;
-    border-bottom: 1px solid var(--border-grey);
 
     @media (max-width: 1599px) {
       margin-bottom: 5.6rem;
