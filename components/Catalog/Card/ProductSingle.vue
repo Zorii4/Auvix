@@ -9,7 +9,10 @@
       <div class="single-product-card__text">
         <p>{{ text }}</p>
       </div>
-      <p class="single-product-card__availability"><span>{{ availability }}</span></p>
+      <p
+        v-if="availability"
+        class="single-product-card__availability"
+      ><span>{{ availability }}</span></p>
       <div class="single-product-card__price-block">
         <span class="single-product-card__price">
           <!-- <div class="single-product-card__price-discount">
@@ -17,8 +20,8 @@
             <span class="single-product-card__price-discount-size discount">-30%</span>
           </div> -->
           <div class="single-product-card__price-number">
-            <span>{{price}}</span>
-            <a
+            <span>{{ price | priceFilter }} {{ computedCurrency }}</span>
+            <!-- <a
               class="single-product-card__price-number-arrows"
               href="#currency"
             >
@@ -28,7 +31,7 @@
               <svg>
                 <use xlink:href="#slider-arrow"></use>
               </svg>
-            </a>
+            </a> -->
           </div>
           <span class="single-product-card__price-recommend">рекомендованная розничная цена</span>
         </span>
@@ -51,37 +54,13 @@
           <ul class="swiper-wrapper">
             <li class="swiper-slide swiper-slide--video">
               <img
-                src="img/product-1.png"
-                alt="Фото товара"
-              >
-            </li>
-            <li class="swiper-slide">
-              <img
-                src="img/product-2.png"
-                alt="Фото товара"
-              >
-            </li>
-            <li class="swiper-slide">
-              <img
-                src="img/product-3.png"
-                alt="Фото товара"
-              >
-            </li>
-            <li class="swiper-slide">
-              <img
-                src="img/product-3.png"
-                alt="Фото товара"
-              >
-            </li>
-            <li class="swiper-slide">
-              <img
-                src="img/product-3.png"
+                :src="productMainImageUrl"
                 alt="Фото товара"
               >
             </li>
           </ul>
         </div>
-        <div class="single-product-card__img-pagination swiper-pagination"></div>
+        <!-- <div class="single-product-card__img-pagination swiper-pagination"></div>
         <div class="single-product-card__gallery-container">
           <div class="single-product-card__gallery swiper-container">
             <ul class="single-product-card__gallery-list swiper-wrapper">
@@ -129,12 +108,12 @@
               </svg>
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
-    <div class="single-product-card__preview">
+    <!-- <div class="single-product-card__preview">
       <div class="single-product-card__preview-close">
-        <!-- {{> close-button }} -->
+        {{> close-button }}
       </div>
       <div class="single-product-card__preview-active-img swiper-container">
         <ul class="swiper-wrapper">
@@ -207,7 +186,7 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -235,6 +214,28 @@ export default {
     text: {
       type: String,
       required: true,
+    },
+    currecy: {
+      type: String,
+      required: true,
+    },
+    productMainImageUrl: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    computedCurrency() {
+      if (this.currency === 'Рубль') {
+        return '₽'
+      }
+      if (this.currency === 'USD') {
+        return '$'
+      }
+      if (this.currency === 'Евро') {
+        return '€'
+      }
+      return '₽'
     },
   },
 }

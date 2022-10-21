@@ -7,6 +7,8 @@
           :price='product.price_retail'
           :articleCode="product.vendor_code"
           :productName='product.name'
+          :currecy="product.currency_name"
+          :productMainImageUrl="product.image_main_url"
         />
       </div>
     </section>
