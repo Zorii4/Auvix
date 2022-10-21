@@ -104,7 +104,7 @@ export default {
       this.subCategoryId = subCategoryId
     }
     if (currentPage) {
-      this.currentPage = currentPage
+      this.currentPage = Number(currentPage)
     }
     const resProducts = await this.fetchProducts()
     return resProducts
