@@ -7,11 +7,11 @@
       <div class="container">
         <ul class="categories-list">
           <li
-            v-for="category in allCategories"
+            v-for="category in filteredCategories"
             :key="category.id"
             class="categories-list__item-wrapper"
           >
-            <CardCategory :category="category" />
+            <CatalogCardCategory :category="category" />
           </li>
         </ul>
       </div>
@@ -37,6 +37,12 @@ export default {
     }
     // TODO Обработка ошибки в случае если запрос вернул ошику
     console.error(err)
+  },
+
+  computed: {
+    filteredCategories() {
+      return this.allCategories.filter((el) => el.count > 0)
+    },
   },
 }
 </script>

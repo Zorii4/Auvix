@@ -28,11 +28,15 @@
             class="card-category__subcategories"
           >
             <li
-              v-for="subCategory in category.children"
+              v-for="subCategory in category.children.filter(el => el.count > 0)"
               :key="subCategory.id"
               class="card-category__subcategory"
             >
-              <nuxt-link :to="{name: 'CatalogByCategory', params: {category: subCategory.id}}">{{ subCategory.name }}<span v-if="subCategory.count">{{ subCategory.count }}</span></nuxt-link>
+            <nuxt-link 
+                :to="{name: 'CatalogByCategory',
+                      params: {category: subCategory.parent_id},
+                      query: {subCategory: subCategory.id}
+              }">{{ subCategory.name }} <span v-if="subCategory.count">{{ subCategory.count }}</span></nuxt-link>
             </li>
           </ul>
           <span

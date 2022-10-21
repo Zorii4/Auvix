@@ -12,7 +12,7 @@
     <!-- TODO Добавить баннер для брендов -->
     <div class="partners__filter">
       <div class="container">
-        <FiltersWordsPicker v-model="pickedWords" />
+        <CatalogFiltersWordsPicker v-model="pickedWords" />
       </div>
     </div>
     <div class="container">
@@ -23,7 +23,7 @@
             :key="brand.id"
             :title="brand.title"
           >
-            <CardBrand
+            <CatalogCardBrand
               :logoUrl="brand.img"
               :slug="brand.slug"
               :logoImgAlt="brand.title"

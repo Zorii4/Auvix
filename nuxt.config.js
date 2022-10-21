@@ -21,7 +21,15 @@ export default {
   css: ['~scss/styles.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/filters/formatData.js', '@/filters/numberWord.js'],
+  plugins: [
+    '@/filters/formatData.js',
+    '@/filters/numberWord.js',
+    '@/filters/numberParse.js',
+    {
+      src: '@/plugins/vuejs-paginate.js',
+      ssr: false,
+    },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

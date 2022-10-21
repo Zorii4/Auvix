@@ -18,7 +18,7 @@ export async function fetchCategoryById(id) {
     const { data } = await axios.get(
       `http://auvix-back.bikdev.ru/api/v1/catalog/category/${id}`
     )
-    return [null, data]
+    return [null, data.data]
   } catch (err) {
     return [err, null]
   }
