@@ -14,7 +14,7 @@
           </div>
 
           <h3 class="card-category__title">
-            <nuxt-link :to="{name: 'Catalog'}">{{category.name}}</nuxt-link>
+            <nuxt-link :to="{name: 'CatalogByCategory', params: {category: category.id}}">{{category.name}}</nuxt-link>
             <!-- <button class="card-category__button">
                       <svg>
                         <use xlink:href="#slider-arrow"></use>
@@ -28,17 +28,21 @@
             class="card-category__subcategories"
           >
             <li
-              v-for="subCategory in category.children"
+              v-for="subCategory in category.children.filter(el => el.count > 0)"
               :key="subCategory.id"
               class="card-category__subcategory"
             >
-              <nuxt-link :to="{name: 'Catalog'}">{{ subCategory.name }}<span v-if="subCategory.count">{{ subCategory.count }}</span></nuxt-link>
+            <nuxt-link 
+                :to="{name: 'CatalogByCategory',
+                      params: {category: subCategory.parent_id},
+                      query: {subCategory: subCategory.id}
+              }">{{ subCategory.name }} <span v-if="subCategory.count">{{ subCategory.count }}</span></nuxt-link>
             </li>
           </ul>
           <span
             v-if="category.count"
             class="card-category__count"
-          ><span>{{ category.count }}</span> товаров</span>
+          >{{ category.count | numberWord(['товар', 'товара', 'товаров']) }}</span>
         </div>
       </div>
     </div>
