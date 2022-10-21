@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="product">
     <section class="product__card">
       <div class="wide-container">
         <CatalogCardProductSingle
@@ -13,41 +13,45 @@
       </div>
     </section>
     <!-- <div class="product__tabs">
-            <div class="container">
-                {{> tabs tabId=true data=productTabs gap=40 gaps='1280:40,1024:28,280:20' }}
-            </div>
-        </div>
-        <div class="product__tabs-content">
-            <section class="product__description tabs-item-js" id="tab_1">
-                <div class="container">
-                    <div class="product-description">
-                        <div class="product-description__text-column">
-                            <div class="product-description__text">
-                                <p>
-                                    Проектор Projectiondesign F82 1080 подходит для использования в разных областях, в том
-                                    числе с большими экранами в обширных аудиториях и на сценах. Виртуозное управление
-                                    цветом обеспечивают технологии RealColor™ и улучшенная оптическая обработка цвета ACOP,
-                                    уникальный динамический диапазон для трехчипового проектора обеспечивает функция
-                                    DynamicBlack™. Проектор имеет разрешение 1080р. Проектор rojectiondesign F82 1080 готов
-                                    к работе в непрерывном режиме 24/7, что покрывается его гарантией.
-                                </p>
-                            </div>
-                            <button class="product-description__more-button">
+      <div class="container">
+        {{> tabs tabId=true data=productTabs gap=40 gaps='1280:40,1024:28,280:20' }}
+      </div>
+    </div> -->
+    <div class="product__tabs-content">
+      <section
+        id="tab_1"
+        class="product__description active"
+      >
+        <div class="container">
+          <div class="product-description">
+            <div class="product-description__text-column">
+              <div class="product-description__text">
+                <p>
+                  {{ product.name }}
+                </p>
+              </div>
+              <!-- <button class="product-description__more-button">
                                 Показать полное описание
                                 <svg>
                                     <use xlink:href="#slider-arrow"></use>
                                 </svg>
-                            </button>
-                        </div>
-                        <div class="product-description__img-column">
-                            <a class="product-description__img-block" href="#">
-                                <img src="img/product-description.svg" alt="Фото бренда">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="product__characteristic tabs-item-js" id="tab_2">
+                            </button> -->
+            </div>
+            <div class="product-description__img-column">
+              <nuxt-link
+                class="product-description__img-block"
+                :to="{name: 'BrandItem', params: {slug: product.brand.slug}}"
+              >
+                <img
+                  :src="$config.baseURLImg + product.brand.img"
+                  alt="Фото бренда"
+                >
+              </nuxt-link>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- <section class="product__characteristic tabs-item-js" id="tab_2">
                 <div class="container">
                     <div class="product-characteristic">
                         <div class="product-characteristic__row">
@@ -168,8 +172,8 @@
                         {{/each}}
                     </ul>
                 </div>
-            </section>
-        </div> -->
+            </section> -->
+    </div>
   </div>
 </template>
 
@@ -457,6 +461,119 @@ export default {
 
   &__visited {
     padding-bottom: 0.8rem;
+  }
+}
+.product-description {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3.2rem 0.4rem;
+
+  @media (max-width: 1023px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 767px) {
+    gap: 2.4rem;
+  }
+
+  &__text-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2.8rem;
+
+    @media (max-width: 1599px) {
+      gap: 2.4rem;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 85rem;
+
+    p {
+      font-size: 2rem;
+      line-height: 1.2;
+      color: var(--easy-dark);
+
+      @media (max-width: 1199px) {
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  &__more-button {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+
+    font-size: 1.8rem;
+    line-height: 1.3;
+    color: #3037eb;
+
+    transition: 0.3s;
+
+    &:hover {
+      color: #696fff;
+    }
+
+    @media (max-width: 767px) {
+      font-size: 1.6rem;
+      gap: 0.8rem;
+    }
+
+    svg {
+      width: 0.6rem;
+      height: 0.8rem;
+
+      transform: rotate(90deg);
+    }
+  }
+
+  &__img-column {
+    display: flex;
+  }
+
+  &__img-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24.3rem;
+    height: 14rem;
+    margin-left: auto;
+
+    border-radius: 2rem;
+    background: var(--grey);
+
+    transition: 0.3s;
+
+    &:hover {
+      background: var(--border-grey);
+      opacity: 1;
+    }
+
+    @media (max-width: 1199px) {
+      width: 21.6rem;
+      height: 12.4rem;
+    }
+
+    @media (max-width: 1023px) {
+      width: 19.6rem;
+      height: 11.2rem;
+    }
+
+    @media (max-width: 767px) {
+      width: 15.8rem;
+      height: 8.8rem;
+    }
+
+    img {
+      max-width: 80%;
+    }
   }
 }
 </style>

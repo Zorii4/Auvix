@@ -54,7 +54,7 @@
           <ul class="swiper-wrapper">
             <li class="swiper-slide swiper-slide--video">
               <img
-                :src="productMainImageUrl"
+                :src="productMainImageUrl || '/images/noimage.jpg'"
                 alt="Фото товара"
               >
             </li>
