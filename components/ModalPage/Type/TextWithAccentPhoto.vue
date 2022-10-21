@@ -35,7 +35,7 @@
                 >
               </div>
               <div
-                v-if="pageProps.image_url && pageProps.image_url.length > 0"
+                v-if="pageProps.image_url && Array.isArray(pageProps.image_url) && pageProps.image_url.length > 0"
                 class="article__image-wrapper"
               >
                 <swiper
@@ -91,6 +91,15 @@
                     </svg>
                   </button>
                 </div>
+              </div>
+              <div
+                v-else
+                class="article__image-wrapper"
+              >
+                <img
+                  :src="$config.baseURLImg + pageProps.image_url"
+                  alt=""
+                >
               </div>
             </div>
           </div>
