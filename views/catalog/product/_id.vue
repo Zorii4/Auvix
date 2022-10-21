@@ -1,6 +1,179 @@
 <template>
-  <div>
-    {{ product }}
+  <div v-if="product">
+    <section class="product__card">
+      <div class="wide-container">
+        <CatalogCardProductSingle
+          availability='в наличии на складе'
+          :price='product.price_retail'
+          :articleCode="product.vendor_code"
+          :productName='product.name'
+          :currecy="product.currency_name"
+          :productMainImageUrl="product.image_main_url"
+        />
+      </div>
+    </section>
+    <!-- <div class="product__tabs">
+      <div class="container">
+        {{> tabs tabId=true data=productTabs gap=40 gaps='1280:40,1024:28,280:20' }}
+      </div>
+    </div> -->
+    <div class="product__tabs-content">
+      <section
+        id="tab_1"
+        class="product__description active"
+      >
+        <div class="container">
+          <div class="product-description">
+            <div class="product-description__text-column">
+              <div class="product-description__text">
+                <p>
+                  {{ product.name }}
+                </p>
+              </div>
+              <!-- <button class="product-description__more-button">
+                                Показать полное описание
+                                <svg>
+                                    <use xlink:href="#slider-arrow"></use>
+                                </svg>
+                            </button> -->
+            </div>
+            <div class="product-description__img-column">
+              <nuxt-link
+                class="product-description__img-block"
+                :to="{name: 'BrandItem', params: {slug: product.brand.slug}}"
+              >
+                <img
+                  :src="$config.baseURLImg + product.brand.img"
+                  alt="Фото бренда"
+                >
+              </nuxt-link>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- <section class="product__characteristic tabs-item-js" id="tab_2">
+                <div class="container">
+                    <div class="product-characteristic">
+                        <div class="product-characteristic__row">
+                            <h3 class="product-characteristic__row-title">Основные</h3>
+                            <ul class="product-characteristic__properties">
+                                {{#each mainProperty }}
+                                    <li class="product-characteristic__property-wrapper">
+                                        <div class="product-characteristic__property">
+                                            <span class="product-characteristic__property-name">{{this.name}}</span>
+                                            <span class="product-characteristic__property-value">{{this.value}}</span>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="product-characteristic__row">
+                            <h3 class="product-characteristic__row-title">Экран и яркость</h3>
+                            <ul class="product-characteristic__properties">
+                                {{#each displayProperty }}
+                                    <li class="product-characteristic__property-wrapper">
+                                        <div class="product-characteristic__property">
+                                            <span class="product-characteristic__property-name">{{this.name}}</span>
+                                            <span class="product-characteristic__property-value">{{this.value}}</span>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="product-characteristic__row">
+                            <h3 class="product-characteristic__row-title">Лампа</h3>
+                            <ul class="product-characteristic__properties">
+                                {{#each lampProperty }}
+                                    <li class="product-characteristic__property-wrapper">
+                                        <div class="product-characteristic__property">
+                                            <span class="product-characteristic__property-name">{{this.name}}</span>
+                                            <span class="product-characteristic__property-value">{{this.value}}</span>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="product__options active tabs-item-js" id="tab_3">
+                <div class="container">
+                    <div class="product-options">
+                        <h3 class="product-options__title">Сменные входные модули</h3>
+                        <ul class="product-options__list">
+                            {{#each inputModules }}
+                                <li>
+                                    <div class="product-options__item">
+                                        <div class="product-options__item-img">
+                                            <img src="{{this.img}}" alt="Фото товара">
+                                        </div>
+                                        <div class="product-options__item-content">
+                                            <div class="product-options__item-content-block">
+                                                <h4 class="product-options__item-title">{{this.title}}</h4>
+                                                <div class="product-options__item-price">
+                                                    <span class="product-options__item-price-number">{{this.price}}</span>
+                                                    <span class="product-options__item-price-recommend">рекомендованная розничная цена</span>
+                                                </div>
+                                            </div>
+                                            <button class="product-options__item-button button button--white">Запросить диллерскую цену</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        </ul>
+                        <h3 class="product-options__title">Модули-вставки</h3>
+                        <ul class="product-options__list">
+                            {{#each insertionModules }}
+                                <li>
+                                    <div class="product-options__item">
+                                        <div class="product-options__item-img">
+                                            <img src="{{this.img}}" alt="Фото товара">
+                                        </div>
+                                        <div class="product-options__item-content">
+                                            <div class="product-options__item-content-block">
+                                                <h4 class="product-options__item-title">{{this.title}}</h4>
+                                                <div class="product-options__item-price">
+                                                    <span class="product-options__item-price-number">{{this.price}}</span>
+                                                    <span class="product-options__item-price-recommend">рекомендованная розничная цена</span>
+                                                </div>
+                                            </div>
+                                            <button class="product-options__item-button button button--white">Запросить диллерскую цену</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section class="product__review tabs-item-js" id="tab_4">
+                <div class="container">
+                    {{> articles mod='articles--light' data=articles }}
+                </div>
+            </section>
+            <section class="product__documentation tabs-item-js" id="tab_5">
+                <div class="container">
+                    <ul class="product-documentation">
+                        {{#each documentation }}
+                            <li>
+                                <div class="product-documentation__item">
+                                    <div class="product-documentation__item-header">
+                                        <span class="product-documentation__item-format">{{format}}</span>
+                                        <span class="product-documentation__item-weight">{{weight}}</span>
+                                    </div>
+                                    <h3 class="product-documentation__item-title">{{this.title}}</h3>
+                                    <button class="product-documentation__item-button">
+                                        <svg>
+                                            <use xlink:href="#download-arrow"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </section> -->
+    </div>
   </div>
 </template>
 
@@ -29,4 +202,378 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.product {
+  &__card {
+    padding: 0.4rem 0 0;
+  }
+
+  &__tabs {
+    border-bottom: 1px solid var(--border-grey);
+  }
+
+  &__tabs-content section {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+
+    width: 100%;
+
+    transition: 0.2s;
+
+    &.active {
+      position: static;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__description {
+    padding: 5.2rem 0 6rem;
+
+    @media (max-width: 1599px) {
+      padding: 4.8rem 0 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding: 4rem 0 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding: 3.6rem 0 5.2rem;
+    }
+
+    @media (max-width: 767px) {
+      padding: 3.2rem 0 4rem;
+    }
+  }
+
+  &__accessories {
+    padding-bottom: 6rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 4.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 4rem;
+    }
+  }
+
+  &__accessories-header {
+    padding-bottom: 4rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 3.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 3.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 2.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 2rem;
+    }
+
+    h2 {
+      max-width: 36.7rem;
+    }
+  }
+
+  &__application {
+    padding-bottom: 6rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 4.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 4rem;
+    }
+
+    .article__text-content {
+      max-width: 64.5rem;
+
+      p {
+        max-width: 57.5rem;
+      }
+    }
+  }
+
+  &__application-header {
+    padding-bottom: 4rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 3.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      display: none;
+    }
+
+    h2 {
+      max-width: 36.7rem;
+    }
+  }
+
+  &__analog {
+    padding-bottom: 6rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 4.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 4rem;
+    }
+  }
+
+  &__analog-header {
+    padding-bottom: 4rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 3.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 3.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 2.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 2rem;
+    }
+
+    h2 {
+      max-width: 36.7rem;
+    }
+  }
+
+  &__characteristic {
+    padding-bottom: 6rem;
+
+    @media (max-width: 1599px) {
+      padding-bottom: 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding-bottom: 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding-bottom: 4.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-bottom: 4rem;
+    }
+  }
+
+  &__documentation {
+    padding: 5.2rem 0 6rem;
+
+    @media (max-width: 1599px) {
+      padding: 4.8rem 0 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding: 4rem 0 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding: 3.6rem 0 4.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding: 3.2rem 0 4rem;
+    }
+  }
+
+  &__review {
+    padding: 5.2rem 0 6rem;
+
+    @media (max-width: 1599px) {
+      padding: 4.8rem 0 6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding: 4rem 0 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding: 3.6rem 0 4.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding: 3.2rem 0 4rem;
+    }
+  }
+
+  &__options {
+    padding: 5.2rem 0 6rem;
+
+    @media (max-width: 1599px) {
+      padding: 4.8rem 0 5.6rem;
+    }
+
+    @media (max-width: 1199px) {
+      padding: 4rem 0 5.2rem;
+    }
+
+    @media (max-width: 1023px) {
+      padding: 3.6rem 0 4.8rem;
+    }
+
+    @media (max-width: 767px) {
+      padding: 3.2rem 0 4rem;
+    }
+  }
+
+  &__visited {
+    padding-bottom: 0.8rem;
+  }
+}
+.product-description {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3.2rem 0.4rem;
+
+  @media (max-width: 1023px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 767px) {
+    gap: 2.4rem;
+  }
+
+  &__text-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2.8rem;
+
+    @media (max-width: 1599px) {
+      gap: 2.4rem;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 85rem;
+
+    p {
+      font-size: 2rem;
+      line-height: 1.2;
+      color: var(--easy-dark);
+
+      @media (max-width: 1199px) {
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  &__more-button {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+
+    font-size: 1.8rem;
+    line-height: 1.3;
+    color: #3037eb;
+
+    transition: 0.3s;
+
+    &:hover {
+      color: #696fff;
+    }
+
+    @media (max-width: 767px) {
+      font-size: 1.6rem;
+      gap: 0.8rem;
+    }
+
+    svg {
+      width: 0.6rem;
+      height: 0.8rem;
+
+      transform: rotate(90deg);
+    }
+  }
+
+  &__img-column {
+    display: flex;
+  }
+
+  &__img-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24.3rem;
+    height: 14rem;
+    margin-left: auto;
+
+    border-radius: 2rem;
+    background: var(--grey);
+
+    transition: 0.3s;
+
+    &:hover {
+      background: var(--border-grey);
+      opacity: 1;
+    }
+
+    @media (max-width: 1199px) {
+      width: 21.6rem;
+      height: 12.4rem;
+    }
+
+    @media (max-width: 1023px) {
+      width: 19.6rem;
+      height: 11.2rem;
+    }
+
+    @media (max-width: 767px) {
+      width: 15.8rem;
+      height: 8.8rem;
+    }
+
+    img {
+      max-width: 80%;
+    }
+  }
+}
 </style>
