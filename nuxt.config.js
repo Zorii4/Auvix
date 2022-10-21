@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   server: {
-    port: 3006
+    port: 3006,
   },
   head: {
     title: 'auvix',
@@ -18,10 +18,18 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ["~scss/styles.scss"],
+  css: ['~scss/styles.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/filters/formatData.js'],
+  plugins: [
+    '@/filters/formatData.js',
+    '@/filters/numberWord.js',
+    '@/filters/numberParse.js',
+    {
+      src: '@/plugins/vuejs-paginate.js',
+      ssr: false,
+    },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -36,7 +44,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    "@nuxtjs/style-resources",
+    '@nuxtjs/style-resources',
     '@nuxtjs/router',
     'nuxt-svg-loader',
   ],
@@ -55,11 +63,10 @@ export default {
   },
 
   styleResources: {
-    scss: ["./scss/*.scss"]
+    scss: ['./scss/*.scss'],
   },
 
   publicRuntimeConfig: {
-    baseURLImg: process.env.IMAGES_DOMAIN_DEVELOP
-  }
+    baseURLImg: process.env.IMAGES_DOMAIN_DEVELOP,
+  },
 }
-
