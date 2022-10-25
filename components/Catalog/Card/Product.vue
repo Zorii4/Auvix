@@ -22,16 +22,16 @@
             <template v-else>
               <!-- Тэги: новый, лучшая цена и тп -->
               <li
-                v-for="tag in tags"
-                :key="tag"
+                v-for="(tag, idx) of calculatedTags"
+                :key="idx"
                 class="product-tags__item-wrapper"
               >
-                <a
-                  :class="`product-tags__item product-tags__item--${tag.tag}`"
-                  href="search-page-tag.html"
+                <span
+                  :class="`product-tags__item product-tags__item`"
+                  :style="{'backgroundColor': tag.color}"
                 >
                   {{tag.caption}}
-                </a>
+                </span>
               </li>
               <li class="product-tags__show-wrapper">
                 <button class="product-tags__show">
@@ -83,19 +83,24 @@
           <span class="catalog-list__item-price-discount-number">7 430 000 ₽</span>
           <span class="catalog-list__item-price-discount-size discount">{{discount}}</span>
         </div> -->
-        <span class="catalog-list__item-price-number">{{Math.floor(price) | priceFilter}} {{computedCurrency}}</span>
-        <!-- <span class="catalog-list__item-price-recommend">рекомендованная розничная цена</span> -->
+        <template v-if="mappedPrice && !needPriceRequets">
+          <span class="catalog-list__item-price-number">{{Math.floor(price) | priceFilter}} ₽</span>
+          <span class="catalog-list__item-price-recommend">рекомендованная розничная цена</span>
+        </template>
+        <template v-if="needPriceRequets">
+          <span class="catalog-list__item-price-number">По запросу</span>
+        </template>
       </span>
       <a
-        v-if="false"
-        class="catalog-list__item-button button"
-        href="#"
-      >Узнать о поступлении</a>
-      <a
-        v-else
+        v-if="mappedPrice"
         class="catalog-list__item-button button"
         href="#price"
       >Запросить диллерскую цену</a>
+      <a
+        v-else
+        class="catalog-list__item-button button"
+        href="#"
+      >Узнать о поступлении</a>
     </div>
   </div>
 </template>
@@ -131,10 +136,6 @@ export default {
       type: [String, Number],
       required: true,
     },
-    currency: {
-      type: String,
-      default: 'Рубль',
-    },
     rawTagsInfo: {
       type: Object,
       default: null,
@@ -143,26 +144,38 @@ export default {
       type: Array,
       default: () => [],
     },
+    needPriceRequets: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
-    computedCurrency() {
-      if (this.currency === 'Рубль') {
-        return '₽'
-      }
-      if (this.currency === 'USD') {
-        return '$'
-      }
-      if (this.currency === 'Евро') {
-        return '€'
-      }
-      return '₽'
-    },
-    tags() {
+    calculatedTags() {
       if (this.rawTagsInfo) {
-        return []
+        const tagsList = {
+          new: 'Новинка',
+          hit: 'Хит',
+          sale: 'Распродажа',
+        }
+        return Object.entries(this.rawTagsInfo)
+          .filter(([_key, value]) => value === 1)
+          .map(([key, _value]) => ({
+            caption: tagsList[key],
+            color:
+              this.optionsList.find((el) => el.code.includes(key)).value ||
+              '#ff0000',
+          }))
       }
       return []
+    },
+
+    optionsList() {
+      return this.$store.state.catalog.optionsList
+    },
+
+    mappedPrice() {
+      return Number(this.price)
     },
   },
 }

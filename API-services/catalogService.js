@@ -25,3 +25,14 @@ export async function fetchProductsByCategory(
     return [err, null]
   }
 }
+
+export async function fetchOptionsList() {
+  try {
+    const { data } = await axios.get(
+      'http://auvix-back.bikdev.ru/api/v1/main/optins'
+    )
+    return [null, data]
+  } catch (err) {
+    return [err, null]
+  }
+}
