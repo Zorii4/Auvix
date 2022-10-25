@@ -37,6 +37,11 @@
                   :key="product.id"
                   :name="product.name"
                   :productId="product.id"
+                  :rawTagsInfo="{
+                    new: product.is_new,
+                    hit: product.is_hit,
+                    sale: product.is_sale,
+                  }"
                   :previwImageUrl="product.image_short_url"
                   :articleCode="product.vendor_code"
                   :price="product.price_retail"

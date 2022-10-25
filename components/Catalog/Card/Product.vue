@@ -22,16 +22,16 @@
             <template v-else>
               <!-- Тэги: новый, лучшая цена и тп -->
               <li
-                v-for="tag in tags"
-                :key="tag"
+                v-for="(tag, idx) of calculatedTags"
+                :key="idx"
                 class="product-tags__item-wrapper"
               >
-                <a
-                  :class="`product-tags__item product-tags__item--${tag.tag}`"
-                  href="search-page-tag.html"
+                <span
+                  :class="`product-tags__item product-tags__item`"
+                  :style="{'backgroundColor': tag.color}"
                 >
                   {{tag.caption}}
-                </a>
+                </span>
               </li>
               <li class="product-tags__show-wrapper">
                 <button class="product-tags__show">
@@ -144,11 +144,25 @@ export default {
   },
 
   computed: {
-    tags() {
+    calculatedTags() {
       if (this.rawTagsInfo) {
-        return []
+        const tagsList = {
+          new: 'Новинка',
+          hit: 'Хит',
+          sale: 'Распродажа',
+        }
+        return Object.entries(this.rawTagsInfo)
+          .filter(([_key, value]) => value === 1)
+          .map(([key, _value]) => ({
+            caption: tagsList[key],
+            color: this.optionsList.find((el) => el.code.includes(key)).value,
+          }))
       }
       return []
+    },
+
+    optionsList() {
+      return this.$store.state.catalog.optionsList
     },
 
     mappedPrice() {
