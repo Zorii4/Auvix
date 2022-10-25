@@ -40,7 +40,7 @@ export function createRouter() {
         component: Catalog,
       },
       {
-        path: '/catalog/brands/:slug',
+        path: '/catalog/brands/:id',
         name: 'BrandItem',
         component: BrandItem,
       },

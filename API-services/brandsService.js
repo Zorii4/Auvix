@@ -16,10 +16,10 @@ export async function fetchBrands() {
 export async function fetchBrandById(slug) {
   try {
     const { data } = await axios.get(
-      'http://auvix-back.bikdev.ru/api/v1/catalog/brand'
+      `http://auvix-back.bikdev.ru/api/v1/catalog/brand/${slug}`
     )
-    const brand = data.data.find((el) => el.slug === slug)
-    return [null, brand]
+
+    return [null, data.data]
   } catch (err) {
     return [err, null]
   }

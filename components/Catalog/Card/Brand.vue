@@ -2,7 +2,7 @@
   <div class="brand">
     <nuxt-link
       class="brand__link"
-      :to="{name: 'BrandItem', params: {slug: slug}}"
+      :to="{name: 'BrandItem', params: {id: brandId}}"
     >
       <div class="brand__img">
         <img
@@ -23,8 +23,8 @@ export default {
       type: String,
       required: true,
     },
-    slug: {
-      type: String,
+    brandId: {
+      type: [String, Number],
       required: true,
     },
     logoImgAlt: {
