@@ -83,19 +83,21 @@
           <span class="catalog-list__item-price-discount-number">7 430 000 ₽</span>
           <span class="catalog-list__item-price-discount-size discount">{{discount}}</span>
         </div> -->
-        <span class="catalog-list__item-price-number">{{Math.floor(price) | priceFilter}} {{computedCurrency}}</span>
-        <!-- <span class="catalog-list__item-price-recommend">рекомендованная розничная цена</span> -->
+        <template v-if="mappedPrice">
+          <span class="catalog-list__item-price-number">{{Math.floor(price) | priceFilter}} ₽</span>
+          <span class="catalog-list__item-price-recommend">рекомендованная розничная цена</span>
+        </template>
       </span>
       <a
-        v-if="false"
-        class="catalog-list__item-button button"
-        href="#"
-      >Узнать о поступлении</a>
-      <a
-        v-else
+        v-if="mappedPrice"
         class="catalog-list__item-button button"
         href="#price"
       >Запросить диллерскую цену</a>
+      <a
+        v-else
+        class="catalog-list__item-button button"
+        href="#"
+      >Узнать о поступлении</a>
     </div>
   </div>
 </template>
@@ -131,10 +133,6 @@ export default {
       type: [String, Number],
       required: true,
     },
-    currency: {
-      type: String,
-      default: 'Рубль',
-    },
     rawTagsInfo: {
       type: Object,
       default: null,
@@ -146,23 +144,15 @@ export default {
   },
 
   computed: {
-    computedCurrency() {
-      if (this.currency === 'Рубль') {
-        return '₽'
-      }
-      if (this.currency === 'USD') {
-        return '$'
-      }
-      if (this.currency === 'Евро') {
-        return '€'
-      }
-      return '₽'
-    },
     tags() {
       if (this.rawTagsInfo) {
         return []
       }
       return []
+    },
+
+    mappedPrice() {
+      return Number(this.price)
     },
   },
 }
