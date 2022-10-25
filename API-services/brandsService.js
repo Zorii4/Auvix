@@ -13,10 +13,10 @@ export async function fetchBrands() {
   }
 }
 
-export async function fetchBrandById(slug) {
+export async function fetchBrandById(slugOrId) {
   try {
     const { data } = await axios.get(
-      `http://auvix-back.bikdev.ru/api/v1/catalog/brand/${slug}`
+      `http://auvix-back.bikdev.ru/api/v1/catalog/brand/${slugOrId}`
     )
 
     return [null, data.data]

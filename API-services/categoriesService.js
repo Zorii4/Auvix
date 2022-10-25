@@ -13,10 +13,10 @@ export async function fetchCategories() {
   }
 }
 
-export async function fetchCategoryById(id) {
+export async function fetchCategoryById(slugOrId) {
   try {
     const { data } = await axios.get(
-      `http://auvix-back.bikdev.ru/api/v1/catalog/category/${id}`
+      `http://auvix-back.bikdev.ru/api/v1/catalog/category/${slugOrId}`
     )
     return [null, data.data]
   } catch (err) {
