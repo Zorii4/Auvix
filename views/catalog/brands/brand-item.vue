@@ -60,7 +60,7 @@ export default {
           button_link_url: null,
           image_url:
             this.currentBrand.slider?.length > 0
-              ? this.currentBrand.slider.map((el) => el.url)
+              ? this.currentBrand.slider
               : null,
           image_alt: this.currentBrand.title || null,
           logo_url: this.currentBrand.img || null,

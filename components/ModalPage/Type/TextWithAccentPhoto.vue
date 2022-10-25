@@ -43,8 +43,8 @@
                   class="card-swiper"
                 >
                   <swiper-slide
-                    v-for="item of pageProps.image_url"
-                    :key="item.id"
+                    v-for="(item, id) in pageProps.image_url"
+                    :key="id"
                     class="card-slide"
                   >
                     <img
