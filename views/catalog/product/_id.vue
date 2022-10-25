@@ -5,7 +5,7 @@
         <CatalogCardProductSingle
           availability='в наличии на складе'
           :price='product.price_retail'
-          :articleCode="product.vendor_code"
+          :articleCode="product.article || product.vendor_code"
           :productName='product.name'
           :currecy="product.currency_name"
           :productMainImageUrl="product.image_main_url"

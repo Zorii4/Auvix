@@ -43,9 +43,10 @@
                     sale: product.is_sale,
                   }"
                   :previwImageUrl="product.image_short_url"
-                  :articleCode="product.vendor_code"
+                  :articleCode="product.article || product.vendor_code"
                   :price="product.price_retail"
                   :currency="product.currency_name"
+                  :needPriceRequets="!!product.need_request_price"
                 />
               </li>
             </ul>

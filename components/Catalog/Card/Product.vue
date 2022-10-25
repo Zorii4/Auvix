@@ -83,9 +83,12 @@
           <span class="catalog-list__item-price-discount-number">7 430 000 ₽</span>
           <span class="catalog-list__item-price-discount-size discount">{{discount}}</span>
         </div> -->
-        <template v-if="mappedPrice">
+        <template v-if="mappedPrice && !needPriceRequets">
           <span class="catalog-list__item-price-number">{{Math.floor(price) | priceFilter}} ₽</span>
           <span class="catalog-list__item-price-recommend">рекомендованная розничная цена</span>
+        </template>
+        <template v-if="needPriceRequets">
+          <span class="catalog-list__item-price-number">По запросу</span>
         </template>
       </span>
       <a
@@ -141,6 +144,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    needPriceRequets: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
@@ -155,7 +162,9 @@ export default {
           .filter(([_key, value]) => value === 1)
           .map(([key, _value]) => ({
             caption: tagsList[key],
-            color: this.optionsList.find((el) => el.code.includes(key)).value,
+            color:
+              this.optionsList.find((el) => el.code.includes(key)).value ||
+              '#ff0000',
           }))
       }
       return []
