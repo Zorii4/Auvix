@@ -31,9 +31,9 @@ export default {
   },
 
   async fetch() {
-    const brandId = this.$route.params.id
-    if (brandId) {
-      const [err, brand] = await fetchBrandById(brandId)
+    const brandSlug = this.$route.params.slug
+    if (brandSlug) {
+      const [err, brand] = await fetchBrandById(brandSlug)
       if (brand) {
         this.currentBrand = brand
         return brand

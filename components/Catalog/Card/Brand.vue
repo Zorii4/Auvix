@@ -2,7 +2,7 @@
   <div class="brand">
     <nuxt-link
       class="brand__link"
-      :to="{name: 'BrandItem', params: {id: brandId}}"
+      :to="{name: 'BrandItem', params: {slug: brandId}}"
     >
       <div class="brand__img">
         <img
