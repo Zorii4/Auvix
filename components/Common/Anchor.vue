@@ -13,6 +13,7 @@
       v-if="!isExternal"
       :to="to || '#'"
       :class="className"
+      :style="color"
     >
       <slot></slot>
     </NuxtLink>
