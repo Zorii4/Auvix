@@ -14,7 +14,10 @@
         </h2>
       </div>
       <div class="catalog__body">
-        <CatalogFiltersProducts />
+        <CatalogFiltersProducts
+          :filterInitialList="currentCategory.attributes4filter"
+          :subCategories="currentCategory.children"
+        />
         <div class="catalog__content">
           <!-- <CatalogFiltersPickedTopRow /> -->
           <div class="catalog__notice">
@@ -37,6 +40,7 @@
                   :key="product.id"
                   :name="product.name"
                   :productId="product.id"
+                  :characteristics="product.attributes.slice(0, 5)"
                   :rawTagsInfo="{
                     new: product.is_new,
                     hit: product.is_hit,

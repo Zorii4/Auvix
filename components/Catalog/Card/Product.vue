@@ -62,7 +62,7 @@
           :key="characteristic.id"
         >
           <div class="catalog-list__item-property-item">
-            <span class="catalog-list__item-property">{{characteristic.property}}</span>
+            <span class="catalog-list__item-property">{{characteristic.name}}:</span>
             <span class="catalog-list__item-property-value">{{characteristic.value}}</span>
           </div>
         </li>

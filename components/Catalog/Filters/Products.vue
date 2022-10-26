@@ -7,81 +7,28 @@
       <h2 class="catalog__filter-header">
         Фильтр
       </h2>
-      <form class="catalog__filter-form catalog-form-js">
-        <fieldset class="catalog__filter-group js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn tag-name-js">
-            Технология
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <!-- <div class="catalog__filter-subgroup js-accordion-content">
-                    {{#each catalogTech }}
-                        <input class="catalog__filter-checkbox-input visually-hidden" type="checkbox" id="{{this.id}}">
-                        <label class="catalog__filter-checkbox" for="{{this.id}}">
-                            <span id="tagValue">{{this.name}}</span>
-                            <span>{{this.count}}</span>
-                        </label>
-                    {{/each}}
-                </div> -->
-        </fieldset>
-        <fieldset class="catalog__filter-group js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn tag-name-js">
-            Бренд
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <label
-            class="visually-hidden"
-            for="catalogSearch"
-          >Поиск</label>
-          <div class="catalog__filter-content js-accordion-content more-button-container-js">
-            <div class="catalog__filter-search-wrapper">
-              <input
-                class="catalog__filter-search"
-                id="catalogSearch"
-                name="catalogSearch"
-                type="text"
-                placeholder="Поиск"
-              >
-              <svg>
-                <use xlink:href="#search"></use>
-              </svg>
-            </div>
-            <!-- <div class="catalog__filter-subgroup">
-                        {{#each catalogBrand }}
-                            <input class="catalog__filter-checkbox-input visually-hidden" type="checkbox" id="{{this.id}}">
-                            <label class="catalog__filter-checkbox more-button-hide-js" for="{{this.id}}">
-                                <span id="tagValue">{{this.name}}</span>
-                                <span>{{this.count}}</span>
-                            </label>
-                        {{/each}}
-                    </div> -->
-            <button class="catalog__filter-more-button more-button-js">Показать еще &nbsp;<span id="hideElementsCount"></span></button>
-          </div>
-        </fieldset>
-        <fieldset class="catalog__filter-group catalog__filter-group--price js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn">
+      <form class="catalog__filter-form">
+        <fieldset class="catalog__filter-group catalog__filter-group--price">
+          <h3 class="catalog__filter-title">
             Цена
             <svg>
               <use xlink:href="#slider-arrow"></use>
             </svg>
           </h3>
-          <div class="catalog__filter-range-block js-accordion-content">
+          <div class="catalog__filter-range-block">
             <div class="catalog__filter-range-wrapper">
               <div
+                id="catalogFilterPrice"
                 class="catalog__filter-range"
                 data-step="1000"
                 data-min="30000"
                 data-max="3000000"
-                id="catalogFilterPrice"
               ></div>
               <div class="catalog__filter-range-block catalog__filter-range-block--min">
                 <input
+                  id="minPrice"
                   class="catalog__filter-range-input catalog__filter-range-input--min"
                   type="text"
-                  id="minPrice"
                 >
               </div>
               <div class="catalog__filter-range-block catalog__filter-range-block--max">
@@ -94,14 +41,14 @@
             </div>
           </div>
         </fieldset>
-        <fieldset class="catalog__filter-group js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn">
+        <fieldset class="catalog__filter-group">
+          <h3 class="catalog__filter-title">
             Основные размеры
             <svg>
               <use xlink:href="#slider-arrow"></use>
             </svg>
           </h3>
-          <div class="catalog__filter-content js-accordion-content">
+          <div class="catalog__filter-content">
             <fieldset class="catalog__filter-subgroup">
               <h4 class="catalog__filter-subtitle tag-name-js">
                 Соотношения сторон
@@ -275,6 +222,29 @@
 <script>
 export default {
   name: 'CatalogFilter',
+
+  props: {
+    filterInitialList: {
+      type: Array,
+      default: () => [],
+    },
+    subCategories: {
+      type: Array,
+      default: () => [],
+    },
+  },
+
+  computed: {
+    filterModel: {
+      get() {
+        return this.filterInitialList
+      },
+
+      set(value) {
+        this.$emit('input', value)
+      },
+    },
+  },
 }
 </script>
 
