@@ -31,9 +31,9 @@ export default {
   },
 
   async fetch() {
-    const slug = this.$route.params.slug
-    if (slug) {
-      const [err, brand] = await fetchBrandById(slug)
+    const brandSlug = this.$route.params.slug
+    if (brandSlug) {
+      const [err, brand] = await fetchBrandById(brandSlug)
       if (brand) {
         this.currentBrand = brand
         return brand
@@ -59,8 +59,8 @@ export default {
           button_title: null,
           button_link_url: null,
           image_url:
-            this.currentBrand.slider.length > 0
-              ? this.currentBrand.slider.map((el) => el.url)
+            this.currentBrand.slider?.length > 0
+              ? this.currentBrand.slider
               : null,
           image_alt: this.currentBrand.title || null,
           logo_url: this.currentBrand.img || null,

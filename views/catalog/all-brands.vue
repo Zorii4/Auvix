@@ -25,7 +25,7 @@
           >
             <CatalogCardBrand
               :logoUrl="brand.img"
-              :slug="brand.slug"
+              :brandId="brand.slug"
               :logoImgAlt="brand.title"
             />
           </li>
