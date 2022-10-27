@@ -1,32 +1,34 @@
 <template>
-  <div class="narrow-container">
-    <div class="text-container">
-      <div
-        v-if="pageProps.list.type === 'bullet'"
-        class="text-container"
-      >
-        <h3></h3>
-        <ul>
-          <li
-            v-for="item of pageProps.list.data"
-            :key="item.id"
-          >{{item.value}}</li>
-        </ul>
-      </div>
-      <div
-        v-if="pageProps.list.type === 'numeric'"
-        class="text-container"
-      >
-        <h2></h2>
-        <ol>
-          <li
-            v-for="item of pageProps.list.data"
-            :key="item.id"
-          >{{item.value}}</li>
-        </ol>
+  <section class="section-list">
+    <div class="narrow-container">
+      <div class="text-container">
+        <div
+          v-if="pageProps.list.type === 'bullet'"
+          class="text-container"
+        >
+          <h3></h3>
+          <ul>
+            <li
+              v-for="item of pageProps.list.data"
+              :key="item.id"
+            >{{item.value}}</li>
+          </ul>
+        </div>
+        <div
+          v-if="pageProps.list.type === 'numeric'"
+          class="text-container"
+        >
+          <h2></h2>
+          <ol>
+            <li
+              v-for="item of pageProps.list.data"
+              :key="item.id"
+            >{{item.value}}</li>
+          </ol>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -39,6 +41,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.section-list {
+  margin-bottom: 5rem;
+}
+
 .text-container {
   max-width: 86.4rem;
 

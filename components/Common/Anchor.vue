@@ -212,4 +212,26 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+.header-link {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  font-size: 1.8rem;
+  line-height: 1.3;
+
+  transition: 0.3s;
+
+  @media (max-width: 1199px) {
+    font-size: 1.6rem;
+    gap: 1.6rem;
+  }
+
+  @media (max-width: 767px) {
+    gap: 1.2rem;
+  }
+}
 </style>

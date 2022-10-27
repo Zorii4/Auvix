@@ -30,6 +30,7 @@
             <img
               :src="$config?.baseURLImg + item.image_url"
               alt="Фото"
+              class="post-image"
             >
             <div class="post-img-slider__caption">
               <p>{{item.name}}</p>
@@ -214,6 +215,10 @@ export default {
   }
 }
 
+.post-image {
+  object-fit: cover;
+}
+
 .article__slider-navigation {
   position: absolute;
   right: 5.2rem;
@@ -223,10 +228,6 @@ export default {
   @media (max-width: 1023px) {
     right: 1.6rem;
     bottom: 1.6rem;
-  }
-
-  @media (max-width: 479px) {
-    display: none;
   }
 }
 

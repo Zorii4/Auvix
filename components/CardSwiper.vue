@@ -133,16 +133,12 @@ export default {
   &__item-wrapper {
     border-radius: 1.6rem;
 
-    @media (max-width: 1599px) {
-      max-width: 30.3rem;
-    }
-
     @media (max-width: 1199px) {
-      max-width: 24.1rem;
+      max-width: 27rem;
     }
 
     @media (max-width: 1023px) {
-      max-width: 27rem;
+      max-width: 24rem;
     }
 
     @media (max-width: 767px) {

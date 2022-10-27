@@ -163,6 +163,7 @@ export default {
 
     @media (max-width: 767px) {
       padding: 1.2rem 0 3rem 1.2rem;
+      align-self: flex-start;
     }
 
     &:nth-child(2) {
@@ -211,6 +212,10 @@ export default {
   &__right {
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 767px) {
+      align-items: center;
+    }
 
     h3 {
       margin-bottom: 4rem;

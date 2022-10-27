@@ -5,11 +5,31 @@
         <div class="academy__news-header">
           <div class="section-header">
             <h2
-              v-if="pageProps.use_title"
+              v-if="pageProps.title"
               class="section-header__title section-title"
             >
               {{pageProps.title}}
             </h2>
+            <CommonAnchor
+              v-if="pageProps.link_url"
+              :to="pageProps.link_url"
+              :className="'header-link'"
+              class="header-link__text"
+            >
+              {{pageProps.link_title}}
+              <svg
+                width="8"
+                height="10"
+                viewBox="0 0 8 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+                  fill="#202226"
+                />
+              </svg>
+            </CommonAnchor>
           </div>
         </div>
         <NewsBlocksSmallNews
@@ -101,6 +121,35 @@ export default {
 
   &__title {
     margin: 0;
+  }
+}
+
+.header-link__text {
+  span:last-child {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    span:first-child {
+      display: none;
+    }
+
+    span:last-child {
+      display: block;
+    }
+  }
+
+  svg {
+    width: 0.8rem;
+    height: 1rem;
+  }
+
+  &:hover {
+    color: var(--jack-grey) !important;
+  }
+
+  &:active {
+    color: var(--easy-dark) !important;
   }
 }
 </style>
