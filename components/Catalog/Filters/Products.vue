@@ -1,7 +1,7 @@
 <template>
-  <div class="catalog__filter js-modal-catalogFilter js-modal">
+  <div class="catalog__filter js-modal-catalogFilter">
     <div class="catalog__filter-inner">
-      <div class="catalog__filter-close js-close-modal">
+      <div class="catalog__filter-close">
         <!-- {{> close-button }} -->
       </div>
       <h2 class="catalog__filter-header">
@@ -41,179 +41,26 @@
             </div>
           </div>
         </fieldset>
-        <fieldset class="catalog__filter-group">
-          <h3 class="catalog__filter-title">
-            Основные размеры
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <div class="catalog__filter-content">
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle tag-name-js">
-                Соотношения сторон
-              </h4>
-              <!-- <div class="catalog__filter-subgroup">
-                            {{#each catalogRatio }}
-                                <input class="catalog__filter-checkbox-input visually-hidden" type="checkbox" id="{{this.id}}">
-                                <label class="catalog__filter-checkbox" for="{{this.id}}">
-                                    <span id="tagValue">{{this.name}}</span>
-                                </label>
-                            {{/each}}
-                        </div> -->
-            </fieldset>
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle">
-                Ширина
-              </h4>
-              <div class="catalog__filter-range-block">
-                <div class="catalog__filter-range-wrapper">
-                  <div
-                    class="catalog__filter-range"
-                    data-step="50"
-                    data-min="100"
-                    data-max="1000"
-                    id="catalogFilterWidth"
-                  ></div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--min"
-                      type="text"
-                      id="minWidth"
-                    >
-                  </div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--max"
-                      type="text"
-                      id="maxWidth"
-                    >
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle">
-                Высота
-              </h4>
-              <div class="catalog__filter-range-block">
-                <div class="catalog__filter-range-wrapper">
-                  <div
-                    class="catalog__filter-range"
-                    data-step="100"
-                    data-min="200"
-                    data-max="2000"
-                    id="catalogFilterHeight"
-                  ></div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--min"
-                      type="text"
-                      id="minHeight"
-                    >
-                  </div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--max"
-                      type="text"
-                      id="maxHeight"
-                    >
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle">
-                Диагональ изображения
-              </h4>
-              <div class="catalog__filter-range-block">
-                <div class="catalog__filter-range-wrapper">
-                  <div
-                    class="catalog__filter-range"
-                    data-step="100"
-                    data-min="300"
-                    data-max="3000"
-                    id="catalogFilterDiagonal"
-                  ></div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--min"
-                      type="text"
-                      id="minDiagonal"
-                    >
-                  </div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--max"
-                      type="text"
-                      id="maxDiagonal"
-                    >
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle">
-                Размер полотна (ширина)
-              </h4>
-              <div class="catalog__filter-range-block">
-                <div class="catalog__filter-range-wrapper">
-                  <div
-                    class="catalog__filter-range"
-                    data-step="100"
-                    data-min="400"
-                    data-max="4000"
-                    id="catalogFilterCanvas"
-                  ></div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--min"
-                      type="text"
-                      id="minCanvas"
-                    >
-                  </div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--max"
-                      type="text"
-                      id="maxCanvas"
-                    >
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-        </fieldset>
-        <fieldset class="catalog__filter-group js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn tag-name-js">
-            Поддержка 3D
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <!-- <div class="catalog__filter-subgroup js-accordion-content">
-                    {{#each catalog3D }}
-                        <input class="catalog__filter-checkbox-input visually-hidden" type="checkbox" id="{{this.id}}">
-                        <label class="catalog__filter-checkbox" for="{{this.id}}">
-                            <span id="tagValue">{{this.name}}</span>
-                        </label>
-                    {{/each}}
-                </div> -->
-        </fieldset>
-        <h3 class="catalog__filter-title catalog__filter-title--radio">
-          Спецпредложение
-          <div class="catalog__filter-radio">
-            <input
-              class="visually-hidden"
-              type="radio"
-              name="catalogSpecial"
-              id="catalogSpecial"
-            >
-            <label for="catalogSpecial"></label>
-          </div>
-        </h3>
+        <FormulateInput
+          v-model="subCategoriesProxy"
+          :options="subCategoriesList.map(el => ({
+            label: el.name,
+            value: el.id
+          }))"
+          :type="'checkbox'"
+          label="Категории"
+        />
+        <FormulateInput
+          v-for="filterItem of mappedFilterList"
+          :key="filterItem.id"
+          :value="filterAttributesValues.id"
+          :options="filterItem.list_values"
+          :type="filterItem.filter_type === 'list' ? 'checkbox' : 'text'"
+          :label="filterItem.name"
+          @input="changeFilterAttributesValues(filterItem.id, $event)"
+        />
         <button class="catalog__filter-button button">Cбросить фильтр</button>
-        <button class="catalog__filter-mobile-button button">Показать 120 товаров</button>
+        <button class="catalog__filter-mobile-button button">Показать товары</button>
       </form>
     </div>
   </div>
@@ -228,21 +75,43 @@ export default {
       type: Array,
       default: () => [],
     },
-    subCategories: {
+    subCategoriesList: {
       type: Array,
       default: () => [],
+    },
+    filterAttributesValues: {
+      type: Object,
+      required: true,
+    },
+    subCategoriesValue: {
+      type: Array,
+      required: true,
     },
   },
 
   computed: {
-    filterModel: {
-      get() {
-        return this.filterInitialList
-      },
+    mappedFilterList() {
+      return this.filterInitialList.filter((el) => el.list_values[0] !== '')
+    },
 
-      set(value) {
-        this.$emit('input', value)
+    subCategoriesProxy: {
+      get() {
+        return this.subCategoriesValue
       },
+      set(value) {
+        this.$emit('changeCategory', value)
+      },
+    },
+  },
+
+  methods: {
+    changeFilterAttributesValues(key, value) {
+      if (value !== false) {
+        this.$emit('changeFilterAtributes', {
+          ...this.filterAttributesValues,
+          [key]: value,
+        })
+      }
     },
   },
 }

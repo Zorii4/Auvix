@@ -16,7 +16,11 @@
       <div class="catalog__body">
         <CatalogFiltersProducts
           :filterInitialList="currentCategory.attributes4filter"
-          :subCategories="currentCategory.children"
+          :subCategoriesList="currentCategory.children"
+          :filterAttributesValues="filterAttributes"
+          :subCategoriesValue="subCategories"
+          @changeCategory="changeCategory"
+          @changeFilterAtributes="changeFilterAtributes"
         />
         <div class="catalog__content">
           <!-- <CatalogFiltersPickedTopRow /> -->
@@ -95,6 +99,9 @@ export default {
       gridLayout: false,
       countItems: 0,
 
+      filterAttributes: {},
+      subCategories: [],
+
       fetchedItems: [],
       currentCategory: null,
       subCategoryId: null,
@@ -168,6 +175,12 @@ export default {
         this.loading = false
         return err
       }
+    },
+    changeCategory(value) {
+      this.subCategories = value
+    },
+    changeFilterAtributes(value) {
+      this.filterAttributes = value
     },
   },
 }
