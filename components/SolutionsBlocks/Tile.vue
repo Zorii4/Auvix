@@ -13,16 +13,21 @@
                   <div class="article__text-column">
                     <div class="article__text-header">
                       <time class="article__text-date">{{item.last_published_at | formatData('toYear')}}</time>
-                      <!-- <span class="article__category">{{articleCategory}}</span> -->
+                      <span
+                        v-for="el of item.rubrics"
+                        :key="el.id"
+                        class="article__category"
+                      >{{el.name}}</span>
                     </div>
                     <div class="article__text-content article__text-content--text-bottomed article__text-content--title-bottomed">
                       <h3 class="article__text-title">{{item.title}}</h3>
                       <p>{{item.short_description}}</p>
                     </div>
                     <router-link
-                      class="article__play-button"
+                      class="article__link"
                       :to="`decisions/${item.code}`"
                     >
+                      Подробнее
                       <svg
                         width="8"
                         height="10"
@@ -137,7 +142,7 @@ export default {
     padding: 5.2rem;
 
     border-radius: 0 2rem 2rem 0;
-    background: #ff8c59;
+    background-color: var(--extra-light-gray);
 
     @media (max-width: 1599px) {
       padding: 2rem;
@@ -292,20 +297,19 @@ export default {
     margin-bottom: 1.5rem;
   }
 
-  &__play-button {
+  &__link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 5.6rem;
-    height: 3.6rem;
+    gap: 2rem;
     margin-top: auto;
 
-    border: 1px solid var(--jack-grey);
-    border-radius: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.3;
+    color: var(--dark);
 
-    @media (max-width: 767px) {
-      width: 4.8rem;
-      height: 3.2rem;
+    @media (max-width: 1199px) {
+      font-size: 1.6rem;
+      gap: 1.6rem;
     }
 
     svg {
