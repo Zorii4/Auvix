@@ -26,16 +26,16 @@
               ></div>
               <div class="catalog__filter-range-block catalog__filter-range-block--min">
                 <input
-                  id="minPrice"
+                  v-model.lazy="priceFromProxy"
                   class="catalog__filter-range-input catalog__filter-range-input--min"
                   type="text"
                 >
               </div>
               <div class="catalog__filter-range-block catalog__filter-range-block--max">
                 <input
+                  v-model.lazy="priceToProxy"
                   class="catalog__filter-range-input catalog__filter-range-input--max"
                   type="text"
-                  id="maxPrice"
                 >
               </div>
             </div>
@@ -53,9 +53,9 @@
         <FormulateInput
           v-for="filterItem of mappedFilterList"
           :key="filterItem.id"
-          :value="filterAttributesValues.id"
           :options="filterItem.list_values"
           :type="filterItem.filter_type === 'list' ? 'checkbox' : 'text'"
+          :value="filterAttributesValues[filterItem.id]"
           :label="filterItem.name"
           @input="changeFilterAttributesValues(filterItem.id, $event)"
         />
@@ -87,6 +87,14 @@ export default {
       type: Array,
       required: true,
     },
+    priceFrom: {
+      type: [Number, String],
+      required: true,
+    },
+    priceTo: {
+      type: [Number, String],
+      required: true,
+    },
   },
 
   computed: {
@@ -100,6 +108,22 @@ export default {
       },
       set(value) {
         this.$emit('changeCategory', value)
+      },
+    },
+    priceFromProxy: {
+      get() {
+        return this.priceFrom
+      },
+      set(value) {
+        this.$emit('changePriceFrom', value)
+      },
+    },
+    priceToProxy: {
+      get() {
+        return this.priceFrom
+      },
+      set(value) {
+        this.$emit('changePriceTo', value)
       },
     },
   },

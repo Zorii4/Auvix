@@ -32,10 +32,9 @@
               :key="subCategory.id"
               class="card-category__subcategory"
             >
-            <nuxt-link 
-                :to="{name: 'CatalogByCategory',
+              <nuxt-link :to="{name: 'CatalogByCategory',
                       params: {category: subCategory.parent_id},
-                      query: {subCategory: subCategory.id}
+                      query: {subCategory: [subCategory.id]}
               }">{{ subCategory.name }} <span v-if="subCategory.count">{{ subCategory.count }}</span></nuxt-link>
             </li>
           </ul>

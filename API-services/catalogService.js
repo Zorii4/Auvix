@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export async function fetchProductsByCategory(
-  categoryId,
+export async function fetchFilteredProducts(
+  categories,
   offset = 0,
   limit = 10,
   sortSting = 'popular'
@@ -15,7 +15,7 @@ export async function fetchProductsByCategory(
           offset,
           sort: sortSting, // popular,new,price_cheap,price_exp
           filters: {
-            category_id: [categoryId],
+            category_id: categories, // Must be array
           },
         },
       }

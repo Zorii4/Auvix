@@ -19,8 +19,12 @@
           :subCategoriesList="currentCategory.children"
           :filterAttributesValues="filterAttributes"
           :subCategoriesValue="subCategories"
+          :priceFrom="priceFrom"
+          :priceTo="priceTo"
           @changeCategory="changeCategory"
           @changeFilterAtributes="changeFilterAtributes"
+          @changePriceFrom="priceFrom = $event"
+          @changePriceTo="priceTo = $event"
         />
         <div class="catalog__content">
           <!-- <CatalogFiltersPickedTopRow /> -->
@@ -83,7 +87,7 @@
 </template>
 
 <script>
-import { fetchProductsByCategory } from '@/API-services/catalogService'
+import { fetchFilteredProducts } from '@/API-services/catalogService'
 import { fetchCategoryById } from '@/API-services/categoriesService'
 export default {
   name: 'ProductsByCategory',
@@ -101,6 +105,8 @@ export default {
 
       filterAttributes: {},
       subCategories: [],
+      priceFrom: '',
+      priceTo: '',
 
       fetchedItems: [],
       currentCategory: null,
@@ -112,16 +118,35 @@ export default {
     const categoryId = this.$route.params.category
     const subCategoryId = this.$route.query.subCategory
     const currentPage = this.$route.query.page
+    const filterAttributes = this.$route.query.filterAttributes
     const [categoryErr, categoryData] = await fetchCategoryById(categoryId)
+    console.error(categoryErr)
     if (categoryData) {
       this.currentCategory = categoryData
+      if (categoryData.attributes4fast_filter.length > 0) {
+        categoryData.attributes4fast_filter.forEach((el) => {
+          this.$set(
+            this.filterAttributes,
+            String(el.id),
+            el.filter_type === 'list' ? [] : ''
+          )
+        })
+      }
     }
-    console.error(categoryErr)
-    if (subCategoryId) {
-      this.subCategoryId = subCategoryId
+    if (subCategoryId && Array.isArray(subCategoryId)) {
+      this.subCategories = subCategoryId
+    }
+    if (subCategoryId && typeof subCategoryId === 'string') {
+      this.subCategories.push(subCategoryId)
     }
     if (currentPage) {
       this.currentPage = Number(currentPage)
+    }
+    if (filterAttributes) {
+      const tempFilterList = JSON.parse(filterAttributes)
+      Object.entries(tempFilterList).forEach(([key, value]) => {
+        this.filterAttributes[String(key)] = value
+      })
     }
     const resProducts = await this.fetchProducts()
     return resProducts
@@ -147,8 +172,22 @@ export default {
       const tempQueryList = {
         page: this.currentPage,
       }
-      if (this.subCategoryId !== null) {
-        tempQueryList.subCategory = this.subCategoryId
+      if (this.subCategories.length > 0) {
+        tempQueryList.subCategory = this.subCategories
+      }
+      if (this.priceFrom) {
+        tempQueryList.priceFrom = this.priceFrom
+      }
+      if (this.priceTo) {
+        tempQueryList.priceTo = this.priceTo
+      }
+      if (Object.keys(this.filterAttributes).length > 0) {
+        const tempFilterList = Object.entries(this.filterAttributes).filter(
+          ([_key, value]) => value.length > 0
+        )
+        tempQueryList.filterAttributes = JSON.stringify(
+          Object.fromEntries(tempFilterList)
+        )
       }
       this.$router.push({ query: tempQueryList })
     },
@@ -156,11 +195,11 @@ export default {
     async fetchProducts() {
       this.loading = true
       const searchedCategory =
-        this.subCategoryId !== null
-          ? this.subCategoryId
-          : this.currentCategory.id
+        this.subCategories.length > 0
+          ? this.subCategories
+          : [this.currentCategory.id]
       const calculatedOffset = this.limit * (this.currentPage - 1)
-      const [err, data] = await fetchProductsByCategory(
+      const [err, data] = await fetchFilteredProducts(
         searchedCategory,
         calculatedOffset,
         this.limit
@@ -178,9 +217,13 @@ export default {
     },
     changeCategory(value) {
       this.subCategories = value
+      this.pushQueryStateCatalog()
+      this.fetchProducts()
     },
     changeFilterAtributes(value) {
       this.filterAttributes = value
+      this.pushQueryStateCatalog()
+      this.fetchProducts()
     },
   },
 }
