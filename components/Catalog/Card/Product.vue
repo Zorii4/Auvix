@@ -95,7 +95,7 @@
         v-if="mappedPrice"
         class="catalog-list__item-button button"
         href="#price"
-      >Запросить диллерскую цену</a>
+      >Запросить дилерскую цену</a>
       <a
         v-else
         class="catalog-list__item-button button"

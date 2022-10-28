@@ -36,7 +36,7 @@
           <span class="single-product-card__price-recommend">рекомендованная розничная цена</span>
         </span>
         <div class="single-product-card__button-block">
-          <button class="single-product-card__button button">Запросить диллерскую цену</button>
+          <button class="single-product-card__button button">Запросить дилерскую цену</button>
         </div>
       </div>
     </div>
