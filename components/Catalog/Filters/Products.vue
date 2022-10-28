@@ -71,17 +71,17 @@
           <div class="catalog__filter-range-block js-accordion-content">
             <div class="catalog__filter-range-wrapper">
               <div
+                id="catalogFilterPrice"
                 class="catalog__filter-range"
                 data-step="1000"
                 data-min="30000"
                 data-max="3000000"
-                id="catalogFilterPrice"
               ></div>
               <div class="catalog__filter-range-block catalog__filter-range-block--min">
                 <input
+                  id="minPrice"
                   class="catalog__filter-range-input catalog__filter-range-input--min"
                   type="text"
-                  id="minPrice"
                 >
               </div>
               <div class="catalog__filter-range-block catalog__filter-range-block--max">
