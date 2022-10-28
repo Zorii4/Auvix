@@ -15,6 +15,7 @@
       </div>
       <div class="catalog__body">
         <CatalogFiltersProducts
+          v-if="currentCategory"
           :filterInitialList="currentCategory.attributes4filter"
           :subCategoriesList="currentCategory.children"
           :filterAttributesValues="filterAttributes"
@@ -23,8 +24,8 @@
           :priceTo="priceTo"
           @changeCategory="changeCategory"
           @changeFilterAtributes="changeFilterAtributes"
-          @changePriceFrom="priceFrom = $event"
-          @changePriceTo="priceTo = $event"
+          @changePriceFrom="changePriceFrom"
+          @changePriceTo="changePriceTo"
         />
         <div class="catalog__content">
           <!-- <CatalogFiltersPickedTopRow /> -->
@@ -77,7 +78,7 @@
               prevClass="pagination__button"
               nextClass="pagination__button"
             >
-              >
+
             </paginate>
           </div>
         </div>
@@ -119,6 +120,8 @@ export default {
     const subCategoryId = this.$route.query.subCategory
     const currentPage = this.$route.query.page
     const filterAttributes = this.$route.query.filterAttributes
+    const priceFrom = this.$route.query.priceFrom
+    const priceTo = this.$route.query.priceTo
     const [categoryErr, categoryData] = await fetchCategoryById(categoryId)
     console.error(categoryErr)
     if (categoryData) {
@@ -133,10 +136,10 @@ export default {
         })
       }
     }
-    if (subCategoryId && Array.isArray(subCategoryId)) {
-      this.subCategories = subCategoryId
+    if (subCategoryId && String(subCategoryId).includes(',')) {
+      this.subCategories = subCategoryId.split(',')
     }
-    if (subCategoryId && typeof subCategoryId === 'string') {
+    if (subCategoryId && !String(subCategoryId).includes(',')) {
       this.subCategories.push(subCategoryId)
     }
     if (currentPage) {
@@ -148,6 +151,13 @@ export default {
         this.filterAttributes[String(key)] = value
       })
     }
+    if (priceFrom) {
+      this.priceFrom = priceFrom
+    }
+    if (priceTo) {
+      this.priceTo = priceTo
+    }
+
     const resProducts = await this.fetchProducts()
     return resProducts
   },
@@ -173,7 +183,7 @@ export default {
         page: this.currentPage,
       }
       if (this.subCategories.length > 0) {
-        tempQueryList.subCategory = this.subCategories
+        tempQueryList.subCategory = this.subCategories.join(',')
       }
       if (this.priceFrom) {
         tempQueryList.priceFrom = this.priceFrom
@@ -222,6 +232,16 @@ export default {
     },
     changeFilterAtributes(value) {
       this.filterAttributes = value
+      this.pushQueryStateCatalog()
+      this.fetchProducts()
+    },
+    changePriceFrom(value) {
+      this.priceFrom = value
+      this.pushQueryStateCatalog()
+      this.fetchProducts()
+    },
+    changePriceTo(value) {
+      this.priceTo = value
       this.pushQueryStateCatalog()
       this.fetchProducts()
     },

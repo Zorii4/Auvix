@@ -42,6 +42,7 @@
           </div>
         </fieldset>
         <FormulateInput
+          v-if="subCategoriesList.length > 0"
           v-model="subCategoriesProxy"
           :options="subCategoriesList.map(el => ({
             label: el.name,
@@ -49,14 +50,18 @@
           }))"
           :type="'checkbox'"
           label="Категории"
+          labelClass="catalog__filter-title"
+          inputClass="catalog__filter-checkbox"
         />
         <FormulateInput
           v-for="filterItem of mappedFilterList"
           :key="filterItem.id"
           :options="filterItem.list_values"
-          :type="filterItem.filter_type === 'list' ? 'checkbox' : 'text'"
+          :type="'checkbox'"
           :value="filterAttributesValues[filterItem.id]"
           :label="filterItem.name"
+          labelClass="catalog__filter-title"
+          inputClass="catalog__filter-checkbox"
           @input="changeFilterAttributesValues(filterItem.id, $event)"
         />
         <button class="catalog__filter-button button">Cбросить фильтр</button>
@@ -120,7 +125,7 @@ export default {
     },
     priceToProxy: {
       get() {
-        return this.priceFrom
+        return this.priceTo
       },
       set(value) {
         this.$emit('changePriceTo', value)
@@ -141,7 +146,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .catalog {
   &__filter {
     grid-column: span 3;
@@ -281,7 +286,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 2rem;
-
+    margin-bottom: 14px;
     font-weight: 400;
     font-size: 2.4rem;
     line-height: 1.2;
@@ -356,7 +361,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 1.2rem;
-
+    margin-bottom: 20px;
     font-size: 1.6rem;
     line-height: 1.25;
 
@@ -618,6 +623,24 @@ export default {
 
     @media (max-width: 767px) {
       display: block;
+    }
+  }
+}
+
+.catalog__filter-checkbox {
+  input {
+    @include visuallyHidden();
+  }
+
+  label {
+    cursor: pointer;
+  }
+
+  &[data-has-value='true'] {
+    &::before {
+      background: var(--dark) url('/images/icons/check-icon.svg') no-repeat
+        center;
+      background-size: 1.3rem 0.9rem;
     }
   }
 }
