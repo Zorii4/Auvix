@@ -14,7 +14,21 @@
         </h2>
       </div>
       <div class="catalog__body">
-        <CatalogFiltersProducts />
+        <CatalogFiltersProducts
+          v-if="currentCategory"
+          :key="updateValueFilterKey"
+          :filterInitialList="currentCategory.attributes4filter"
+          :subCategoriesList="currentCategory.children"
+          :filterAttributesValues="filterAttributes"
+          :subCategoriesValue="subCategories"
+          :priceFrom="priceFrom"
+          :priceTo="priceTo"
+          @changeCategory="changeCategory"
+          @changeFilterAtributes="changeFilterAtributes"
+          @changePriceFrom="changePriceFrom"
+          @changePriceTo="changePriceTo"
+          @clearFilter="clearFilter"
+        />
         <div class="catalog__content">
           <!-- <CatalogFiltersPickedTopRow /> -->
           <div class="catalog__notice">
@@ -37,6 +51,7 @@
                   :key="product.id"
                   :name="product.name"
                   :productId="product.id"
+                  :characteristics="product.attributes.slice(0, 5)"
                   :rawTagsInfo="{
                     new: product.is_new,
                     hit: product.is_hit,
@@ -50,6 +65,10 @@
                 />
               </li>
             </ul>
+            <div
+              v-else
+              class="catalog-list-empty"
+            >Не найдено товаров по вашему запросу</div>
           </div>
           <div class="catalog__pagination">
             <paginate
@@ -64,8 +83,9 @@
               pageClass="pagination__number"
               prevClass="pagination__button"
               nextClass="pagination__button"
+              :clickHandler="pageChangedHandler"
             >
-              >
+
             </paginate>
           </div>
         </div>
@@ -75,7 +95,7 @@
 </template>
 
 <script>
-import { fetchProductsByCategory } from '@/API-services/catalogService'
+import { fetchFilteredProducts } from '@/API-services/catalogService'
 import { fetchCategoryById } from '@/API-services/categoriesService'
 export default {
   name: 'ProductsByCategory',
@@ -90,6 +110,12 @@ export default {
       offset: 0,
       gridLayout: false,
       countItems: 0,
+      updateValueFilterKey: 0,
+
+      filterAttributes: {},
+      subCategories: [],
+      priceFrom: '',
+      priceTo: '',
 
       fetchedItems: [],
       currentCategory: null,
@@ -101,17 +127,45 @@ export default {
     const categoryId = this.$route.params.category
     const subCategoryId = this.$route.query.subCategory
     const currentPage = this.$route.query.page
+    const filterAttributes = this.$route.query.filterAttributes
+    const priceFrom = this.$route.query.priceFrom
+    const priceTo = this.$route.query.priceTo
     const [categoryErr, categoryData] = await fetchCategoryById(categoryId)
+    console.error(categoryErr)
     if (categoryData) {
       this.currentCategory = categoryData
+      if (categoryData.attributes4fast_filter.length > 0) {
+        categoryData.attributes4fast_filter.forEach((el) => {
+          this.$set(
+            this.filterAttributes,
+            String(el.id),
+            el.filter_type === 'list' ? [] : ''
+          )
+        })
+      }
     }
-    console.error(categoryErr)
-    if (subCategoryId) {
-      this.subCategoryId = subCategoryId
+    if (subCategoryId && String(subCategoryId).includes(',')) {
+      this.subCategories = subCategoryId.split(',')
+    }
+    if (subCategoryId && !String(subCategoryId).includes(',')) {
+      this.subCategories.push(subCategoryId)
     }
     if (currentPage) {
       this.currentPage = Number(currentPage)
     }
+    if (filterAttributes) {
+      const tempFilterList = JSON.parse(filterAttributes)
+      Object.entries(tempFilterList).forEach(([key, value]) => {
+        this.filterAttributes[String(key)] = value
+      })
+    }
+    if (priceFrom) {
+      this.priceFrom = priceFrom
+    }
+    if (priceTo) {
+      this.priceTo = priceTo
+    }
+
     const resProducts = await this.fetchProducts()
     return resProducts
   },
@@ -122,35 +176,65 @@ export default {
     },
   },
 
-  watch: {
-    currentPage() {
-      this.$nextTick(async () => {
-        this.pushQueryStateCatalog()
-        await this.fetchProducts()
-      })
-    },
-  },
-
   methods: {
     pushQueryStateCatalog() {
       const tempQueryList = {
         page: this.currentPage,
       }
-      if (this.subCategoryId !== null) {
-        tempQueryList.subCategory = this.subCategoryId
+      if (this.subCategories.length > 0) {
+        tempQueryList.subCategory = this.subCategories.join(',')
       }
-      this.$router.push({ query: tempQueryList })
+      if (this.priceFrom) {
+        tempQueryList.priceFrom = this.priceFrom
+      }
+      if (this.priceTo) {
+        tempQueryList.priceTo = this.priceTo
+      }
+      if (
+        Object.keys(this.filterAttributes).length > 0 &&
+        Object.values(this.filterAttributes).filter((el) => el.length > 0)
+          .length > 0
+      ) {
+        const tempFilterList = Object.entries(this.filterAttributes).filter(
+          ([_key, value]) => value.length > 0
+        )
+        tempQueryList.filterAttributes = JSON.stringify(
+          Object.fromEntries(tempFilterList)
+        )
+      }
+      this.$router.replace({ query: tempQueryList })
     },
 
     async fetchProducts() {
       this.loading = true
       const searchedCategory =
-        this.subCategoryId !== null
-          ? this.subCategoryId
-          : this.currentCategory.id
+        this.subCategories.length > 0
+          ? this.subCategories
+          : [this.currentCategory.id]
+
+      let calculatedFilterAtributes = {}
+      const calculatedPriceFromTo = {}
+
+      if (this.priceFrom && Number(this.priceFrom) > 0) {
+        calculatedPriceFromTo.from = this.priceFrom
+      }
+      if (this.priceTo && Number(this.priceTo) > 0) {
+        calculatedPriceFromTo.to = this.priceTo
+      }
+
+      if (Object.values(this.filterAttributes).filter((el) => el.length > 0)) {
+        calculatedFilterAtributes = Object.fromEntries(
+          Object.entries(this.filterAttributes).filter(
+            ([_key, value]) => value.length > 0
+          )
+        )
+      }
+
       const calculatedOffset = this.limit * (this.currentPage - 1)
-      const [err, data] = await fetchProductsByCategory(
+      const [err, data] = await fetchFilteredProducts(
         searchedCategory,
+        calculatedFilterAtributes,
+        calculatedPriceFromTo,
         calculatedOffset,
         this.limit
       )
@@ -164,6 +248,50 @@ export default {
         this.loading = false
         return err
       }
+    },
+    async changeCategory(value) {
+      this.subCategories = value
+      this.currentPage = 1
+      this.pushQueryStateCatalog()
+      await this.fetchProducts()
+    },
+    async changeFilterAtributes(value) {
+      this.filterAttributes = value
+      this.currentPage = 1
+      this.pushQueryStateCatalog()
+      await this.fetchProducts()
+    },
+    async changePriceFrom(value) {
+      this.priceFrom = value
+      this.currentPage = 1
+      this.pushQueryStateCatalog()
+      await this.fetchProducts()
+    },
+    async changePriceTo(value) {
+      this.priceTo = value
+      this.currentPage = 1
+      this.pushQueryStateCatalog()
+      await this.fetchProducts()
+    },
+    async clearFilter() {
+      this.subCategories = []
+      this.priceFrom = ''
+      this.priceTo = ''
+      this.currentPage = 1
+      if (this.currentCategory.attributes4fast_filter.length > 0) {
+        this.currentCategory.attributes4fast_filter.forEach((el) => {
+          this.filterAttributes[el.id] = el.filter_type === 'list' ? [] : ''
+        })
+      }
+      this.updateValueFilterKey++
+      this.$router.replace({ query: null })
+      await this.fetchProducts()
+    },
+    pageChangedHandler() {
+      this.$nextTick(async () => {
+        this.pushQueryStateCatalog()
+        await this.fetchProducts()
+      })
     },
   },
 }
@@ -704,5 +832,9 @@ export default {
   &__visited {
     padding-bottom: 0.7rem;
   }
+}
+.catalog-list-empty {
+  margin-top: 20px;
+  font-size: 18px;
 }
 </style>
