@@ -64,7 +64,11 @@
           inputClass="catalog__filter-checkbox"
           @input="changeFilterAttributesValues(filterItem.id, $event)"
         />
-        <button class="catalog__filter-button button">Cбросить фильтр</button>
+        <button
+          type="button"
+          @click.prevent="clearFilter"
+          class="catalog__filter-button button"
+        >Cбросить фильтр</button>
         <button class="catalog__filter-mobile-button button">Показать товары</button>
       </form>
     </div>
@@ -141,6 +145,9 @@ export default {
           [key]: value,
         })
       }
+    },
+    clearFilter() {
+      this.$emit('clearFilter')
     },
   },
 }
@@ -350,37 +357,43 @@ export default {
     }
 
     &[disabled]:checked + .catalog__filter-checkbox {
-      &::before {
-        background: var(--light-grey) url('/images/icons/check-icon-gray.svg')
-          no-repeat center;
+      label {
+        &::before {
+          background: var(--light-grey) url('/images/icons/check-icon-gray.svg')
+            no-repeat center;
+        }
       }
     }
   }
 
   &__filter-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    margin-bottom: 20px;
-    font-size: 1.6rem;
-    line-height: 1.25;
+    label {
+      &[id] {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        margin-bottom: 20px;
+        font-size: 1.6rem;
+        line-height: 1.25;
 
-    cursor: pointer;
+        cursor: pointer;
 
-    span {
-      color: var(--jack-grey);
-    }
+        span {
+          color: var(--jack-grey);
+        }
 
-    &::before {
-      content: '';
+        &::before {
+          content: '';
 
-      width: 2.4rem;
-      height: 2.4rem;
+          width: 2.4rem;
+          height: 2.4rem;
 
-      border-radius: 0.8rem;
-      background-color: var(--extra-light-gray);
+          border-radius: 0.8rem;
+          background-color: var(--extra-light-gray);
 
-      transition: 0.3s;
+          transition: 0.3s;
+        }
+      }
     }
   }
 
@@ -637,10 +650,14 @@ export default {
   }
 
   &[data-has-value='true'] {
-    &::before {
-      background: var(--dark) url('/images/icons/check-icon.svg') no-repeat
-        center;
-      background-size: 1.3rem 0.9rem;
+    label {
+      &[id] {
+        &::before {
+          background: var(--dark) url('/images/icons/check-icon.svg') no-repeat
+            center;
+          background-size: 1.3rem 0.9rem;
+        }
+      }
     }
   }
 }

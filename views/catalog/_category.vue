@@ -16,6 +16,7 @@
       <div class="catalog__body">
         <CatalogFiltersProducts
           v-if="currentCategory"
+          :key="updateValueFilterKey"
           :filterInitialList="currentCategory.attributes4filter"
           :subCategoriesList="currentCategory.children"
           :filterAttributesValues="filterAttributes"
@@ -26,6 +27,7 @@
           @changeFilterAtributes="changeFilterAtributes"
           @changePriceFrom="changePriceFrom"
           @changePriceTo="changePriceTo"
+          @clearFilter="clearFilter"
         />
         <div class="catalog__content">
           <!-- <CatalogFiltersPickedTopRow /> -->
@@ -63,6 +65,10 @@
                 />
               </li>
             </ul>
+            <div
+              v-else
+              class="catalog-list-empty"
+            >Не найдено товаров по вашему запросу</div>
           </div>
           <div class="catalog__pagination">
             <paginate
@@ -77,6 +83,7 @@
               pageClass="pagination__number"
               prevClass="pagination__button"
               nextClass="pagination__button"
+              :clickHandler="pageChangedHandler"
             >
 
             </paginate>
@@ -103,6 +110,7 @@ export default {
       offset: 0,
       gridLayout: false,
       countItems: 0,
+      updateValueFilterKey: 0,
 
       filterAttributes: {},
       subCategories: [],
@@ -168,15 +176,6 @@ export default {
     },
   },
 
-  watch: {
-    currentPage() {
-      this.$nextTick(async () => {
-        this.pushQueryStateCatalog()
-        await this.fetchProducts()
-      })
-    },
-  },
-
   methods: {
     pushQueryStateCatalog() {
       const tempQueryList = {
@@ -191,7 +190,11 @@ export default {
       if (this.priceTo) {
         tempQueryList.priceTo = this.priceTo
       }
-      if (Object.keys(this.filterAttributes).length > 0) {
+      if (
+        Object.keys(this.filterAttributes).length > 0 &&
+        Object.values(this.filterAttributes).filter((el) => el.length > 0)
+          .length > 0
+      ) {
         const tempFilterList = Object.entries(this.filterAttributes).filter(
           ([_key, value]) => value.length > 0
         )
@@ -199,7 +202,7 @@ export default {
           Object.fromEntries(tempFilterList)
         )
       }
-      this.$router.push({ query: tempQueryList })
+      this.$router.replace({ query: tempQueryList })
     },
 
     async fetchProducts() {
@@ -208,9 +211,30 @@ export default {
         this.subCategories.length > 0
           ? this.subCategories
           : [this.currentCategory.id]
+
+      let calculatedFilterAtributes = {}
+      const calculatedPriceFromTo = {}
+
+      if (this.priceFrom && Number(this.priceFrom) > 0) {
+        calculatedPriceFromTo.from = this.priceFrom
+      }
+      if (this.priceTo && Number(this.priceTo) > 0) {
+        calculatedPriceFromTo.to = this.priceTo
+      }
+
+      if (Object.values(this.filterAttributes).filter((el) => el.length > 0)) {
+        calculatedFilterAtributes = Object.fromEntries(
+          Object.entries(this.filterAttributes).filter(
+            ([_key, value]) => value.length > 0
+          )
+        )
+      }
+
       const calculatedOffset = this.limit * (this.currentPage - 1)
       const [err, data] = await fetchFilteredProducts(
         searchedCategory,
+        calculatedFilterAtributes,
+        calculatedPriceFromTo,
         calculatedOffset,
         this.limit
       )
@@ -225,25 +249,49 @@ export default {
         return err
       }
     },
-    changeCategory(value) {
+    async changeCategory(value) {
       this.subCategories = value
+      this.currentPage = 1
       this.pushQueryStateCatalog()
-      this.fetchProducts()
+      await this.fetchProducts()
     },
-    changeFilterAtributes(value) {
+    async changeFilterAtributes(value) {
       this.filterAttributes = value
+      this.currentPage = 1
       this.pushQueryStateCatalog()
-      this.fetchProducts()
+      await this.fetchProducts()
     },
-    changePriceFrom(value) {
+    async changePriceFrom(value) {
       this.priceFrom = value
+      this.currentPage = 1
       this.pushQueryStateCatalog()
-      this.fetchProducts()
+      await this.fetchProducts()
     },
-    changePriceTo(value) {
+    async changePriceTo(value) {
       this.priceTo = value
+      this.currentPage = 1
       this.pushQueryStateCatalog()
-      this.fetchProducts()
+      await this.fetchProducts()
+    },
+    async clearFilter() {
+      this.subCategories = []
+      this.priceFrom = ''
+      this.priceTo = ''
+      this.currentPage = 1
+      if (this.currentCategory.attributes4fast_filter.length > 0) {
+        this.currentCategory.attributes4fast_filter.forEach((el) => {
+          this.filterAttributes[el.id] = el.filter_type === 'list' ? [] : ''
+        })
+      }
+      this.updateValueFilterKey++
+      this.$router.replace({ query: null })
+      await this.fetchProducts()
+    },
+    pageChangedHandler() {
+      this.$nextTick(async () => {
+        this.pushQueryStateCatalog()
+        await this.fetchProducts()
+      })
     },
   },
 }
@@ -784,5 +832,9 @@ export default {
   &__visited {
     padding-bottom: 0.7rem;
   }
+}
+.catalog-list-empty {
+  margin-top: 20px;
+  font-size: 18px;
 }
 </style>
