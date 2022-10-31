@@ -56,6 +56,20 @@
           </li>
         </ul>
       </div>
+      <paginate
+        v-if="pageProps.entire_block_as_slider && pageCount > 0"
+        v-model="currentPage"
+        :pageCount="pageCount"
+        :pageRange="3"
+        :marginPages="1"
+        prevText="Назад"
+        nextText="Вперед"
+        containerClass="pagination"
+        pageClass="pagination__number"
+        prevClass="pagination__button"
+        nextClass="pagination__button"
+      >
+      </paginate>
     </div>
   </section>
 </template>
@@ -65,6 +79,19 @@ export default {
   name: 'Tile',
   props: {
     solutionsData: Object,
+    pageProps: Object,
+  },
+  data() {
+    return {
+      currentPage: 1,
+      countItems: this.pageProps?.cards_before_slider,
+      limit: this.pageProps?.limit,
+    }
+  },
+  computed: {
+    pageCount() {
+      return Math.ceil(this.limit / this.countItems)
+    },
   },
 }
 </script>

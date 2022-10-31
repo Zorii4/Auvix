@@ -36,6 +36,7 @@
       <SolutionsBlocksTile
         v-if="pageProps.size === 'tile'"
         :solutionsData="solutionsData"
+        :pageProps="pageProps"
       />
     </div>
   </section>
