@@ -4,7 +4,7 @@
       <div class="scope__list-block">
         <ul class="scope__list">
           <li
-            v-for="item of solutionsData?.data"
+            v-for="item of solutionsData?.data?.slice((currentPage - 1) * countItems, currentPage * countItems)"
             :key="item.id"
           >
             <div class="article">
@@ -100,6 +100,7 @@ export default {
 .scope {
   &__list-block {
     padding-top: 4rem;
+    margin-bottom: 4rem;
 
     @media (max-width: 1199px) {
       padding-top: 3.6rem;
