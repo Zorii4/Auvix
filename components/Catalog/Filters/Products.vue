@@ -1,74 +1,21 @@
 <template>
-  <div class="catalog__filter js-modal-catalogFilter js-modal">
+  <div class="catalog__filter js-modal-catalogFilter">
     <div class="catalog__filter-inner">
-      <div class="catalog__filter-close js-close-modal">
+      <div class="catalog__filter-close">
         <!-- {{> close-button }} -->
       </div>
       <h2 class="catalog__filter-header">
         Фильтр
       </h2>
-      <form class="catalog__filter-form catalog-form-js">
-        <fieldset class="catalog__filter-group js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn tag-name-js">
-            Технология
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <!-- <div class="catalog__filter-subgroup js-accordion-content">
-                    {{#each catalogTech }}
-                        <input class="catalog__filter-checkbox-input visually-hidden" type="checkbox" id="{{this.id}}">
-                        <label class="catalog__filter-checkbox" for="{{this.id}}">
-                            <span id="tagValue">{{this.name}}</span>
-                            <span>{{this.count}}</span>
-                        </label>
-                    {{/each}}
-                </div> -->
-        </fieldset>
-        <fieldset class="catalog__filter-group js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn tag-name-js">
-            Бренд
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <label
-            class="visually-hidden"
-            for="catalogSearch"
-          >Поиск</label>
-          <div class="catalog__filter-content js-accordion-content more-button-container-js">
-            <div class="catalog__filter-search-wrapper">
-              <input
-                class="catalog__filter-search"
-                id="catalogSearch"
-                name="catalogSearch"
-                type="text"
-                placeholder="Поиск"
-              >
-              <svg>
-                <use xlink:href="#search"></use>
-              </svg>
-            </div>
-            <!-- <div class="catalog__filter-subgroup">
-                        {{#each catalogBrand }}
-                            <input class="catalog__filter-checkbox-input visually-hidden" type="checkbox" id="{{this.id}}">
-                            <label class="catalog__filter-checkbox more-button-hide-js" for="{{this.id}}">
-                                <span id="tagValue">{{this.name}}</span>
-                                <span>{{this.count}}</span>
-                            </label>
-                        {{/each}}
-                    </div> -->
-            <button class="catalog__filter-more-button more-button-js">Показать еще &nbsp;<span id="hideElementsCount"></span></button>
-          </div>
-        </fieldset>
-        <fieldset class="catalog__filter-group catalog__filter-group--price js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn">
+      <form class="catalog__filter-form">
+        <fieldset class="catalog__filter-group catalog__filter-group--price">
+          <h3 class="catalog__filter-title">
             Цена
             <svg>
               <use xlink:href="#slider-arrow"></use>
             </svg>
           </h3>
-          <div class="catalog__filter-range-block js-accordion-content">
+          <div class="catalog__filter-range-block">
             <div class="catalog__filter-range-wrapper">
               <div
                 id="catalogFilterPrice"
@@ -80,193 +27,50 @@
               <div class="catalog__filter-range-block catalog__filter-range-block--min">
                 <input
                   id="minPrice"
+                  v-model.lazy="priceFromProxy"
                   class="catalog__filter-range-input catalog__filter-range-input--min"
                   type="text"
                 >
               </div>
               <div class="catalog__filter-range-block catalog__filter-range-block--max">
                 <input
+                  v-model.lazy="priceToProxy"
                   class="catalog__filter-range-input catalog__filter-range-input--max"
                   type="text"
-                  id="maxPrice"
                 >
               </div>
             </div>
           </div>
         </fieldset>
-        <fieldset class="catalog__filter-group js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn">
-            Основные размеры
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <div class="catalog__filter-content js-accordion-content">
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle tag-name-js">
-                Соотношения сторон
-              </h4>
-              <!-- <div class="catalog__filter-subgroup">
-                            {{#each catalogRatio }}
-                                <input class="catalog__filter-checkbox-input visually-hidden" type="checkbox" id="{{this.id}}">
-                                <label class="catalog__filter-checkbox" for="{{this.id}}">
-                                    <span id="tagValue">{{this.name}}</span>
-                                </label>
-                            {{/each}}
-                        </div> -->
-            </fieldset>
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle">
-                Ширина
-              </h4>
-              <div class="catalog__filter-range-block">
-                <div class="catalog__filter-range-wrapper">
-                  <div
-                    class="catalog__filter-range"
-                    data-step="50"
-                    data-min="100"
-                    data-max="1000"
-                    id="catalogFilterWidth"
-                  ></div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--min"
-                      type="text"
-                      id="minWidth"
-                    >
-                  </div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--max"
-                      type="text"
-                      id="maxWidth"
-                    >
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle">
-                Высота
-              </h4>
-              <div class="catalog__filter-range-block">
-                <div class="catalog__filter-range-wrapper">
-                  <div
-                    class="catalog__filter-range"
-                    data-step="100"
-                    data-min="200"
-                    data-max="2000"
-                    id="catalogFilterHeight"
-                  ></div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--min"
-                      type="text"
-                      id="minHeight"
-                    >
-                  </div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--max"
-                      type="text"
-                      id="maxHeight"
-                    >
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle">
-                Диагональ изображения
-              </h4>
-              <div class="catalog__filter-range-block">
-                <div class="catalog__filter-range-wrapper">
-                  <div
-                    class="catalog__filter-range"
-                    data-step="100"
-                    data-min="300"
-                    data-max="3000"
-                    id="catalogFilterDiagonal"
-                  ></div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--min"
-                      type="text"
-                      id="minDiagonal"
-                    >
-                  </div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--max"
-                      type="text"
-                      id="maxDiagonal"
-                    >
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="catalog__filter-subgroup">
-              <h4 class="catalog__filter-subtitle">
-                Размер полотна (ширина)
-              </h4>
-              <div class="catalog__filter-range-block">
-                <div class="catalog__filter-range-wrapper">
-                  <div
-                    class="catalog__filter-range"
-                    data-step="100"
-                    data-min="400"
-                    data-max="4000"
-                    id="catalogFilterCanvas"
-                  ></div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--min"
-                      type="text"
-                      id="minCanvas"
-                    >
-                  </div>
-                  <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                    <input
-                      class="catalog__filter-range-input catalog__filter-range-input--max"
-                      type="text"
-                      id="maxCanvas"
-                    >
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-        </fieldset>
-        <fieldset class="catalog__filter-group js-accordion active">
-          <h3 class="catalog__filter-title js-accordion-btn tag-name-js">
-            Поддержка 3D
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <!-- <div class="catalog__filter-subgroup js-accordion-content">
-                    {{#each catalog3D }}
-                        <input class="catalog__filter-checkbox-input visually-hidden" type="checkbox" id="{{this.id}}">
-                        <label class="catalog__filter-checkbox" for="{{this.id}}">
-                            <span id="tagValue">{{this.name}}</span>
-                        </label>
-                    {{/each}}
-                </div> -->
-        </fieldset>
-        <h3 class="catalog__filter-title catalog__filter-title--radio">
-          Спецпредложение
-          <div class="catalog__filter-radio">
-            <input
-              class="visually-hidden"
-              type="radio"
-              name="catalogSpecial"
-              id="catalogSpecial"
-            >
-            <label for="catalogSpecial"></label>
-          </div>
-        </h3>
-        <button class="catalog__filter-button button">Cбросить фильтр</button>
-        <button class="catalog__filter-mobile-button button">Показать 120 товаров</button>
+        <FormulateInput
+          v-if="subCategoriesList.length > 0"
+          v-model="subCategoriesProxy"
+          :options="subCategoriesList.map(el => ({
+            label: el.name,
+            value: el.id
+          }))"
+          :type="'checkbox'"
+          label="Категории"
+          labelClass="catalog__filter-title"
+          inputClass="catalog__filter-checkbox"
+        />
+        <FormulateInput
+          v-for="filterItem of mappedFilterList"
+          :key="filterItem.id"
+          :options="filterItem.list_values"
+          :type="'checkbox'"
+          :value="filterAttributesValues[filterItem.id]"
+          :label="filterItem.name"
+          labelClass="catalog__filter-title"
+          inputClass="catalog__filter-checkbox"
+          @input="changeFilterAttributesValues(filterItem.id, $event)"
+        />
+        <button
+          type="button"
+          class="catalog__filter-button button"
+          @click.prevent="clearFilter"
+        >Cбросить фильтр</button>
+        <button class="catalog__filter-mobile-button button">Показать товары</button>
       </form>
     </div>
   </div>
@@ -275,10 +79,82 @@
 <script>
 export default {
   name: 'CatalogFilter',
+
+  props: {
+    filterInitialList: {
+      type: Array,
+      default: () => [],
+    },
+    subCategoriesList: {
+      type: Array,
+      default: () => [],
+    },
+    filterAttributesValues: {
+      type: Object,
+      required: true,
+    },
+    subCategoriesValue: {
+      type: Array,
+      required: true,
+    },
+    priceFrom: {
+      type: [Number, String],
+      required: true,
+    },
+    priceTo: {
+      type: [Number, String],
+      required: true,
+    },
+  },
+
+  computed: {
+    mappedFilterList() {
+      return this.filterInitialList.filter((el) => el.list_values[0] !== '')
+    },
+
+    subCategoriesProxy: {
+      get() {
+        return this.subCategoriesValue
+      },
+      set(value) {
+        this.$emit('changeCategory', value)
+      },
+    },
+    priceFromProxy: {
+      get() {
+        return this.priceFrom
+      },
+      set(value) {
+        this.$emit('changePriceFrom', value)
+      },
+    },
+    priceToProxy: {
+      get() {
+        return this.priceTo
+      },
+      set(value) {
+        this.$emit('changePriceTo', value)
+      },
+    },
+  },
+
+  methods: {
+    changeFilterAttributesValues(key, value) {
+      if (value !== false) {
+        this.$emit('changeFilterAtributes', {
+          ...this.filterAttributesValues,
+          [key]: value,
+        })
+      }
+    },
+    clearFilter() {
+      this.$emit('clearFilter')
+    },
+  },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .catalog {
   &__filter {
     grid-column: span 3;
@@ -418,7 +294,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 2rem;
-
+    margin-bottom: 14px;
     font-weight: 400;
     font-size: 2.4rem;
     line-height: 1.2;
@@ -482,37 +358,43 @@ export default {
     }
 
     &[disabled]:checked + .catalog__filter-checkbox {
-      &::before {
-        background: var(--light-grey) url('/images/icons/check-icon-gray.svg')
-          no-repeat center;
+      label {
+        &::before {
+          background: var(--light-grey) url('/images/icons/check-icon-gray.svg')
+            no-repeat center;
+        }
       }
     }
   }
 
   &__filter-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
+    label {
+      &[id] {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        margin-bottom: 20px;
+        font-size: 1.6rem;
+        line-height: 1.25;
 
-    font-size: 1.6rem;
-    line-height: 1.25;
+        cursor: pointer;
 
-    cursor: pointer;
+        span {
+          color: var(--jack-grey);
+        }
 
-    span {
-      color: var(--jack-grey);
-    }
+        &::before {
+          content: '';
 
-    &::before {
-      content: '';
+          width: 2.4rem;
+          height: 2.4rem;
 
-      width: 2.4rem;
-      height: 2.4rem;
+          border-radius: 0.8rem;
+          background-color: var(--extra-light-gray);
 
-      border-radius: 0.8rem;
-      background-color: var(--extra-light-gray);
-
-      transition: 0.3s;
+          transition: 0.3s;
+        }
+      }
     }
   }
 
@@ -755,6 +637,28 @@ export default {
 
     @media (max-width: 767px) {
       display: block;
+    }
+  }
+}
+
+.catalog__filter-checkbox {
+  input {
+    @include visuallyHidden();
+  }
+
+  label {
+    cursor: pointer;
+  }
+
+  &[data-has-value='true'] {
+    label {
+      &[id] {
+        &::before {
+          background: var(--dark) url('/images/icons/check-icon.svg') no-repeat
+            center;
+          background-size: 1.3rem 0.9rem;
+        }
+      }
     }
   }
 }
