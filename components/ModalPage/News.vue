@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'News',
   props: {
@@ -60,11 +62,11 @@ export default {
     )
   },
   computed: {
+    ...mapState({
+      interactiveData: (state) => state.interactive.interactiveData,
+    }),
     newsData() {
-      return this.$store.state.interactive?.interactiveData[this.idNumber]
-    },
-    idNumber() {
-      return Number(this.pageProps.id)
+      return this.interactiveData[this.pageProps.id]
     },
   },
 }

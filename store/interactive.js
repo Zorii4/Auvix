@@ -1,3 +1,4 @@
+import { set } from 'vue'
 import { getData } from '@/API-services/interactiveService.js'
 
 export const state = () => ({
@@ -6,7 +7,7 @@ export const state = () => ({
 
 export const mutations = {
   setInteractiveData(state, { id, data }) {
-    state.interactiveData[id] = data
+    set(state.interactiveData, id, data)
   },
 }
 
