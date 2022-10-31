@@ -100,6 +100,7 @@ export default {
 .scope {
   &__list-block {
     padding-top: 4rem;
+    margin-bottom: 4rem;
 
     @media (max-width: 1199px) {
       padding-top: 3.6rem;

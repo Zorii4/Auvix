@@ -51,10 +51,7 @@ export default {
     pageProps: Object,
   },
   fetch() {
-    return this.$store.dispatch(
-      'interactive/getInteractiveData',
-      this.pageProps.id
-    )
+    return this.$store.dispatch('solutions/getSolutionsData', this.pageProps.id)
   },
   computed: {
     // ...mapState({
