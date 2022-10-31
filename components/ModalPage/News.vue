@@ -48,27 +48,23 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
-
 export default {
   name: 'News',
   props: {
     pageProps: Object,
   },
-  fetch() {
-    return this.$store.dispatch(
+  async fetch() {
+    return await this.$store.dispatch(
       'interactive/getInteractiveData',
       this.pageProps.id
     )
   },
   computed: {
-    // ...mapState({
-    //   newsData: (state) =>
-    //     state.interactive?.interactiveData[this.pageProps.id],
-    // }),
-
     newsData() {
-      return this.$store.state.interactive?.interactiveData[this.pageProps.id]
+      return this.$store.state.interactive?.interactiveData[this.idNumber]
+    },
+    idNumber() {
+      return Number(this.pageProps.id)
     },
   },
 }

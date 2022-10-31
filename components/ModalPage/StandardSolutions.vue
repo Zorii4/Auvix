@@ -43,24 +43,26 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
-
 export default {
   name: 'StandartSolutions',
   props: {
     pageProps: Object,
   },
-  fetch() {
-    return this.$store.dispatch('solutions/getSolutionsData', this.pageProps.id)
+  async fetch() {
+    return await this.$store.dispatch(
+      'interactive/getInteractiveData',
+      this.pageProps.id
+    )
   },
   computed: {
-    // ...mapState({
-    //   solutionsData: (state) =>
-    //     state.interactive?.interactiveData[this.pageProps.id],
-    // }),
-
     solutionsData() {
-      return this.$store.state.interactive?.interactiveData[this.pageProps.id]
+      return this.$store.state.interactive.interactiveData[this.idNumber]
+    },
+    idNumber() {
+      return Number(this.pageProps.id)
+    },
+    haveObjects() {
+      return this.$store.state.interactive.interactiveData
     },
   },
 }
