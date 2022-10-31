@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 
 export default {
   name: 'News',
@@ -62,9 +62,14 @@ export default {
     )
   },
   computed: {
-    ...mapState({
-      newsData: (state) => state.interactive?.interactiveData,
-    }),
+    // ...mapState({
+    //   newsData: (state) =>
+    //     state.interactive?.interactiveData[this.pageProps.id],
+    // }),
+
+    newsData() {
+      return this.$store.state.interactive?.interactiveData[this.pageProps.id]
+    },
   },
 }
 </script>

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 
 export default {
   name: 'StandartSolutions',
@@ -57,9 +57,14 @@ export default {
     )
   },
   computed: {
-    ...mapState({
-      solutionsData: (state) => state.interactive?.interactiveData,
-    }),
+    // ...mapState({
+    //   solutionsData: (state) =>
+    //     state.interactive?.interactiveData[this.pageProps.id],
+    // }),
+
+    solutionsData() {
+      return this.$store.state.interactive?.interactiveData[this.pageProps.id]
+    },
   },
 }
 </script>
