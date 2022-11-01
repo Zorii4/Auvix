@@ -36,7 +36,7 @@ env develop:
     - echo 'export ENV="develop"' >> variables
     - echo 'export DEPLOY_HOST="auvix.bikdev.ru"' >> variables
     - echo 'export DEPLOY_DIR="/var/www/frontend/auvix.bikdev.ru/"' >> variables
-    - echo 'export PM2_RESTART="pm2 restart auvix"' >> variables
+    - echo 'export PM2_RESTART="pm2 start"' >> variables
   artifacts:
     expire_in: 1 week
     paths: [variables]
