@@ -96,7 +96,7 @@ deploy:
     - rm -rf .git
     - mkdir -p static/upload
     - ${SSH} ${DEPLOY_HOST} "echo \"connected\""
-    - rsync -avqz --include-from ./backup_list --stats --delete -e "ssh -o StrictHostKeyChecking=no" . ${DEPLOY_HOST}:${DEPLOY_DIR}
+    - rsync -avqz --include-from ./.rsync_include --stats --delete -e "ssh -o StrictHostKeyChecking=no" . ${DEPLOY_HOST}:${DEPLOY_DIR}
 
 update:
   stage: docker
