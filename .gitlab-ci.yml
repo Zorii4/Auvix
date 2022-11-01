@@ -48,11 +48,10 @@ conf bikdev:
   tags: [docker]
   only: [develop]
   script:
-    - cp .bikdev.env .env
+    - cp .env.bikdev .env
   artifacts:
     paths:
       - .env
-      - docker-compose.override.yml
     expire_in: 1 week
 
 
