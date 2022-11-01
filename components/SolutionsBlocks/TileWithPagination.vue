@@ -58,6 +58,7 @@
       </div>
       <paginate
         v-if="pageProps.entire_block_as_slider && pageCount > 0"
+        :style="{display: 'flex'}"
         v-model="currentPage"
         :pageCount="pageCount"
         :pageRange="3"
