@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   server: {
-    port: 3006,
+    port: process.env.SERVER_PORT,
   },
   head: {
     title: 'auvix',
@@ -53,7 +53,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://auvix-back.bikdev.ru/api/v1/',
+    baseURL: process.env.IMAGES_DOMAIN+'/api/v1/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -68,6 +68,6 @@ export default {
   },
 
   publicRuntimeConfig: {
-    baseURLImg: process.env.IMAGES_DOMAIN_DEVELOP,
+    baseURLImg: process.env.IMAGES_DOMAIN
   },
 }

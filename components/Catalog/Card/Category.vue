@@ -35,11 +35,11 @@
               <nuxt-link :to="{name: 'CatalogByCategory',
                       params: {category: category.slug || category.id},
                       query: {subCategory: subCategory.id}
-              }">{{ subCategory.name }} <span v-if="subCategory.count">{{ subCategory.count }}</span></nuxt-link>
+              }">{{ subCategory.name }} <span v-if="subCategory.count && isShowCounters">{{ subCategory.count }}</span></nuxt-link>
             </li>
           </ul>
           <span
-            v-if="category.count"
+            v-if="category.count && isShowCounters"
             class="card-category__count"
           >{{ category.count | numberWord(['товар', 'товара', 'товаров']) }}</span>
         </div>
@@ -56,6 +56,10 @@ export default {
     category: {
       type: Object,
       required: true,
+    },
+    isShowCounters: {
+      type: Boolean,
+      default: true,
     },
   },
 }
