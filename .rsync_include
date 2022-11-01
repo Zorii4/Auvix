@@ -1,0 +1,8 @@
+ecosystem.config.js
+.env
+node_modules
+.nuxt
+nuxt.config.js
+package.json
+package-lock.json
+static
