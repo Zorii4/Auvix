@@ -33,10 +33,14 @@
         v-if="pageProps.size === 'rubrics'"
         :solutionsData="solutionsData"
       />
-      <SolutionsBlocksTile
-        v-if="pageProps.size === 'tile'"
+      <SolutionsBlocksTileWithPagination
+        v-if="pageProps.size === 'tile' && pageProps.entire_block_as_slider"
         :solutionsData="solutionsData"
         :pageProps="pageProps"
+      />
+      <SolutionsBlocksTileWithoutPagination
+        v-if="pageProps.size === 'tile' && !pageProps.entire_block_as_slider"
+        :solutionsData="solutionsData"
       />
     </div>
   </section>
