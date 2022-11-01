@@ -54,6 +54,7 @@ export default {
   },
 
   async fetch() {
+    // Получение всех брендов
     const [err, data] = await fetchBrands()
     if (data) {
       this.allBrands = data

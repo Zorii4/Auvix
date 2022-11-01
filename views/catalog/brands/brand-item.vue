@@ -16,6 +16,29 @@
         </div>
       </div>
     </section>
+    <section
+      v-if="currentProjectCategories.length"
+      class="partners-single__categories"
+    >
+      <div class="container">
+        <h2 class="partners-single__categories-title section-title">Категории бренда</h2>
+        <div class="categories__categories-list">
+
+          <ul class="categories-list">
+            <li
+              v-for="category in currentProjectCategories"
+              :key="category.id"
+              class="categories-list__item-wrapper"
+            >
+              <CatalogCardCategory
+                :isShowCounters="false"
+                :category="category"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -31,6 +54,10 @@ export default {
   },
 
   async fetch() {
+    // Получение списка категорий для парсинга внутри детальной страницы бренда и отображения, привяззных к бренду категорий
+    if (!this.categoriesList.length) {
+      await this.$store.dispatch('catalog/fetchCategoriesList')
+    }
     const brandSlug = this.$route.params.slug
     if (brandSlug) {
       const [err, brand] = await fetchBrandById(brandSlug)
@@ -75,7 +102,7 @@ export default {
           id: this.currentBrand.id || null,
           title: this.currentBrand.header_2 || null,
           sub_title: this.currentBrand.text_2 || null,
-          description: this.currentBrand.description || null,
+          description: this.currentBrand.description_2 || null,
           paragraphs: [],
           steps: this.benefitSteps,
         }
@@ -92,6 +119,32 @@ export default {
         }))
       }
       return null
+    },
+    categoriesList() {
+      return this.$store.state.catalog.categoriesList
+    },
+    currentProjectCategories() {
+      if (
+        this.currentBrand &&
+        'categories' in this.currentBrand &&
+        this.categoriesList.length
+      ) {
+        return this.categoriesList
+          .filter(
+            (el) =>
+              this.currentBrand.categories.includes(el.id) ||
+              el.children.filter((subEl) =>
+                this.currentBrand.categories.includes(subEl.id)
+              ).length
+          )
+          .map((el) => ({
+            ...el,
+            children: el.children.filter((el) =>
+              this.currentBrand.categories.includes(el.id)
+            ),
+          }))
+      }
+      return []
     },
   },
 }
@@ -169,6 +222,26 @@ export default {
         margin-top: 0.5rem;
       }
     }
+  }
+}
+.categories-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 0.4rem;
+  margin-bottom: -0.4rem;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  &__item-wrapper {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 0.4rem;
   }
 }
 </style>
