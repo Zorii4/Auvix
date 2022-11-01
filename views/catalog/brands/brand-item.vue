@@ -75,7 +75,7 @@ export default {
           id: this.currentBrand.id || null,
           title: this.currentBrand.header_2 || null,
           sub_title: this.currentBrand.text_2 || null,
-          description: this.currentBrand.description || null,
+          description: this.currentBrand.description_2 || null,
           paragraphs: [],
           steps: this.benefitSteps,
         }
