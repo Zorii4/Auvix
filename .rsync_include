@@ -1,6 +1,6 @@
 ecosystem.config.js
 .env
-node_modules
+node_modules/nuxt
 .nuxt
 nuxt.config.js
 package.json
