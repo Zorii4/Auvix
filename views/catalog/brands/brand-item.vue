@@ -132,15 +132,17 @@ export default {
         return this.categoriesList
           .filter(
             (el) =>
-              this.currentBrand.categories.includes(el.id) ||
+              this.currentBrand.categories.map((el) => el.id).includes(el.id) ||
               el.children.filter((subEl) =>
-                this.currentBrand.categories.includes(subEl.id)
+                this.currentBrand.categories
+                  .map((el) => el.id)
+                  .includes(subEl.id)
               ).length
           )
           .map((el) => ({
             ...el,
             children: el.children.filter((el) =>
-              this.currentBrand.categories.includes(el.id)
+              this.currentBrand.categories.map((el) => el.id).includes(el.id)
             ),
           }))
       }
