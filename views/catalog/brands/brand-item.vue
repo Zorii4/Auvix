@@ -71,6 +71,19 @@ export default {
     // TODO Сделать редирект на страницу ошибки, если нет id
   },
 
+  head() {
+    return {
+      title: this.currentBrand?.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.currentBrand?.description,
+        },
+      ],
+    }
+  },
+
   computed: {
     brandTopSliderData() {
       if (this.currentBrand) {
