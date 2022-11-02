@@ -44,7 +44,7 @@
         :pageProps="pageProps"
       />
       <TextBlocksWithStepsStandart
-        v-if="pageProps.varition ==='in-four-col-standard'"
+        v-if="pageProps.variation ==='in-four-col-standard'"
         :pageProps="pageProps"
       />
     </div>
