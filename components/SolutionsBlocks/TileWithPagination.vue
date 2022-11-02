@@ -56,21 +56,23 @@
           </li>
         </ul>
       </div>
-      <paginate
-        v-if="pageProps.entire_block_as_slider && pageCount > 0"
-        :style="{display: 'flex'}"
-        v-model="currentPage"
-        :pageCount="pageCount"
-        :pageRange="3"
-        :marginPages="1"
-        prevText="Назад"
-        nextText="Вперед"
-        containerClass="pagination__solutions"
-        pageClass="pagination__number"
-        prevClass="pagination__button-prev"
-        nextClass="pagination__button-next"
-      >
-      </paginate>
+      <client-only>
+        <paginate
+          v-if="pageProps.entire_block_as_slider && pageCount > 0"
+          :style="{display: 'flex'}"
+          v-model="currentPage"
+          :pageCount="pageCount"
+          :pageRange="3"
+          :marginPages="1"
+          prevText="Назад"
+          nextText="Вперед"
+          containerClass="pagination__solutions"
+          pageClass="pagination__number"
+          prevClass="pagination__button-prev"
+          nextClass="pagination__button-next"
+        >
+        </paginate>
+      </client-only>
     </div>
   </section>
 </template>
