@@ -40,6 +40,16 @@
                 >
               </div>
             </div>
+            <CommonMultipleRangeInput
+              :min="0"
+              :max="200"
+              :step="1"
+              :ruler="true"
+              :label="true"
+              :minValue="priceFrom"
+              :maxValue="priceTo"
+              @input="updateValuesPrice"
+            />
           </div>
         </fieldset>
         <FormulateInput
@@ -149,6 +159,9 @@ export default {
     },
     clearFilter() {
       this.$emit('clearFilter')
+    },
+    updateValuesPrice() {
+      this.$emit('updateValuesPrice')
     },
   },
 }

@@ -28,6 +28,7 @@
           @changePriceFrom="changePriceFrom"
           @changePriceTo="changePriceTo"
           @clearFilter="clearFilter"
+          @updateValuesPrice="updateValuesPrice"
         />
         <div class="catalog__content">
           <!-- <CatalogFiltersPickedTopRow /> -->
@@ -114,8 +115,8 @@ export default {
 
       filterAttributes: {},
       subCategories: [],
-      priceFrom: '',
-      priceTo: '',
+      priceFrom: 0,
+      priceTo: 200,
 
       fetchedItems: [],
       currentCategory: null,
@@ -292,6 +293,9 @@ export default {
         this.pushQueryStateCatalog()
         await this.fetchProducts()
       })
+    },
+    updateValuesPrice() {
+      console.log('updateValue')
     },
   },
 }
