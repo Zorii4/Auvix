@@ -24,8 +24,8 @@
                       <p>{{item.short_description}}</p>
                     </div>
                     <router-link
-                      class="article__link"
                       :to="`decisions/${item.code}`"
+                      class="article__link"
                     >
                       Подробнее
                       <svg
