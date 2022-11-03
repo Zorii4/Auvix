@@ -12,7 +12,7 @@
                 <div class="article__inner">
                   <div class="article__text-column">
                     <div class="article__text-header">
-                      <time class="article__text-date">{{item.last_published_at | formatData('toYear')}}</time>
+                      <!-- <span class="article__text-date">{{item.last_published_at | formatData('toYear')}}</span> -->
                       <span
                         v-for="el of item.rubrics"
                         :key="el.id"
