@@ -57,8 +57,6 @@
         </ul>
       </div>
       <client-only>
-        {{ pageProps.entire_block_as_slider }}
-        {{ pageCount }}
         <paginate
           v-if="pageProps.entire_block_as_slider && pageCount > 0"
           v-model="currentPage"
