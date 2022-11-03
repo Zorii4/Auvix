@@ -234,4 +234,51 @@ export default {
     gap: 1.2rem;
   }
 }
+
+.products__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 48.8rem;
+  padding: 4rem 2.8rem 2.8rem;
+  border-radius: 1.6rem;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  @media (max-width: 1599px) {
+    min-height: 40.8rem;
+    padding: 3.2rem 2.4rem 2.4rem;
+  }
+
+  @media (max-width: 1199px) {
+    min-height: 32.4rem;
+    padding: 2.8rem 2.4rem 2.4rem;
+  }
+
+  @media (max-width: 1023px) {
+    min-height: 36.4rem;
+  }
+
+  @media (max-width: 767px) {
+    min-height: 16rem;
+    padding: 1.2rem;
+  }
+
+  &:hover {
+    opacity: 1;
+
+    span {
+      padding-left: 10px;
+    }
+  }
+
+  div {
+    transition: 0.4s;
+  }
+
+  &:hover div {
+    transform: scale(1.2);
+  }
+}
 </style>

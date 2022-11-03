@@ -1,7 +1,7 @@
 <template>
   <div class="decisions">
     <router-link
-      v-for="item of solutionsData?.data"
+      v-for="item of solutionsData"
       :key="item.id"
       :to="`decisions/${item.code}`"
       class="decisions__item"
@@ -41,7 +41,7 @@
 export default {
   name: 'Rubrics',
   props: {
-    solutionsData: Object,
+    solutionsData: Array,
   },
 }
 </script>

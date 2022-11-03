@@ -4,7 +4,7 @@
       <div class="scope__list-block">
         <ul class="scope__list">
           <li
-            v-for="item of solutionsData?.data.slice((currentPage - 1) * countItems, currentPage * countItems)"
+            v-for="item of solutionsData.slice((currentPage - 1) * countItems, currentPage * countItems)"
             :key="item.id"
           >
             <div class="article">
@@ -12,7 +12,7 @@
                 <div class="article__inner">
                   <div class="article__text-column">
                     <div class="article__text-header">
-                      <!-- <span class="article__text-date">{{item.last_published_at | formatData('toYear')}}</span> -->
+                      <time class="article__text-date">{{item.date | formatData('toYear')}}</time>
                       <span
                         v-for="el of item.rubrics"
                         :key="el.id"
@@ -69,6 +69,7 @@
           pageClass="pagination__number"
           prevClass="pagination__button-prev"
           nextClass="pagination__button-next"
+          :clickHandler="clickCallback"
         >
         </paginate>
       </client-only>
@@ -81,7 +82,7 @@ export default {
   name: 'TileWithPagination',
   props: {
     solutionsData: {
-      type: Object,
+      type: Array,
       required: true,
     },
     pageProps: {
@@ -99,6 +100,12 @@ export default {
   computed: {
     pageCount() {
       return Math.ceil(this.limit / this.countItems)
+    },
+  },
+
+  methods: {
+    clickCallback() {
+      return window.scrollTo(0, 0)
     },
   },
 }

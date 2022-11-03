@@ -28,21 +28,19 @@
         </svg>
       </CommonAnchor>
     </div>
-    <template v-if="solutionsData">
-      <SolutionsBlocksRubrics
-        v-if="pageProps.size === 'rubrics'"
-        :solutionsData="solutionsData"
-      />
-      <SolutionsBlocksTileWithPagination
-        v-if="pageProps.size === 'tile' && pageProps.entire_block_as_slider"
-        :solutionsData="solutionsData"
-        :pageProps="pageProps"
-      />
-      <SolutionsBlocksTileWithoutPagination
-        v-if="pageProps.size === 'tile' && !pageProps.entire_block_as_slider"
-        :solutionsData="solutionsData"
-      />
-    </template>
+    <SolutionsBlocksRubrics
+      v-if="pageProps.size === 'rubrics'"
+      :solutionsData="dateSort"
+    />
+    <SolutionsBlocksTileWithPagination
+      v-if="pageProps.size === 'tile' && pageProps.entire_block_as_slider"
+      :solutionsData="dateSort"
+      :pageProps="pageProps"
+    />
+    <SolutionsBlocksTileWithoutPagination
+      v-if="pageProps.size === 'tile' && !pageProps.entire_block_as_slider"
+      :solutionsData="dateSort"
+    />
   </section>
 </template>
 
@@ -66,6 +64,11 @@ export default {
     }),
     solutionsData() {
       return this.interactiveData[this.pageProps.id]
+    },
+    dateSort() {
+      return this.solutionsData?.data
+        .map((el) => el)
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     },
   },
 }
