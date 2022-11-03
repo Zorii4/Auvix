@@ -1,9 +1,56 @@
 <template>
   <div>
-    <ul class="services-list">
+    <ul
+      class="services-list"
+      v-if="pageProps.number_cards_before_btn > 0"
+    >
       <li
         class="services-list__item"
         v-for="item of pageProps?.service_items.slice(0, counter)"
+        :key="item.id"
+        :style="{backgroundColor: `${item.background_color}`}"
+      >
+        <CommonAnchor
+          :to="item.link_url"
+          :className="'services-list__item-link'"
+        >
+          <h2 class="services-list__item-title">{{item.title}}</h2>
+          <span
+            class="services-list__item-more"
+            v-if="item.link_url"
+          >{{item.link_name}}
+            <svg
+              width="8"
+              height="10"
+              viewBox="0 0 8 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+                fill="#202226"
+              />
+            </svg>
+          </span>
+          <p
+            class="services-list__item-text"
+            v-if="!item.link_url"
+          >{{item.description}}</p>
+        </CommonAnchor>
+        <img
+          class="services-list__item-img"
+          :src="$config.baseURLImg + item.image_url"
+          :alt="`Услуга ${item.image_alt}`"
+        >
+      </li>
+    </ul>
+    <ul
+      class="services-list"
+      v-if="pageProps.number_cards_before_btn === 0"
+    >
+      <li
+        class="services-list__item"
+        v-for="item of pageProps?.service_items"
         :key="item.id"
         :style="{backgroundColor: `${item.background_color}`}"
       >

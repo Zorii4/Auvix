@@ -43,6 +43,10 @@
         v-if="pageProps.variation === 'tiles'"
         :pageProps="pageProps"
       />
+      <TextBlocksWithStepsStandart
+        v-if="pageProps.variation ==='in-four-col-standard'"
+        :pageProps="pageProps"
+      />
     </div>
   </section>
 

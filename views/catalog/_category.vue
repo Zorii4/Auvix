@@ -72,22 +72,24 @@
             >Не найдено товаров по вашему запросу</div>
           </div>
           <div class="catalog__pagination">
-            <paginate
-              v-if="pageCount > 1 && !loading"
-              v-model="currentPage"
-              :pageCount="pageCount"
-              :pageRange="3"
-              :marginPages="2"
-              prevText="Назад"
-              nextText="Вперед"
-              containerClass="pagination"
-              pageClass="pagination__number"
-              prevClass="pagination__button"
-              nextClass="pagination__button"
-              :clickHandler="pageChangedHandler"
-            >
+            <client-only>
+              <paginate
+                v-if="pageCount > 1 && !loading"
+                v-model="currentPage"
+                :pageCount="pageCount"
+                :pageRange="3"
+                :marginPages="2"
+                prevText="Назад"
+                nextText="Вперед"
+                containerClass="pagination"
+                pageClass="pagination__number"
+                prevClass="pagination__button"
+                nextClass="pagination__button"
+                :clickHandler="pageChangedHandler"
+              >
 
-            </paginate>
+              </paginate>
+            </client-only>
           </div>
         </div>
       </div>

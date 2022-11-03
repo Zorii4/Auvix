@@ -71,6 +71,19 @@ export default {
     // TODO Сделать редирект на страницу ошибки, если нет id
   },
 
+  head() {
+    return {
+      title: this.currentBrand?.seo_title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.currentBrand?.seo_description,
+        },
+      ],
+    }
+  },
+
   computed: {
     brandTopSliderData() {
       if (this.currentBrand) {
@@ -78,7 +91,7 @@ export default {
           id: this.currentBrand.id || null,
           title: this.currentBrand.header || null,
           title_color: '#202226',
-          description: this.currentBrand.description || null,
+          description: this.currentBrand.text || null,
           description_color: '#5B5E66',
           type: 'type_text_with_accent_photo',
           background_color: '#EFF0F4',
@@ -89,7 +102,7 @@ export default {
             this.currentBrand.slider?.length > 0
               ? this.currentBrand.slider
               : null,
-          image_alt: this.currentBrand.title || null,
+          image_alt: this.currentBrand.name || null,
           logo_url: this.currentBrand.img || null,
         }
       }

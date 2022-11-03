@@ -4,7 +4,7 @@
       <div class="scope__list-block">
         <ul class="scope__list">
           <li
-            v-for="item of solutionsData?.data"
+            v-for="item of solutionsData"
             :key="item.id"
           >
             <div class="article">
@@ -64,7 +64,7 @@
 export default {
   name: 'TileWithoutPagination',
   props: {
-    solutionsData: Object,
+    solutionsData: Array,
   },
 }
 </script>

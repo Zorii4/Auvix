@@ -4,7 +4,7 @@
       <div class="scope__list-block">
         <ul class="scope__list">
           <li
-            v-for="item of solutionsData?.data.slice((currentPage - 1) * countItems, currentPage * countItems)"
+            v-for="item of solutionsData.slice((currentPage - 1) * countItems, currentPage * countItems)"
             :key="item.id"
           >
             <div class="article">
@@ -12,7 +12,7 @@
                 <div class="article__inner">
                   <div class="article__text-column">
                     <div class="article__text-header">
-                      <time class="article__text-date">{{item.last_published_at | formatData('toYear')}}</time>
+                      <time class="article__text-date">{{item.date | formatData('toYear')}}</time>
                       <span
                         v-for="el of item.rubrics"
                         :key="el.id"
@@ -24,8 +24,8 @@
                       <p>{{item.short_description}}</p>
                     </div>
                     <router-link
-                      class="article__link"
                       :to="`decisions/${item.code}`"
+                      class="article__link"
                     >
                       Подробнее
                       <svg
@@ -56,20 +56,23 @@
           </li>
         </ul>
       </div>
-      <paginate
-        v-if="pageProps.entire_block_as_slider && pageCount > 0"
-        v-model="currentPage"
-        :pageCount="pageCount"
-        :pageRange="3"
-        :marginPages="1"
-        prevText="Назад"
-        nextText="Вперед"
-        containerClass="pagination__solutions"
-        pageClass="pagination__number"
-        prevClass="pagination__button-prev"
-        nextClass="pagination__button-next"
-      >
-      </paginate>
+      <client-only>
+        <paginate
+          v-if="pageProps.entire_block_as_slider && pageCount > 0"
+          v-model="currentPage"
+          :pageCount="pageCount"
+          :pageRange="3"
+          :marginPages="1"
+          prevText="Назад"
+          nextText="Вперед"
+          containerClass="pagination__solutions"
+          pageClass="pagination__number"
+          prevClass="pagination__button-prev"
+          nextClass="pagination__button-next"
+          :clickHandler="clickCallback"
+        >
+        </paginate>
+      </client-only>
     </div>
   </section>
 </template>
@@ -78,19 +81,31 @@
 export default {
   name: 'TileWithPagination',
   props: {
-    solutionsData: Object,
-    pageProps: Object,
+    solutionsData: {
+      type: Array,
+      required: true,
+    },
+    pageProps: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
       currentPage: 1,
-      countItems: this.pageProps?.cards_before_slider,
-      limit: this.pageProps?.limit,
+      countItems: this.pageProps.cards_before_slider,
+      limit: this.pageProps.limit,
     }
   },
   computed: {
     pageCount() {
       return Math.ceil(this.limit / this.countItems)
+    },
+  },
+
+  methods: {
+    clickCallback() {
+      return window.scrollTo(0, 0)
     },
   },
 }

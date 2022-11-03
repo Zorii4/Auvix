@@ -21,12 +21,12 @@
           <li
             v-for="brand in filteredBrands"
             :key="brand.id"
-            :title="brand.title"
+            :title="brand.name"
           >
             <CatalogCardBrand
               :logoUrl="brand.img"
               :brandId="brand.slug"
-              :logoImgAlt="brand.title"
+              :logoImgAlt="brand.name"
             />
           </li>
         </template>
@@ -73,7 +73,7 @@ export default {
       if (this.pickedWords.length > 0) {
         const pattern = `[${this.pickedWords.join('')}]`
         const regExp = new RegExp(pattern, 'gi')
-        return this.allBrands.filter((el) => el.title.charAt(0).match(regExp))
+        return this.allBrands.filter((el) => el.name.charAt(0).match(regExp))
       }
       return this.allBrands
     },

@@ -49,7 +49,7 @@
                   >
                     <img
                       :src="$config.baseURLImg + item"
-                      alt=""
+                      :alt="pageProps.image_alt"
                     >
                   </swiper-slide>
                 </swiper>
@@ -98,7 +98,7 @@
               >
                 <img
                   :src="$config.baseURLImg + pageProps.image_url"
-                  alt=""
+                  :alt="pageProps.image_alt"
                 >
               </div>
             </div>
