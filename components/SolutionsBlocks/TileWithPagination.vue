@@ -57,9 +57,10 @@
         </ul>
       </div>
       <client-only>
+        {{ pageProps.entire_block_as_slider }}
+        {{ pageCount }}
         <paginate
           v-if="pageProps.entire_block_as_slider && pageCount > 0"
-          :style="{display: 'flex'}"
           v-model="currentPage"
           :pageCount="pageCount"
           :pageRange="3"
@@ -81,14 +82,20 @@
 export default {
   name: 'TileWithPagination',
   props: {
-    solutionsData: Object,
-    pageProps: Object,
+    solutionsData: {
+      type: Object,
+      required: true,
+    },
+    pageProps: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
       currentPage: 1,
-      countItems: this.pageProps?.cards_before_slider,
-      limit: this.pageProps?.limit,
+      countItems: this.pageProps.cards_before_slider,
+      limit: this.pageProps.limit,
     }
   },
   computed: {
