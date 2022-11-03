@@ -52,5 +52,40 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.range-slider {
+  .noUi-handle {
+    right: -1rem;
+    top: -0.7rem;
+
+    width: 1.6rem;
+    height: 1.6rem;
+
+    border: none;
+    border-radius: 50%;
+    box-shadow: none;
+    background-color: var(--dark);
+    cursor: pointer;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .noUi-connect {
+    background: var(--dark);
+  }
+
+  .noUi-connects {
+    border-radius: 0.3rem;
+  }
+
+  .noUi-handle-lower {
+    right: -1.2rem;
+  }
+}
 </style>

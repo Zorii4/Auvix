@@ -16,14 +16,14 @@
             </svg>
           </h3>
           <div class="catalog__filter-range-block">
+            <CommonMultipleRangeInput
+              :min="0"
+              :max="200"
+              :step="1"
+              :minValue="priceFrom"
+              :maxValue="priceTo"
+            />
             <div class="catalog__filter-range-wrapper">
-              <div
-                id="catalogFilterPrice"
-                class="catalog__filter-range"
-                data-step="1000"
-                data-min="30000"
-                data-max="3000000"
-              ></div>
               <div class="catalog__filter-range-block catalog__filter-range-block--min">
                 <input
                   id="minPrice"
@@ -40,16 +40,6 @@
                 >
               </div>
             </div>
-            <CommonMultipleRangeInput
-              :min="0"
-              :max="200"
-              :step="1"
-              :ruler="true"
-              :label="true"
-              :minValue="priceFrom"
-              :maxValue="priceTo"
-              @input="updateValuesPrice"
-            />
           </div>
         </fieldset>
         <FormulateInput
@@ -499,51 +489,6 @@ export default {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem 0.5rem;
     padding-top: 1rem;
-  }
-
-  &__filter-range {
-    position: relative;
-    left: 0.5rem;
-
-    width: calc(100% - 1.5rem);
-    grid-column: span 2;
-    height: 0.2rem;
-
-    border: none;
-
-    .noUi-handle {
-      right: -1rem;
-      top: -0.7rem;
-
-      width: 1.6rem;
-      height: 1.6rem;
-
-      border: none;
-      border-radius: 50%;
-      box-shadow: none;
-      background-color: var(--dark);
-      cursor: pointer;
-
-      &::before {
-        display: none;
-      }
-
-      &::after {
-        display: none;
-      }
-    }
-
-    .noUi-connect {
-      background: var(--dark);
-    }
-
-    .noUi-connects {
-      border-radius: 0.3rem;
-    }
-
-    .noUi-handle-lower {
-      right: -1.2rem;
-    }
   }
 
   &__filter-range-block {
