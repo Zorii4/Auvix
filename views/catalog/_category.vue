@@ -17,6 +17,7 @@
         <CatalogFiltersProducts
           v-if="currentCategory"
           :key="updateValueFilterKey"
+          class="catalog__filter-box"
           :filterInitialList="currentCategory.attributes4filter"
           :subCategoriesList="currentCategory.children"
           :filterAttributesValues="filterAttributes"
@@ -28,9 +29,16 @@
           @changePriceFrom="changePriceFrom"
           @changePriceTo="changePriceTo"
           @clearFilter="clearFilter"
+          @changeValues="updateValuesPrice"
+          @setTempValues="setTempValues"
         />
         <div class="catalog__content">
-          <!-- <CatalogFiltersPickedTopRow /> -->
+          <CatalogFiltersPickedTopRow
+            v-if="currentCategory && currentCategory.attributes4filter.length"
+            :initialFilterAttributes="currentCategory.attributes4filter"
+            :pickedAttributes="filterAttributes"
+            @updateFilterAttributes="changeFilterAtributes"
+          />
           <div class="catalog__notice">
             <p>
               В карточке отражена рекомендуемая розничная цена, точную цену можно узнать в личном кабинете или по запросу
@@ -38,17 +46,18 @@
           </div>
           <div
             v-if="!loading"
-            class="catalog__list catalog-grid-js"
+            class="catalog__list"
           >
             <ul
               v-if="fetchedItems.length > 0"
               class="catalog-list"
               :class="{'catalog-list--tile': gridLayout}"
             >
-              <li>
+              <li
+                v-for="product of fetchedItems"
+                :key="product.id"
+              >
                 <CatalogCardProduct
-                  v-for="product of fetchedItems"
-                  :key="product.id"
                   :name="product.name"
                   :productId="product.id"
                   :characteristics="product.attributes.slice(0, 5)"
@@ -116,8 +125,8 @@ export default {
 
       filterAttributes: {},
       subCategories: [],
-      priceFrom: '',
-      priceTo: '',
+      priceFrom: 0,
+      priceTo: 2000000,
 
       fetchedItems: [],
       currentCategory: null,
@@ -277,8 +286,8 @@ export default {
     },
     async clearFilter() {
       this.subCategories = []
-      this.priceFrom = ''
-      this.priceTo = ''
+      this.priceFrom = 0
+      this.priceTo = 2000000
       this.currentPage = 1
       if (this.currentCategory.attributes4fast_filter.length > 0) {
         this.currentCategory.attributes4fast_filter.forEach((el) => {
@@ -295,6 +304,18 @@ export default {
         await this.fetchProducts()
       })
     },
+    async updateValuesPrice(values) {
+      const [priceFrom, priceTo] = values
+      this.priceFrom = Math.ceil(priceFrom)
+      this.priceTo = Math.ceil(priceTo)
+      this.pushQueryStateCatalog()
+      await this.fetchProducts()
+    },
+    setTempValues(values) {
+      const [priceFrom, priceTo] = values
+      this.priceFrom = Math.ceil(priceFrom)
+      this.priceTo = Math.ceil(priceTo)
+    },
   },
 }
 </script>
@@ -302,6 +323,11 @@ export default {
 <style lang="scss">
 .catalog {
   padding: 2rem 0 6rem;
+
+  &__filter-box {
+    grid-column: span 3;
+    padding-right: 3.2rem;
+  }
 
   @media (max-width: 1599px) {
     padding-bottom: 5.6rem;

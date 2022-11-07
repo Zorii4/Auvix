@@ -1,84 +1,138 @@
 <template>
-  <div class="catalog__filter js-modal-catalogFilter">
-    <div class="catalog__filter-inner">
-      <div class="catalog__filter-close">
-        <!-- {{> close-button }} -->
-      </div>
-      <h2 class="catalog__filter-header">
-        Фильтр
-      </h2>
-      <form class="catalog__filter-form">
-        <fieldset class="catalog__filter-group catalog__filter-group--price">
-          <h3 class="catalog__filter-title">
-            Цена
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <div class="catalog__filter-range-block">
-            <div class="catalog__filter-range-wrapper">
-              <div
-                id="catalogFilterPrice"
-                class="catalog__filter-range"
-                data-step="1000"
-                data-min="30000"
-                data-max="3000000"
-              ></div>
-              <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                <input
-                  id="minPrice"
-                  v-model.lazy="priceFromProxy"
-                  class="catalog__filter-range-input catalog__filter-range-input--min"
-                  type="text"
+  <div class="catalog">
+    <div class="catalog__filter">
+      <div class="catalog__filter-inner">
+        <div class="catalog__filter-close">
+          <!-- {{> close-button }} -->
+        </div>
+        <h2 class="catalog__filter-header">
+          Фильтр
+        </h2>
+        <form class="catalog__filter-form">
+          <CommonAccordion>
+            <CommonAccordionItem :initialOpened="true">
+              <template #accordion-trigger="{ visible }">
+                <div
+                  class="catalog__accordion"
+                  :class="{'catalog__accordion--opened': visible}"
                 >
-              </div>
-              <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                <input
-                  v-model.lazy="priceToProxy"
-                  class="catalog__filter-range-input catalog__filter-range-input--max"
-                  type="text"
+                  <span class="catalog__filter-title">Цена</span>
+                  <SliderArrow />
+                </div>
+              </template>
+              <template slot="accordion-content">
+                <div class="catalog__filter-range-block catalog__item-box">
+                  <CommonMultipleRangeInput
+                    :min="0"
+                    :max="2000000"
+                    :step="1"
+                    :minValue="Number(priceFrom)"
+                    :maxValue="Number(priceTo)"
+                    @changeValues="changeValues"
+                    @setTempValues="setTempValues"
+                  />
+                  <div class="catalog__filter-range-wrapper">
+                    <div class="catalog__filter-range-block catalog__filter-range-block--min">
+                      <input
+                        id="minPrice"
+                        v-model.lazy="priceFromProxy"
+                        class="catalog__filter-range-input catalog__filter-range-input--min"
+                        type="text"
+                      >
+                    </div>
+                    <div class="catalog__filter-range-block catalog__filter-range-block--max">
+                      <input
+                        v-model.lazy="priceToProxy"
+                        class="catalog__filter-range-input catalog__filter-range-input--max"
+                        type="text"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </template>
+              <fieldset class="catalog__filter-group catalog__filter-group--price">
+              </fieldset>
+            </CommonAccordionItem>
+
+            <CommonAccordionItem
+              v-if="subCategoriesList.length > 0"
+              :initialOpened="true"
+            >
+              <template #accordion-trigger="{ visible }">
+                <div
+                  class="catalog__accordion"
+                  :class="{'catalog__accordion--opened': visible}"
                 >
-              </div>
+                  <span class="catalog__filter-title">Категории</span>
+                  <SliderArrow />
+                </div>
+              </template>
+              <template slot="accordion-content">
+                <div class="catalog__item-box">
+                  <FormulateInput
+                    v-model="subCategoriesProxy"
+                    :options="subCategoriesList.map(el => ({
+                  label: el.name,
+                  value: el.id
+                }))"
+                    :type="'checkbox'"
+                    inputClass="catalog__filter-checkbox"
+                  />
+                </div>
+              </template>
+            </CommonAccordionItem>
+
+            <div
+              v-if="mappedFilterList.length > 0"
+              class="catalog-filters-inputs"
+            >
+              <CommonAccordionItem
+                v-for="filterItem of mappedFilterList"
+                :key="filterItem.id"
+                :initialOpened="filterAttributesValues[filterItem.id].length > 0"
+              >
+                <template #accordion-trigger="{ visible }">
+                  <div
+                    class="catalog__accordion"
+                    :class="{'catalog__accordion--opened': visible}"
+                  >
+                    <span class="catalog__filter-title">{{filterItem.name}}</span>
+                    <SliderArrow />
+                  </div>
+                </template>
+                <template slot="accordion-content">
+                  <FormulateInput
+                    :key="filterAttributesValues[filterItem.id].length"
+                    :options="filterItem.list_values"
+                    :type="'checkbox'"
+                    :value="filterAttributesValues[filterItem.id]"
+                    inputClass="catalog__filter-checkbox"
+                    @input="changeFilterAttributesValues(filterItem.id, $event)"
+                  />
+                </template>
+              </CommonAccordionItem>
             </div>
-          </div>
-        </fieldset>
-        <FormulateInput
-          v-if="subCategoriesList.length > 0"
-          v-model="subCategoriesProxy"
-          :options="subCategoriesList.map(el => ({
-            label: el.name,
-            value: el.id
-          }))"
-          :type="'checkbox'"
-          label="Категории"
-          labelClass="catalog__filter-title"
-          inputClass="catalog__filter-checkbox"
-        />
-        <FormulateInput
-          v-for="filterItem of mappedFilterList"
-          :key="filterItem.id"
-          :options="filterItem.list_values"
-          :type="'checkbox'"
-          :value="filterAttributesValues[filterItem.id]"
-          :label="filterItem.name"
-          labelClass="catalog__filter-title"
-          inputClass="catalog__filter-checkbox"
-          @input="changeFilterAttributesValues(filterItem.id, $event)"
-        />
-        <button
-          type="button"
-          class="catalog__filter-button button"
-          @click.prevent="clearFilter"
-        >Cбросить фильтр</button>
-        <button class="catalog__filter-mobile-button button">Показать товары</button>
-      </form>
+          </CommonAccordion>
+          <button
+            type="button"
+            class="catalog__filter-button button"
+            @click.prevent="clearFilter"
+          >Cбросить фильтр</button>
+          <button class="catalog__filter-mobile-button button">Показать товары</button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import SliderArrow from '@/assets/icons/slider-arrow.svg'
 export default {
   name: 'CatalogFilter',
+
+  components: {
+    SliderArrow,
+  },
 
   props: {
     filterInitialList: {
@@ -150,6 +204,15 @@ export default {
     clearFilter() {
       this.$emit('clearFilter')
     },
+    updateValuesPrice() {
+      this.$emit('updateValuesPrice')
+    },
+    changeValues(values) {
+      this.$emit('changeValues', values)
+    },
+    setTempValues(values) {
+      this.$emit('setTempValues', values)
+    },
   },
 }
 </script>
@@ -157,9 +220,6 @@ export default {
 <style lang="scss">
 .catalog {
   &__filter {
-    grid-column: span 3;
-    padding-right: 3.2rem;
-
     @media (max-width: 1199px) {
       opacity: 0;
       visibility: hidden;
@@ -488,51 +548,6 @@ export default {
     padding-top: 1rem;
   }
 
-  &__filter-range {
-    position: relative;
-    left: 0.5rem;
-
-    width: calc(100% - 1.5rem);
-    grid-column: span 2;
-    height: 0.2rem;
-
-    border: none;
-
-    .noUi-handle {
-      right: -1rem;
-      top: -0.7rem;
-
-      width: 1.6rem;
-      height: 1.6rem;
-
-      border: none;
-      border-radius: 50%;
-      box-shadow: none;
-      background-color: var(--dark);
-      cursor: pointer;
-
-      &::before {
-        display: none;
-      }
-
-      &::after {
-        display: none;
-      }
-    }
-
-    .noUi-connect {
-      background: var(--dark);
-    }
-
-    .noUi-connects {
-      border-radius: 0.3rem;
-    }
-
-    .noUi-handle-lower {
-      right: -1.2rem;
-    }
-  }
-
   &__filter-range-block {
     position: relative;
 
@@ -638,6 +653,39 @@ export default {
     @media (max-width: 767px) {
       display: block;
     }
+  }
+}
+
+.catalog__item-box {
+  margin-top: 14px;
+}
+
+.catalog__accordion {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+
+  svg {
+    width: 0.6rem;
+    height: 0.8rem;
+    transform: rotate(90deg);
+    transition: transform 0.4s ease !important;
+  }
+
+  &--opened {
+    svg {
+      transform-origin: 50% 40%;
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+.catalog-filters-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 5.2rem;
+  .formulate-input-element {
+    margin-top: 14px;
   }
 }
 

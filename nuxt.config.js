@@ -18,7 +18,10 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~scss/styles.scss'],
+  css: [
+    '~scss/styles.scss',
+    '~node_modules/nouislider/dist/nouislider.min.css',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -53,7 +56,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: process.env.IMAGES_DOMAIN+'/api/v1/',
+    baseURL: process.env.IMAGES_DOMAIN + '/api/v1/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -68,6 +71,6 @@ export default {
   },
 
   publicRuntimeConfig: {
-    baseURLImg: process.env.IMAGES_DOMAIN
+    baseURLImg: process.env.IMAGES_DOMAIN,
   },
 }
