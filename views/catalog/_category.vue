@@ -28,7 +28,8 @@
           @changePriceFrom="changePriceFrom"
           @changePriceTo="changePriceTo"
           @clearFilter="clearFilter"
-          @updateValuesPrice="updateValuesPrice"
+          @changeValues="updateValuesPrice"
+          @setTempValues="setTempValues"
         />
         <div class="catalog__content">
           <!-- <CatalogFiltersPickedTopRow /> -->
@@ -118,7 +119,7 @@ export default {
       filterAttributes: {},
       subCategories: [],
       priceFrom: 0,
-      priceTo: 200,
+      priceTo: 2000000,
 
       fetchedItems: [],
       currentCategory: null,
@@ -296,8 +297,17 @@ export default {
         await this.fetchProducts()
       })
     },
-    updateValuesPrice() {
-      console.log('updateValue')
+    async updateValuesPrice(values) {
+      const [priceFrom, priceTo] = values
+      this.priceFrom = Math.ceil(priceFrom)
+      this.priceTo = Math.ceil(priceTo)
+      this.pushQueryStateCatalog()
+      await this.fetchProducts()
+    },
+    setTempValues(values) {
+      const [priceFrom, priceTo] = values
+      this.priceFrom = Math.ceil(priceFrom)
+      this.priceTo = Math.ceil(priceTo)
     },
   },
 }

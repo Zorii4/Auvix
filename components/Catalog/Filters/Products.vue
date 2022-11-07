@@ -1,77 +1,81 @@
 <template>
-  <div class="catalog__filter js-modal-catalogFilter">
-    <div class="catalog__filter-inner">
-      <div class="catalog__filter-close">
-        <!-- {{> close-button }} -->
-      </div>
-      <h2 class="catalog__filter-header">
-        Фильтр
-      </h2>
-      <form class="catalog__filter-form">
-        <fieldset class="catalog__filter-group catalog__filter-group--price">
-          <h3 class="catalog__filter-title">
-            Цена
-            <svg>
-              <use xlink:href="#slider-arrow"></use>
-            </svg>
-          </h3>
-          <div class="catalog__filter-range-block">
-            <CommonMultipleRangeInput
-              :min="0"
-              :max="200"
-              :step="1"
-              :minValue="priceFrom"
-              :maxValue="priceTo"
-            />
-            <div class="catalog__filter-range-wrapper">
-              <div class="catalog__filter-range-block catalog__filter-range-block--min">
-                <input
-                  id="minPrice"
-                  v-model.lazy="priceFromProxy"
-                  class="catalog__filter-range-input catalog__filter-range-input--min"
-                  type="text"
-                >
-              </div>
-              <div class="catalog__filter-range-block catalog__filter-range-block--max">
-                <input
-                  v-model.lazy="priceToProxy"
-                  class="catalog__filter-range-input catalog__filter-range-input--max"
-                  type="text"
-                >
+  <div class="catalog">
+    <div class="catalog__filter">
+      <div class="catalog__filter-inner">
+        <div class="catalog__filter-close">
+          <!-- {{> close-button }} -->
+        </div>
+        <h2 class="catalog__filter-header">
+          Фильтр
+        </h2>
+        <form class="catalog__filter-form">
+          <fieldset class="catalog__filter-group catalog__filter-group--price">
+            <h3 class="catalog__filter-title">
+              Цена
+              <svg>
+                <use xlink:href="#slider-arrow"></use>
+              </svg>
+            </h3>
+            <div class="catalog__filter-range-block">
+              <CommonMultipleRangeInput
+                :min="0"
+                :max="2000000"
+                :step="1"
+                :minValue="Number(priceFrom)"
+                :maxValue="Number(priceTo)"
+                @changeValues="changeValues"
+                @setTempValues="setTempValues"
+              />
+              <div class="catalog__filter-range-wrapper">
+                <div class="catalog__filter-range-block catalog__filter-range-block--min">
+                  <input
+                    id="minPrice"
+                    v-model.lazy="priceFromProxy"
+                    class="catalog__filter-range-input catalog__filter-range-input--min"
+                    type="text"
+                  >
+                </div>
+                <div class="catalog__filter-range-block catalog__filter-range-block--max">
+                  <input
+                    v-model.lazy="priceToProxy"
+                    class="catalog__filter-range-input catalog__filter-range-input--max"
+                    type="text"
+                  >
+                </div>
               </div>
             </div>
-          </div>
-        </fieldset>
-        <FormulateInput
-          v-if="subCategoriesList.length > 0"
-          v-model="subCategoriesProxy"
-          :options="subCategoriesList.map(el => ({
+          </fieldset>
+          <FormulateInput
+            v-if="subCategoriesList.length > 0"
+            v-model="subCategoriesProxy"
+            :options="subCategoriesList.map(el => ({
             label: el.name,
             value: el.id
           }))"
-          :type="'checkbox'"
-          label="Категории"
-          labelClass="catalog__filter-title"
-          inputClass="catalog__filter-checkbox"
-        />
-        <FormulateInput
-          v-for="filterItem of mappedFilterList"
-          :key="filterItem.id"
-          :options="filterItem.list_values"
-          :type="'checkbox'"
-          :value="filterAttributesValues[filterItem.id]"
-          :label="filterItem.name"
-          labelClass="catalog__filter-title"
-          inputClass="catalog__filter-checkbox"
-          @input="changeFilterAttributesValues(filterItem.id, $event)"
-        />
-        <button
-          type="button"
-          class="catalog__filter-button button"
-          @click.prevent="clearFilter"
-        >Cбросить фильтр</button>
-        <button class="catalog__filter-mobile-button button">Показать товары</button>
-      </form>
+            :type="'checkbox'"
+            label="Категории"
+            labelClass="catalog__filter-title"
+            inputClass="catalog__filter-checkbox"
+          />
+          <FormulateInput
+            v-for="filterItem of mappedFilterList"
+            :key="filterItem.id"
+            :options="filterItem.list_values"
+            :type="'checkbox'"
+            :value="filterAttributesValues[filterItem.id]"
+            :label="filterItem.name"
+            labelClass="catalog__filter-title"
+            inputClass="catalog__filter-checkbox"
+            @input="changeFilterAttributesValues(filterItem.id, $event)"
+          />
+          <button
+            type="button"
+            class="catalog__filter-button button"
+            @click.prevent="clearFilter"
+          >Cбросить фильтр</button>
+          <button class="catalog__filter-mobile-button button">Показать товары</button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -152,6 +156,12 @@ export default {
     },
     updateValuesPrice() {
       this.$emit('updateValuesPrice')
+    },
+    changeValues(values) {
+      this.$emit('changeValues', values)
+    },
+    setTempValues(values) {
+      this.$emit('setTempValues', values)
     },
   },
 }

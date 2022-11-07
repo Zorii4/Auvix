@@ -13,19 +13,19 @@ export default {
 
   props: {
     minValue: {
-      type: Number,
+      type: [Number, String],
       required: true,
     },
     maxValue: {
-      type: Number,
+      type: [Number, String],
       required: true,
     },
     min: {
-      type: Number,
+      type: [Number, String],
       default: 0,
     },
     max: {
-      type: Number,
+      type: [Number, String],
       required: true,
     },
     step: {
@@ -39,21 +39,60 @@ export default {
       sliderInstance: null,
     }
   },
+
+  watch: {
+    minValue(value) {
+      this.setMinMaxValueRange(value, this.maxValue)
+    },
+    maxValue(value) {
+      this.setMinMaxValueRange(this.minValue, value)
+    },
+  },
   mounted() {
     const slierContainer = this.$refs.rangeSlider
-    this.sliderInstance = nouislider.create(slierContainer, {
-      start: [this.minValue, this.maxValue],
-      range: {
-        min: [this.min],
-        max: [this.max],
-      },
-    })
+    this.initRangeSlider(slierContainer)
+    this.sliderInstance.on('change', this.emitChangedNewValues)
+    // TODO improve perfomance for slide event
+    this.sliderInstance.on('slide', this.emitTempNewValues)
+  },
+
+  methods: {
+    initRangeSlider(rangeContainer) {
+      this.sliderInstance = nouislider.create(rangeContainer, {
+        start: [this.minValue, this.maxValue],
+        connect: true,
+        step: this.step,
+        range: {
+          min: [this.min],
+          max: [this.max],
+        },
+      })
+    },
+    setMinMaxValueRange(min, max) {
+      if (this.sliderInstance) {
+        this.sliderInstance.set([min, max])
+      }
+    },
+    emitChangedNewValues(values) {
+      this.$emit('changeValues', values)
+    },
+    emitTempNewValues(values) {
+      this.$emit('setTempValues', values)
+    },
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .range-slider {
+  position: relative;
+  left: 0.5rem;
+  margin: 10px 0;
+  width: calc(100% - 1.5rem);
+  grid-column: span 2;
+  height: 0.2rem;
+
+  border: none;
   .noUi-handle {
     right: -1rem;
     top: -0.7rem;
@@ -77,7 +116,7 @@ export default {
   }
 
   .noUi-connect {
-    background: var(--dark);
+    background-color: var(--dark);
   }
 
   .noUi-connects {
