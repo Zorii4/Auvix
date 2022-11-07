@@ -102,6 +102,7 @@
                 </template>
                 <template slot="accordion-content">
                   <FormulateInput
+                    :key="filterAttributesValues[filterItem.id].length"
                     :options="filterItem.list_values"
                     :type="'checkbox'"
                     :value="filterAttributesValues[filterItem.id]"

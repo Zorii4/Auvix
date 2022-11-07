@@ -33,7 +33,12 @@
           @setTempValues="setTempValues"
         />
         <div class="catalog__content">
-          <!-- <CatalogFiltersPickedTopRow /> -->
+          <CatalogFiltersPickedTopRow
+            v-if="currentCategory && currentCategory.attributes4filter.length"
+            :initialFilterAttributes="currentCategory.attributes4filter"
+            :pickedAttributes="filterAttributes"
+            @updateFilterAttributes="changeFilterAtributes"
+          />
           <div class="catalog__notice">
             <p>
               В карточке отражена рекомендуемая розничная цена, точную цену можно узнать в личном кабинете или по запросу
