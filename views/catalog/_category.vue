@@ -17,6 +17,7 @@
         <CatalogFiltersProducts
           v-if="currentCategory"
           :key="updateValueFilterKey"
+          class="catalog__filter-box"
           :filterInitialList="currentCategory.attributes4filter"
           :subCategoriesList="currentCategory.children"
           :filterAttributesValues="filterAttributes"
@@ -40,17 +41,18 @@
           </div>
           <div
             v-if="!loading"
-            class="catalog__list catalog-grid-js"
+            class="catalog__list"
           >
             <ul
               v-if="fetchedItems.length > 0"
               class="catalog-list"
               :class="{'catalog-list--tile': gridLayout}"
             >
-              <li>
+              <li
+                v-for="product of fetchedItems"
+                :key="product.id"
+              >
                 <CatalogCardProduct
-                  v-for="product of fetchedItems"
-                  :key="product.id"
                   :name="product.name"
                   :productId="product.id"
                   :characteristics="product.attributes.slice(0, 5)"
@@ -279,8 +281,8 @@ export default {
     },
     async clearFilter() {
       this.subCategories = []
-      this.priceFrom = ''
-      this.priceTo = ''
+      this.priceFrom = 0
+      this.priceTo = 2000000
       this.currentPage = 1
       if (this.currentCategory.attributes4fast_filter.length > 0) {
         this.currentCategory.attributes4fast_filter.forEach((el) => {
@@ -316,6 +318,11 @@ export default {
 <style lang="scss">
 .catalog {
   padding: 2rem 0 6rem;
+
+  &__filter-box {
+    grid-column: span 3;
+    padding-right: 3.2rem;
+  }
 
   @media (max-width: 1599px) {
     padding-bottom: 5.6rem;
