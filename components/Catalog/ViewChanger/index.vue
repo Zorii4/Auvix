@@ -1,9 +1,15 @@
 <template>
   <div class="catalog__content-grid-filter">
-    <button class="active grid-row-js">
+    <button
+      :class="{'active' : currentLayoutType === 'row'}"
+      @click.prevent="changeCatalogLayout('row')"
+    >
       <GridFilterRowIcon />
     </button>
-    <button class="grid-tile-js">
+    <button
+      :class="{'active' : currentLayoutType === 'tile'}"
+      @click.prevent="changeCatalogLayout('tile')"
+    >
       <GridFilterTileIcon />
     </button>
   </div>
@@ -19,8 +25,24 @@ export default {
     GridFilterRowIcon,
     GridFilterTileIcon,
   },
+
+  props: {
+    currentLayoutType: {
+      type: String,
+      required: true,
+    },
+  },
+
+  methods: {
+    changeCatalogLayout(type) {
+      this.$emit('changeLayoutCatalog', type)
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+.catalog__content-grid-filter button.active svg {
+  fill: var(--jack-grey);
+}
 </style>

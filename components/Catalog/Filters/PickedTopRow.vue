@@ -1,5 +1,8 @@
 <template>
-  <div class="catalog__content-filter-bottom">
+  <div
+    v-if="mappedPickedFilterAttributes.length > 0"
+    class="catalog__content-filter-bottom"
+  >
     <ul class="catalog__content-filter-tags">
       <div
         v-for="filterAttribute of mappedPickedFilterAttributes"

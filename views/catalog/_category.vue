@@ -33,12 +33,23 @@
           @setTempValues="setTempValues"
         />
         <div class="catalog__content">
-          <CatalogFiltersPickedTopRow
-            v-if="currentCategory && currentCategory.attributes4filter.length"
-            :initialFilterAttributes="currentCategory.attributes4filter"
-            :pickedAttributes="filterAttributes"
-            @updateFilterAttributes="changeFilterAtributes"
-          />
+          <div class="catalog__content-filter">
+            <div class="catalog__content-filter-top">
+              <div class="catalog__content-select-wrapper">
+                <!-- TODO Сортировка по Моделям и производителям -->
+              </div>
+              <CatalogViewChanger
+                :currentLayoutType="layoutType"
+                @changeLayoutCatalog="changeLayoutType"
+              />
+            </div>
+            <CatalogFiltersPickedTopRow
+              v-if="currentCategory && currentCategory.attributes4filter.length"
+              :initialFilterAttributes="currentCategory.attributes4filter"
+              :pickedAttributes="filterAttributes"
+              @updateFilterAttributes="changeFilterAtributes"
+            />
+          </div>
           <div class="catalog__notice">
             <p>
               В карточке отражена рекомендуемая розничная цена, точную цену можно узнать в личном кабинете или по запросу
@@ -51,7 +62,7 @@
             <ul
               v-if="fetchedItems.length > 0"
               class="catalog-list"
-              :class="{'catalog-list--tile': gridLayout}"
+              :class="{'catalog-list--tile': layoutType === 'tile'}"
             >
               <li
                 v-for="product of fetchedItems"
@@ -114,12 +125,11 @@ export default {
   data() {
     return {
       currentPage: 1,
-
+      layoutType: 'row',
       loading: false,
 
-      limit: 10,
+      limit: 12,
       offset: 0,
-      gridLayout: false,
       countItems: 0,
       updateValueFilterKey: 0,
 
@@ -141,6 +151,7 @@ export default {
     const filterAttributes = this.$route.query.filterAttributes
     const priceFrom = this.$route.query.priceFrom
     const priceTo = this.$route.query.priceTo
+    const layoutType = this.$route.query.view
     const [categoryErr, categoryData] = await fetchCategoryById(categoryId)
     console.error(categoryErr)
     if (categoryData) {
@@ -154,6 +165,9 @@ export default {
           )
         })
       }
+    }
+    if (layoutType) {
+      this.layoutType = layoutType
     }
     if (subCategoryId && String(subCategoryId).includes(',')) {
       this.subCategories = subCategoryId.split(',')
@@ -188,9 +202,14 @@ export default {
   },
 
   methods: {
+    changeLayoutType(type) {
+      this.layoutType = type
+      this.pushQueryStateCatalog()
+    },
     pushQueryStateCatalog() {
       const tempQueryList = {
         page: this.currentPage,
+        view: this.layoutType,
       }
       if (this.subCategories.length > 0) {
         tempQueryList.subCategory = this.subCategories.join(',')
@@ -647,119 +666,6 @@ export default {
       margin-left: 2rem;
       margin-right: 2rem;
     }
-  }
-
-  &__content-filter-tags {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-
-    @media (max-width: 1023px) {
-      gap: 0.8rem;
-    }
-
-    @media (max-width: 767px) {
-      overflow-x: scroll;
-      -ms-overflow-style: none;
-      flex-wrap: nowrap;
-
-      &::-webkit-scrollbar {
-        height: 0;
-      }
-    }
-  }
-
-  &__content-filter-tag-wrapper {
-    flex-shrink: 0;
-  }
-
-  &__content-filter-tag {
-    display: flex;
-    align-items: center;
-    padding: 0.6rem 0.6rem 0.6rem 1.2rem;
-
-    border-radius: 4rem;
-    background-color: var(--extra-light-gray);
-
-    font-size: 1.6rem;
-    line-height: 1.25;
-
-    @media (max-width: 1023px) {
-      font-size: 1.4rem;
-    }
-  }
-
-  &__content-filter-tag-name {
-    color: var(--jack-grey);
-
-    @media (max-width: 1023px) {
-      margin-right: 0.4rem;
-    }
-  }
-
-  &__content-filter-tag-value {
-    margin-left: 0.4rem;
-    margin-right: 0.8rem;
-
-    @media (max-width: 1023px) {
-      display: none;
-    }
-  }
-
-  &__content-filter-tag-delete {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 2.4rem;
-    height: 2.4rem;
-
-    border-radius: 50%;
-    background-color: var(--border-grey);
-
-    @media (max-width: 1023px) {
-      width: 2rem;
-      height: 2rem;
-    }
-
-    svg {
-      width: 1rem;
-      height: 1rem;
-      stroke: var(--dark);
-
-      @media (max-width: 1023px) {
-        width: 0.8rem;
-        height: 0.8rem;
-      }
-    }
-
-    &--black {
-      background-color: var(--dark);
-
-      svg {
-        stroke: #fff;
-      }
-    }
-  }
-
-  &__content-filter-tag-show {
-    @extend .catalog__content-filter-tag;
-  }
-
-  &__content-filter-tag-show-text {
-    margin-right: 0.8rem;
-    cursor: pointer;
-
-    @media (max-width: 1023px) {
-      margin-right: 0.4rem;
-    }
-  }
-
-  &__content-filter-tag-more {
-    @extend .catalog__content-filter-tag-delete;
-
-    background: transparent;
-    cursor: pointer;
   }
 
   &__content-filter-reset {
