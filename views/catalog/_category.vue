@@ -68,7 +68,7 @@
                   }"
                   :previwImageUrl="product.image_short_url"
                   :articleCode="product.article || product.vendor_code"
-                  :price="product.price_retail"
+                  :price="product.price_retail_rub"
                   :currency="product.currency_name"
                   :needPriceRequets="!!product.need_request_price"
                 />
