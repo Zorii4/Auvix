@@ -9,33 +9,41 @@
           :productName='product.name'
           :currecy="product.currency_name"
           :productMainImageUrl="product.image_main_url"
+          :productDescription="product.description"
         />
       </div>
     </section>
-    <!-- <div class="product__tabs">
+    <div class="product__tabs">
       <div class="container">
-        {{> tabs tabId=true data=productTabs gap=40 gaps='1280:40,1024:28,280:20' }}
+        <CommonTabs
+          :pickedTab="currentTab"
+          :tabsData="tabsList"
+          @changeTab="changeTab"
+        />
       </div>
-    </div> -->
+    </div>
     <div class="product__tabs-content">
       <section
         id="tab_1"
-        class="product__description active"
+        class="product__description"
+        :class="{active: currentTab === 'Описание'}"
       >
         <div class="container">
           <div class="product-description">
             <div class="product-description__text-column">
               <div class="product-description__text">
-                <p>
-                  {{ product.name }}
+                <p
+                  v-if="calculatedProductDescription"
+                  v-html="unEscape(calculatedProductDescription)"
+                >
                 </p>
               </div>
-              <!-- <button class="product-description__more-button">
-                                Показать полное описание
-                                <svg>
-                                    <use xlink:href="#slider-arrow"></use>
-                                </svg>
-                            </button> -->
+              <button class="product-description__more-button">
+                Показать полное описание
+                <svg>
+                  <use xlink:href="#slider-arrow"></use>
+                </svg>
+              </button>
             </div>
             <div class="product-description__img-column">
               <nuxt-link
@@ -51,128 +59,57 @@
           </div>
         </div>
       </section>
-      <!-- <section class="product__characteristic tabs-item-js" id="tab_2">
-                <div class="container">
-                    <div class="product-characteristic">
-                        <div class="product-characteristic__row">
-                            <h3 class="product-characteristic__row-title">Основные</h3>
-                            <ul class="product-characteristic__properties">
-                                {{#each mainProperty }}
-                                    <li class="product-characteristic__property-wrapper">
-                                        <div class="product-characteristic__property">
-                                            <span class="product-characteristic__property-name">{{this.name}}</span>
-                                            <span class="product-characteristic__property-value">{{this.value}}</span>
-                                        </div>
-                                    </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                        <div class="product-characteristic__row">
-                            <h3 class="product-characteristic__row-title">Экран и яркость</h3>
-                            <ul class="product-characteristic__properties">
-                                {{#each displayProperty }}
-                                    <li class="product-characteristic__property-wrapper">
-                                        <div class="product-characteristic__property">
-                                            <span class="product-characteristic__property-name">{{this.name}}</span>
-                                            <span class="product-characteristic__property-value">{{this.value}}</span>
-                                        </div>
-                                    </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                        <div class="product-characteristic__row">
-                            <h3 class="product-characteristic__row-title">Лампа</h3>
-                            <ul class="product-characteristic__properties">
-                                {{#each lampProperty }}
-                                    <li class="product-characteristic__property-wrapper">
-                                        <div class="product-characteristic__property">
-                                            <span class="product-characteristic__property-name">{{this.name}}</span>
-                                            <span class="product-characteristic__property-value">{{this.value}}</span>
-                                        </div>
-                                    </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="product__options active tabs-item-js" id="tab_3">
-                <div class="container">
-                    <div class="product-options">
-                        <h3 class="product-options__title">Сменные входные модули</h3>
-                        <ul class="product-options__list">
-                            {{#each inputModules }}
-                                <li>
-                                    <div class="product-options__item">
-                                        <div class="product-options__item-img">
-                                            <img src="{{this.img}}" alt="Фото товара">
-                                        </div>
-                                        <div class="product-options__item-content">
-                                            <div class="product-options__item-content-block">
-                                                <h4 class="product-options__item-title">{{this.title}}</h4>
-                                                <div class="product-options__item-price">
-                                                    <span class="product-options__item-price-number">{{this.price}}</span>
-                                                    <span class="product-options__item-price-recommend">рекомендованная розничная цена</span>
-                                                </div>
-                                            </div>
-                                            <button class="product-options__item-button button button--white">Запросить диллерскую цену</button>
-                                        </div>
-                                    </div>
-                                </li>
-                            {{/each}}
-                        </ul>
-                        <h3 class="product-options__title">Модули-вставки</h3>
-                        <ul class="product-options__list">
-                            {{#each insertionModules }}
-                                <li>
-                                    <div class="product-options__item">
-                                        <div class="product-options__item-img">
-                                            <img src="{{this.img}}" alt="Фото товара">
-                                        </div>
-                                        <div class="product-options__item-content">
-                                            <div class="product-options__item-content-block">
-                                                <h4 class="product-options__item-title">{{this.title}}</h4>
-                                                <div class="product-options__item-price">
-                                                    <span class="product-options__item-price-number">{{this.price}}</span>
-                                                    <span class="product-options__item-price-recommend">рекомендованная розничная цена</span>
-                                                </div>
-                                            </div>
-                                            <button class="product-options__item-button button button--white">Запросить диллерскую цену</button>
-                                        </div>
-                                    </div>
-                                </li>
-                            {{/each}}
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <section class="product__review tabs-item-js" id="tab_4">
-                <div class="container">
-                    {{> articles mod='articles--light' data=articles }}
-                </div>
-            </section>
-            <section class="product__documentation tabs-item-js" id="tab_5">
-                <div class="container">
-                    <ul class="product-documentation">
-                        {{#each documentation }}
-                            <li>
-                                <div class="product-documentation__item">
-                                    <div class="product-documentation__item-header">
-                                        <span class="product-documentation__item-format">{{format}}</span>
-                                        <span class="product-documentation__item-weight">{{weight}}</span>
-                                    </div>
-                                    <h3 class="product-documentation__item-title">{{this.title}}</h3>
-                                    <button class="product-documentation__item-button">
-                                        <svg>
-                                            <use xlink:href="#download-arrow"></use>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </li>
-                        {{/each}}
-                    </ul>
-                </div>
-            </section> -->
+      <section
+        class="product__characteristic"
+        :class="{active: currentTab === 'Характеристики'}"
+      >
+        <div class="container">
+          <div class="product-characteristic">
+            <div class="product-characteristic__row">
+              <h3 class="product-characteristic__row-title">Основные</h3>
+              <ul class="product-characteristic__properties">
+                <li
+                  v-if="product.model"
+                  class="product-characteristic__property-wrapper"
+                >
+                  <div class="product-characteristic__property">
+                    <span class="product-characteristic__property-name">Модель</span>
+                    <span class="product-characteristic__property-value">{{ product.model }}</span>
+                  </div>
+                </li>
+                <li
+                  v-if="product.vendor_code"
+                  class="product-characteristic__property-wrapper"
+                >
+                  <div class="product-characteristic__property">
+                    <span class="product-characteristic__property-name">Артикул</span>
+                    <span class="product-characteristic__property-value">{{ product.vendor_code }}</span>
+                  </div>
+                </li>
+                <li
+                  v-if="product.partnumber"
+                  class="product-characteristic__property-wrapper"
+                >
+                  <div class="product-characteristic__property">
+                    <span class="product-characteristic__property-name">Серия</span>
+                    <span class="product-characteristic__property-value">{{ product.partnumber }}</span>
+                  </div>
+                </li>
+                <li
+                  v-for="(attribute, idx) of product.attributes"
+                  :key="idx"
+                  class="product-characteristic__property-wrapper"
+                >
+                  <div class="product-characteristic__property">
+                    <span class="product-characteristic__property-name">{{ attribute.name }}</span>
+                    <span class="product-characteristic__property-value">{{ attribute.value }}</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -184,6 +121,8 @@ export default {
   data() {
     return {
       product: null,
+      currentTab: 'Описание',
+      tabsList: ['Описание', 'Характеристики'],
     }
   },
 
@@ -210,6 +149,36 @@ export default {
         },
       ],
     }
+  },
+
+  computed: {
+    calculatedProductDescription() {
+      if (
+        this.product.description &&
+        typeof this.product.description === 'string'
+      ) {
+        return this.product.description
+          .replaceAll(/&lt;/g, '<')
+          .replaceAll(/&gt;/g, '>')
+          .replaceAll(/&quot;/g, '"')
+          .replaceAll(/&#39;/g, "\\'")
+          .replaceAll(/&amp;/g, '&')
+      }
+      return null
+    },
+  },
+  methods: {
+    unEscape(htmlStr) {
+      htmlStr = htmlStr.replace(/&lt;/g, '<')
+      htmlStr = htmlStr.replace(/&gt;/g, '>')
+      htmlStr = htmlStr.replace(/&quot;/g, '"')
+      htmlStr = htmlStr.replace(/&#39;/g, "\\'")
+      htmlStr = htmlStr.replace(/&amp;/g, '&')
+      return htmlStr
+    },
+    changeTab(tab) {
+      this.currentTab = tab
+    },
   },
 }
 </script>
@@ -587,6 +556,93 @@ export default {
     img {
       max-width: 80%;
     }
+  }
+}
+.product-characteristic {
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: flex-start;
+    padding: 3.6rem 0;
+
+    border-bottom: 1px solid var(--border-grey);
+
+    @media (max-width: 1599px) {
+      padding: 3.2rem 0;
+    }
+
+    @media (max-width: 1199px) {
+      padding: 2.8rem 0;
+    }
+
+    @media (max-width: 1023px) {
+      padding: 2.4rem 0;
+    }
+
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 3.2rem 0 0;
+      border-bottom: 0;
+    }
+  }
+
+  &__row-title {
+    font-weight: 400;
+    font-size: 2.4rem;
+    line-height: 1.2;
+
+    @media (max-width: 1199px) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: 767px) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__property-wrapper {
+    border-bottom: 1px solid var(--border-grey);
+    padding: 2rem 0;
+
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+
+      @media (max-width: 767px) {
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-grey);
+      }
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  &__property {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 2rem;
+    line-height: 1.2;
+
+    @media (max-width: 1199px) {
+      font-size: 1.8rem;
+    }
+
+    @media (max-width: 767px) {
+      font-size: 1.6rem;
+    }
+  }
+
+  &__property-name {
+    color: var(--jack-grey);
+  }
+
+  &__property-value {
+    text-align: right;
   }
 }
 </style>
