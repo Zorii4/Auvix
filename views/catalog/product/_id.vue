@@ -38,12 +38,12 @@
                 >
                 </p>
               </div>
-              <button class="product-description__more-button">
+              <!-- <button class="product-description__more-button">
                 Показать полное описание
                 <svg>
                   <use xlink:href="#slider-arrow"></use>
                 </svg>
-              </button>
+              </button> -->
             </div>
             <div class="product-description__img-column">
               <nuxt-link
