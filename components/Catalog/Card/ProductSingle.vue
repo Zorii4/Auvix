@@ -7,7 +7,7 @@
       <h1 class="single-product-card__title section-title">{{ productName }}</h1>
       <span class="single-product-card__article">Артикул {{articleCode}}</span>
       <div class="single-product-card__text">
-        <p>{{ text }}</p>
+        <p v-if="anonceProductText">{{anonceProductText}}</p>
       </div>
       <p
         v-if="availability"
@@ -19,9 +19,10 @@
             <span class="single-product-card__price-discount-number">{{price}}</span>
             <span class="single-product-card__price-discount-size discount">-30%</span>
           </div> -->
-          <div class="single-product-card__price-number">
-            <span>{{ price | priceFilter }} {{ computedCurrency }}</span>
-            <!-- <a
+          <template v-if="Number(price) > 0">
+            <div class="single-product-card__price-number">
+              <span>{{ price | priceFilter }} {{ computedCurrency }}</span>
+              <!-- <a
               class="single-product-card__price-number-arrows"
               href="#currency"
             >
@@ -32,8 +33,14 @@
                 <use xlink:href="#slider-arrow"></use>
               </svg>
             </a> -->
-          </div>
-          <span class="single-product-card__price-recommend">рекомендованная розничная цена</span>
+            </div>
+            <span class="single-product-card__price-recommend">рекомендованная розничная цена</span>
+
+          </template>
+          <div
+            v-else
+            class="single-product-card__price-number"
+          >По запросу</div>
         </span>
         <div class="single-product-card__button-block">
           <button class="single-product-card__button button">Запросить дилерскую цену</button>
@@ -211,7 +218,7 @@ export default {
       type: String,
       required: true,
     },
-    text: {
+    productDescription: {
       type: String,
       required: true,
     },
@@ -222,6 +229,10 @@ export default {
     productMainImageUrl: {
       type: String,
       required: true,
+    },
+    anonceProductText: {
+      type: String,
+      default: '',
     },
   },
   computed: {

@@ -10,40 +10,31 @@
       <div class="catalog-list__item-tags">
         <div class="catalog-list__item-tags-list">
           <ul class="product-tags">
-            <!-- Большене не выпускается -->
+            <!--TODO статус Больше не не выпускается -->
+            <!-- Тэги: новый, лучшая цена и тп -->
             <li
-              v-if="false"
+              v-for="(tag, idx) of calculatedTags"
+              :key="idx"
               class="product-tags__item-wrapper"
             >
-              <div class="product-tags__item product-tags__item--grey">
-                снят с производства
-              </div>
-            </li>
-            <template v-else>
-              <!-- Тэги: новый, лучшая цена и тп -->
-              <li
-                v-for="(tag, idx) of calculatedTags"
-                :key="idx"
-                class="product-tags__item-wrapper"
+              <span
+                :class="`product-tags__item product-tags__item`"
+                :style="{'backgroundColor': tag.color}"
               >
-                <span
-                  :class="`product-tags__item product-tags__item`"
-                  :style="{'backgroundColor': tag.color}"
-                >
-                  {{tag.caption}}
-                </span>
-              </li>
-              <li class="product-tags__show-wrapper">
-                <button class="product-tags__show">
-                  0
-                </button>
-              </li>
-              <li class="product-tags__hide-wrapper">
-                <button class="product-tags__hide">
-                  <SliderArrow />
-                </button>
-              </li>
-            </template>
+                {{tag.caption}}
+              </span>
+            </li>
+            <li class="product-tags__show-wrapper">
+              <button class="product-tags__show">
+                0
+              </button>
+            </li>
+            <li class="product-tags__hide-wrapper">
+              <button class="product-tags__hide">
+                <SliderArrow />
+              </button>
+            </li>
+
           </ul>
         </div>
       </div>
@@ -69,16 +60,9 @@
       </ul>
     </div>
     <div class="catalog-list__item-price-block">
-      <!-- Большене не выпускается -->
-      <a
-        v-if="false"
-        class="catalog-list__item-button button"
-        href="#"
-      >Посмотреть аналоги</a>
-      <span
-        v-else
-        class="catalog-list__item-price"
-      >
+      <!-- TODO Большене не выпускается: Посмотреть аналоги -->
+
+      <span class="catalog-list__item-price">
         <!-- <div class="catalog-list__item-price-discount">
           <span class="catalog-list__item-price-discount-number">7 430 000 ₽</span>
           <span class="catalog-list__item-price-discount-size discount">{{discount}}</span>
@@ -87,20 +71,19 @@
           <span class="catalog-list__item-price-number">{{Math.floor(price) | priceFilter}} ₽</span>
           <span class="catalog-list__item-price-recommend">рекомендованная розничная цена</span>
         </template>
-        <template v-if="needPriceRequets">
+        <template v-if="!mappedPrice && !needPriceRequets">
           <span class="catalog-list__item-price-number">По запросу</span>
         </template>
       </span>
       <a
-        v-if="mappedPrice"
         class="catalog-list__item-button button"
         href="#price"
       >Запросить дилерскую цену</a>
-      <a
+      <!-- <a
         v-else
         class="catalog-list__item-button button"
         href="#"
-      >Узнать о поступлении</a>
+      >Узнать о поступлении</a> -->
     </div>
   </div>
 </template>
@@ -465,8 +448,8 @@ export default {
     padding: 1.4rem;
     justify-content: center;
 
-    background-color: var(--extra-light-gray);
-    border-color: var(--grey);
+    background-color: var(--extra-light-gray) !important;
+    border-color: var(--grey) !important;
 
     font-size: 1.6rem;
     line-height: 1.25;
