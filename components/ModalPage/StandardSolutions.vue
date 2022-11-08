@@ -1,46 +1,48 @@
 <template>
   <section class="index__decisions">
-    <div class="section-header">
-      <h2
-        v-if="pageProps.title"
-        class="section-header__title section-title"
-      >
-        {{pageProps.title}}
-      </h2>
-      <CommonAnchor
-        v-if="pageProps.link_url"
-        :to="pageProps.link_url"
-        :className="'header-link'"
-        class="header-link__text"
-      >
-        {{pageProps.link_title}}
-        <svg
-          width="8"
-          height="10"
-          viewBox="0 0 8 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+    <div class="wide-container">
+      <div class="section-header">
+        <h2
+          v-if="pageProps.title"
+          class="section-header__title section-title"
         >
-          <path
-            d="M8 5L-8.74228e-07 10L0 0L8 5Z"
-            fill="#202226"
-          />
-        </svg>
-      </CommonAnchor>
+          {{pageProps.title}}
+        </h2>
+        <CommonAnchor
+          v-if="pageProps.link_url"
+          :to="pageProps.link_url"
+          :className="'header-link'"
+          class="header-link__text"
+        >
+          {{pageProps.link_title}}
+          <svg
+            width="8"
+            height="10"
+            viewBox="0 0 8 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+              fill="#202226"
+            />
+          </svg>
+        </CommonAnchor>
+      </div>
+      <SolutionsBlocksRubrics
+        v-if="pageProps.size === 'rubrics'"
+        :solutionsData="dateSort"
+      />
+      <SolutionsBlocksTileWithPagination
+        v-if="pageProps.size === 'tile' && pageProps.entire_block_as_slider"
+        :solutionsData="dateSort"
+        :pageProps="pageProps"
+      />
+      <SolutionsBlocksTileWithoutPagination
+        v-if="pageProps.size === 'tile' && !pageProps.entire_block_as_slider"
+        :solutionsData="dateSort"
+      />
     </div>
-    <SolutionsBlocksRubrics
-      v-if="pageProps.size === 'rubrics'"
-      :solutionsData="dateSort"
-    />
-    <SolutionsBlocksTileWithPagination
-      v-if="pageProps.size === 'tile' && pageProps.entire_block_as_slider"
-      :solutionsData="dateSort"
-      :pageProps="pageProps"
-    />
-    <SolutionsBlocksTileWithoutPagination
-      v-if="pageProps.size === 'tile' && !pageProps.entire_block_as_slider"
-      :solutionsData="dateSort"
-    />
   </section>
 </template>
 
