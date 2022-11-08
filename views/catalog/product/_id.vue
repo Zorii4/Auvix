@@ -4,7 +4,7 @@
       <div class="wide-container">
         <CatalogCardProductSingle
           availability='в наличии на складе'
-          :price='product.price_retail'
+          :price='product.price_retail_rub'
           :articleCode="product.article || product.vendor_code"
           :productName='product.name'
           :currecy="product.currency_name"
@@ -196,6 +196,19 @@ export default {
       this.product = productData
     } else {
       console.error(productErr)
+    }
+  },
+
+  head() {
+    return {
+      title: this.product?.meta_title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.product?.meta_description,
+        },
+      ],
     }
   },
 }
