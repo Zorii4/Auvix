@@ -23,6 +23,11 @@ export default {
   props: {
     pageProps: Object,
   },
+  // computed: {
+  //   link() {
+  //     return this.pageProps.videos_cards.filter((el) => el.includes))
+  //   }
+  // }
 }
 </script>
 

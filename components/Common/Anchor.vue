@@ -170,28 +170,20 @@ export default {
 .accent-photo-button {
   align-self: flex-start;
   padding: 1.6rem 4rem;
-
   border-radius: 1.2rem;
-
   font-size: 1.8rem;
   line-height: 1.3;
 
-  @media (max-width: 1599px) {
-  }
-
-  @media (max-width: 1199px) {
-  }
-
   @media (max-width: 1023px) {
     padding: 1.6rem 3.2rem;
-
     border-radius: 0.8rem;
-
     font-size: 1.6rem;
     line-height: 1.25;
   }
 
   @media (max-width: 767px) {
+    display: block;
+    text-align: center;
     align-self: stretch;
     justify-content: center;
     padding: 1.6rem;
