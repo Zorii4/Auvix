@@ -6,10 +6,11 @@
           availability='в наличии на складе'
           :price='product.price_retail_rub'
           :articleCode="product.article || product.vendor_code"
-          :productName='product.name'
+          :productName='calculatedShortName'
           :currecy="product.currency_name"
           :productMainImageUrl="product.image_main_url"
           :productDescription="product.description"
+          :anonceProductText="product.name"
         />
       </div>
     </section>
@@ -165,6 +166,11 @@ export default {
           .replaceAll(/&amp;/g, '&')
       }
       return null
+    },
+
+    calculatedShortName() {
+      const lastPartName = this.product.model || this.product.partnumber
+      return `${this.product.short_name} ${this.product.brand.name} ${lastPartName}`
     },
   },
   methods: {

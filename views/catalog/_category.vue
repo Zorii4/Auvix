@@ -69,7 +69,7 @@
                 :key="product.id"
               >
                 <CatalogCardProduct
-                  :name="product.name"
+                  :name="calculateName(product)"
                   :productId="product.id"
                   :characteristics="product.attributes.slice(0, 5)"
                   :rawTagsInfo="{
@@ -334,6 +334,11 @@ export default {
       const [priceFrom, priceTo] = values
       this.priceFrom = Math.ceil(priceFrom)
       this.priceTo = Math.ceil(priceTo)
+    },
+
+    calculateName(item) {
+      const lastPartName = item.model || item.partnumber
+      return `${item.short_name} ${item.brand.name} ${lastPartName}`
     },
   },
 }
