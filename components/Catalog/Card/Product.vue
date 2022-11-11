@@ -38,7 +38,7 @@
           </ul>
         </div>
       </div>
-      <nuxt-link :to="{name: 'ProductPage', params: {id: productId}}">
+      <nuxt-link :to="{name: 'ProductPage', params: {idOrSlug: slug || productId,       brandName: brandName}}">
         <h3 class="catalog-list__item-title">{{ name }}</h3>
       </nuxt-link>
       <span
@@ -104,6 +104,14 @@ export default {
       required: true,
     },
     previwImageUrl: {
+      type: String,
+      required: true,
+    },
+    brandName: {
+      type: String,
+      required: true,
+    },
+    slug: {
       type: String,
       required: true,
     },

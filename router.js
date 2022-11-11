@@ -25,7 +25,7 @@ export function createRouter() {
         component: AllBrands,
       },
       {
-        path: '/product/:id',
+        path: '/product/:brandName/:idOrSlug',
         name: 'ProductPage',
         component: ProductPage,
       },

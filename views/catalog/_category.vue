@@ -77,6 +77,8 @@
                     hit: product.is_hit,
                     sale: product.is_sale,
                   }"
+                  :slug="product.slug"
+                  :brandName="product.brand.name"
                   :previwImageUrl="product.image_short_url"
                   :articleCode="product.article || product.vendor_code"
                   :price="product.price_retail_rub"

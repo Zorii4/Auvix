@@ -128,9 +128,9 @@ export default {
   },
 
   async fetch() {
-    const productId = this.$route.params.id
+    const productIdOrSlug = this.$route.params.idOrSlug
 
-    const [productErr, productData] = await fetchProductById(productId)
+    const [productErr, productData] = await fetchProductById(productIdOrSlug)
 
     if (productData) {
       this.product = productData
