@@ -21,18 +21,18 @@ export default {
   name: 'MainPage',
   head() {
     const robots = this.pageSeoData?.seo_config?.robots.map((el) => {
-      return { property: el.name, content: el.content }
+      return { name: el.name, content: el.content }
     })
     if (this.pageSeoData?.seo_config?.robots) {
       return {
         title: this.pageSeoData?.seo_config?.title || this.pageSeoData?.name,
         meta: [
           {
-            property: 'description',
+            name: 'description',
             content: this.pageSeoData?.seo_config?.description || null,
           },
           {
-            property: 'keywords',
+            name: 'keywords',
             content: this.pageSeoData?.seo_config?.keywords || null,
           },
           ...robots,
@@ -43,11 +43,11 @@ export default {
         title: this.pageSeoData?.seo_config?.title || this.pageSeoData?.name,
         meta: [
           {
-            property: 'description',
+            name: 'description',
             content: this.pageSeoData?.seo_config?.description || null,
           },
           {
-            property: 'keywords',
+            name: 'keywords',
             content: this.pageSeoData?.seo_config?.keywords || null,
           },
         ],
