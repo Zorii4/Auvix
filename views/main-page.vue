@@ -28,6 +28,7 @@ export default {
         title: this.pageSeoData?.seo_config?.title || this.pageSeoData?.name,
         meta: [
           {
+            hid: 'description',
             name: 'description',
             content: this.pageSeoData?.seo_config?.description || null,
           },
@@ -43,6 +44,7 @@ export default {
         title: this.pageSeoData?.seo_config?.title || this.pageSeoData?.name,
         meta: [
           {
+            hid: 'description',
             name: 'description',
             content: this.pageSeoData?.seo_config?.description || null,
           },
