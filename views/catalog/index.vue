@@ -3,7 +3,16 @@
     <div class="container">
       <h1 class="categories__title section-title">Каталог оборудования</h1>
     </div>
-    <section class="categories__categories-list">
+    <div
+      v-if="loadingCategories"
+      class="categories__loader"
+    >
+      <CommonLoader />
+    </div>
+    <section
+      v-else
+      class="categories__categories-list"
+    >
       <div class="container">
         <ul class="categories-list">
           <li
@@ -27,14 +36,17 @@ export default {
   data() {
     return {
       allCategories: [],
+      loadingCategories: false,
     }
   },
 
   async fetch() {
+    this.loadingCategories = true
     const [err, data] = await fetchCategories()
     if (data) {
       this.allCategories = data
     }
+    this.loadingCategories = false
     // TODO Обработка ошибки в случае если запрос вернул ошику
     console.error(err)
   },
@@ -130,6 +142,14 @@ export default {
       padding-bottom: 3.2rem;
     }
   }
+}
+
+.categories__loader {
+  width: 100%;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .categories-list {
   column-count: 3;

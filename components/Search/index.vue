@@ -11,9 +11,17 @@
       <button
         v-if="active"
         class="search__category"
+        @click="openSearchMenu"
       >
-        {{ pickedCategory }}
-        <SearchIconClear class="search__category-clear" />
+        {{ mappedCategoryName }}
+        <SearchIconClear
+          v-if="isOpenMenu"
+          class="search__category-icon clear"
+        />
+        <SearchIconArrow
+          v-else
+          class="search__category-icon select"
+        />
       </button>
       <SearchIcon
         v-if="!active"
@@ -21,9 +29,10 @@
       />
       <input
         ref="searchInput"
+        v-model="searchedQueryStringProxy"
         class="search__input"
         type="text"
-        placeholder="Поиск"
+        :placeholder="'Поиск ' + computedPlaceHolder"
       >
       <button
         v-if="active"
@@ -37,7 +46,8 @@
 
 <script>
 import SearchIcon from '@/assets/icons/Search.svg'
-import SearchIconClear from '@/assets/icons/search-clear.svg'
+import SearchIconClear from '@/assets/icons/clear.svg'
+import SearchIconArrow from '@/assets/icons/select-arrow.svg'
 
 export default {
   name: 'Search',
@@ -45,22 +55,71 @@ export default {
   components: {
     SearchIcon,
     SearchIconClear,
+    SearchIconArrow,
   },
 
-  data() {
-    return {
-      pickedCategory: 'По каталогу',
-      active: false,
-    }
+  props: {
+    isOpenMenu: {
+      type: Boolean,
+      required: true,
+    },
+    pickedCategory: {
+      type: Object,
+      default: null,
+    },
+    value: {
+      type: String,
+      required: true,
+    },
+    active: {
+      type: Boolean,
+      required: true,
+    },
   },
+
+  computed: {
+    computedPlaceHolder() {
+      return this.computedCategoryName.toLocaleLowerCase()
+    },
+    computedCategoryName() {
+      if (this.pickedCategory === null) {
+        return 'По каталогу'
+      }
+      return this.pickedCategory.name
+    },
+
+    searchedQueryStringProxy: {
+      get() {
+        return this.value
+      },
+      set(newVal) {
+        this.$emit('input', newVal)
+      },
+    },
+
+    mappedCategoryName() {
+      if (this.pickedCategory === null) {
+        return 'По каталогу'
+      }
+
+      if (this.computedCategoryName.length > 10) {
+        return this.computedCategoryName.slice(0, 10) + '...'
+      }
+      return this.computedCategoryName
+    },
+  },
+
   methods: {
     async activateSearchBar() {
       if (!this.active) {
-        this.active = true
         await this.$nextTick()
         this.$emit('activateSearchBar')
         this.$refs.searchInput.focus()
       }
+    },
+
+    openSearchMenu() {
+      this.$emit('openMenu')
     },
   },
 }
@@ -160,6 +219,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    white-space: nowrap;
     width: 160px;
     color: #fff;
     margin-right: 11px;
@@ -171,11 +231,16 @@ export default {
     flex-shrink: 0;
   }
 
-  &__category-clear {
+  &__category-icon {
     position: absolute;
     top: 50%;
     right: 12px;
     transform: translateY(-50%);
+
+    &.select {
+      width: 14px;
+      height: 14px;
+    }
   }
 }
 .active {
@@ -183,6 +248,12 @@ export default {
     padding: 3px;
     border: 1px solid #5b5e66;
     background: #fff;
+  }
+}
+
+.clear {
+  path {
+    fill: #fff;
   }
 }
 </style>

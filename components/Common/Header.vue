@@ -3,6 +3,10 @@
     class="header"
     :class="{'active-search': activeSearchBar}"
   >
+    <div
+      @click.stop="disactiveSearchBar"
+      class="header__search-bg"
+    ></div>
     <div class="header__box">
       <div class="container">
         <div class="header__inner">
@@ -14,7 +18,14 @@
             <HeaderLogo />
 
             <div class="header__search">
-              <Search @activateSearchBar='activateSearchBar' />
+              <Search
+                v-model="searchedQuery"
+                :isOpenMenu="isOpenMenu"
+                :active="activeSearchBar"
+                :pickedCategory="pickedCategory"
+                @openMenu="openSearchMenu"
+                @activateSearchBar='activateSearchBar'
+              />
             </div>
 
             <a
@@ -33,12 +44,27 @@
           </div>
         </div>
       </div>
+      <SearchVariantsForPick
+        v-if="isOpenMenu && !loadingResults"
+        class="header__search-box search__variants"
+        :pickedCategory="pickedCategory"
+        @pickCategory="pickCategory"
+        @clearCategory="clearCategory"
+      />
+      <SearchTempResults
+        v-if="loadingResults || showResultsView"
+        class="header__search-box"
+        :loadingTempResults="loadingResults"
+        :searchedTempResults="fetchedSearchResults"
+      />
     </div>
   </header>
 </template>
 
 <script>
+import { debounce } from 'debounce'
 import UserIcon from '@/assets/icons/User.svg'
+import { fetchSearchedItems } from '@/API-services/searchService'
 
 export default {
   name: 'HeaderMain',
@@ -49,15 +75,86 @@ export default {
 
   data() {
     return {
+      // search state
       activeSearchBar: false,
+      isOpenMenu: false,
+      loadingResults: false,
+
+      pickedCategory: null,
+      searchedQuery: '',
+
+      fetchedSearchResults: {},
     }
+  },
+
+  computed: {
+    showResultsView() {
+      return Object.keys(this.fetchedSearchResults).length > 0
+    },
+  },
+
+  watch: {
+    searchedQuery(newVal) {
+      this.searchResults(newVal)
+    },
+    '$route.path'() {
+      this.searchedQuery = ''
+      this.fetchedSearchResults = {}
+      this.activeSearchBar = false
+    },
   },
 
   methods: {
     activateSearchBar() {
-      console.log('wwww')
       this.activeSearchBar = true
     },
+
+    openSearchMenu() {
+      this.isOpenMenu = !this.isOpenMenu
+    },
+
+    pickCategory(category) {
+      this.pickedCategory = category
+      this.searchedQuery = ''
+      this.fetchedSearchResults = {}
+    },
+
+    clearCategory() {
+      this.pickedCategory = null
+      this.searchedQuery = ''
+      this.fetchedSearchResults = {}
+    },
+
+    disactiveSearchBar() {
+      this.searchedQuery = ''
+      this.fetchedSearchResults = {}
+      this.activeSearchBar = false
+    },
+
+    searchResults: debounce(async function (queryString) {
+      this.fetchedSearchResults = {}
+      if (queryString.length > 1) {
+        this.loadingResults = true
+        this.isOpenMenu = false
+        const categoryId =
+          this.pickedCategory === null ? '' : this.pickedCategory.id
+        const [err, results] = await fetchSearchedItems(
+          queryString,
+          'catalog',
+          categoryId
+        )
+
+        if (results) {
+          this.fetchedSearchResults = results
+        }
+        // TODO обработка ошибки
+        if (err) {
+          console.error(err)
+        }
+
+        this.loadingResults = false
+      }
+    }, 600),
   },
 }
 </script>
@@ -88,17 +185,28 @@ export default {
     }
   }
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 0vh;
-    background: #1e1e1e;
-    z-index: 5;
-    transition: 0.3s;
-    opacity: 0;
-  }
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   width: 100%;
+  //   height: 0vh;
+  //   background: #1e1e1e;
+  //   z-index: 5;
+  //   transition: 0.3s;
+  //   opacity: 0;
+  // }
+}
+
+.header__search-bg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 0vh;
+  background: #1e1e1e;
+  z-index: 5;
+  transition: 0.3s;
+  opacity: 0;
 }
 
 .header__top {
@@ -231,8 +339,17 @@ export default {
 
 .header {
   &.active-search {
-    &::before {
-      content: '';
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   top: 0;
+    //   width: 100%;
+    //   height: 100vh;
+    //   background: rgba(#1e1e1e, 0.8);
+    //   z-index: 5;
+    //   opacity: 1;
+    // }
+    .header__search-bg {
       position: absolute;
       top: 0;
       width: 100%;
@@ -255,5 +372,16 @@ export default {
       padding-bottom: 24px;
     }
   }
+}
+.header__search-box {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  z-index: 10;
+}
+
+.search__variants {
+  z-index: 20;
 }
 </style>
