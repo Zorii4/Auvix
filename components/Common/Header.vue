@@ -1,56 +1,160 @@
 <template>
-  <header class="header">
-    <div class="container">
-      <div class="header__inner">
-        <div class="header__top">
-          <div class="header__burger">
-            <!-- BURGERS -->
-          </div>
-
-          <HeaderLogo />
-
-          <div class="header__search">
-            <div class="search">
-              <form
-                class="search__form"
-                name="searchForm"
-              >
-                <SearchIcon class="search__icon" />
-                <input
-                  class="search__input"
-                  name="searchInput"
-                  type="text"
-                  placeholder="Поиск"
-                >
-              </form>
+  <header
+    class="header"
+    :class="{'active-search': activeSearchBar}"
+  >
+    <div
+      @click.stop="disactiveSearchBar"
+      class="header__search-bg"
+    ></div>
+    <div class="header__box">
+      <div class="container">
+        <div class="header__inner">
+          <div class="header__top">
+            <div class="header__burger">
+              <!-- BURGERS -->
             </div>
+
+            <HeaderLogo />
+
+            <div class="header__search">
+              <Search
+                v-model="searchedQuery"
+                :isOpenMenu="isOpenMenu"
+                :active="activeSearchBar"
+                :pickedCategory="pickedCategory"
+                @openMenu="openSearchMenu"
+                @activateSearchBar='activateSearchBar'
+              />
+            </div>
+
+            <a
+              class="header__user-navigation"
+              href="#"
+            >
+              <UserIcon />
+            </a>
+
           </div>
-
-          <a
-            class="header__user-navigation"
-            href="#"
+          <div
+            v-if="!activeSearchBar"
+            class="header__bottom"
           >
-            <UserIcon />
-          </a>
-
-        </div>
-        <div class="header__bottom">
-          <NavMenu />
+            <NavMenu />
+          </div>
         </div>
       </div>
+      <SearchVariantsForPick
+        v-if="isOpenMenu && !loadingResults"
+        class="header__search-box search__variants"
+        :pickedCategory="pickedCategory"
+        @pickCategory="pickCategory"
+        @clearCategory="clearCategory"
+      />
+      <SearchTempResults
+        v-if="loadingResults || showResultsView"
+        class="header__search-box"
+        :loadingTempResults="loadingResults"
+        :searchedTempResults="fetchedSearchResults"
+      />
     </div>
   </header>
 </template>
 
 <script>
-import SearchIcon from '@/assets/icons/Search.svg'
+import { debounce } from 'debounce'
 import UserIcon from '@/assets/icons/User.svg'
+import { fetchSearchedItems } from '@/API-services/searchService'
 
 export default {
   name: 'HeaderMain',
+
   components: {
-    SearchIcon,
     UserIcon,
+  },
+
+  data() {
+    return {
+      // search state
+      activeSearchBar: false,
+      isOpenMenu: false,
+      loadingResults: false,
+
+      pickedCategory: null,
+      searchedQuery: '',
+
+      fetchedSearchResults: {},
+    }
+  },
+
+  computed: {
+    showResultsView() {
+      return Object.keys(this.fetchedSearchResults).length > 0
+    },
+  },
+
+  watch: {
+    searchedQuery(newVal) {
+      this.searchResults(newVal)
+    },
+    '$route.path'() {
+      this.searchedQuery = ''
+      this.fetchedSearchResults = {}
+      this.activeSearchBar = false
+    },
+  },
+
+  methods: {
+    activateSearchBar() {
+      this.activeSearchBar = true
+    },
+
+    openSearchMenu() {
+      this.isOpenMenu = !this.isOpenMenu
+    },
+
+    pickCategory(category) {
+      this.pickedCategory = category
+      this.searchedQuery = ''
+      this.fetchedSearchResults = {}
+    },
+
+    clearCategory() {
+      this.pickedCategory = null
+      this.searchedQuery = ''
+      this.fetchedSearchResults = {}
+    },
+
+    disactiveSearchBar() {
+      this.searchedQuery = ''
+      this.fetchedSearchResults = {}
+      this.activeSearchBar = false
+    },
+
+    searchResults: debounce(async function (queryString) {
+      this.fetchedSearchResults = {}
+      if (queryString.length > 1) {
+        this.loadingResults = true
+        this.isOpenMenu = false
+        const categoryId =
+          this.pickedCategory === null ? '' : this.pickedCategory.id
+        const [err, results] = await fetchSearchedItems(
+          queryString,
+          'catalog',
+          categoryId
+        )
+
+        if (results) {
+          this.fetchedSearchResults = results
+        }
+        // TODO обработка ошибки
+        if (err) {
+          console.error(err)
+        }
+
+        this.loadingResults = false
+      }
+    }, 600),
   },
 }
 </script>
@@ -80,6 +184,29 @@ export default {
       height: 100vh;
     }
   }
+
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   width: 100%;
+  //   height: 0vh;
+  //   background: #1e1e1e;
+  //   z-index: 5;
+  //   transition: 0.3s;
+  //   opacity: 0;
+  // }
+}
+
+.header__search-bg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 0vh;
+  background: #1e1e1e;
+  z-index: 5;
+  transition: 0.3s;
+  opacity: 0;
 }
 
 .header__top {
@@ -164,103 +291,6 @@ export default {
   }
 }
 
-.search {
-  position: relative;
-  height: 100%;
-
-  &--icon-right {
-    .search__input {
-      padding: 1.6rem 2rem;
-    }
-
-    .search__icon {
-      left: auto;
-      right: 2rem;
-
-      @media (max-width: 1170px) {
-        left: auto;
-        right: 1.6rem;
-      }
-
-      @media (max-width: 767px) {
-        right: 1.2rem;
-      }
-    }
-  }
-
-  &__form {
-    position: relative;
-    display: flex;
-    flex-grow: 1;
-    height: 100%;
-  }
-
-  &__icon {
-    position: absolute;
-    z-index: 1;
-    left: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1.6rem;
-    height: 1.6rem;
-
-    @media (max-width: 1170px) {
-      left: 1.6rem;
-    }
-
-    @media (max-width: 767px) {
-      left: 1.2rem;
-    }
-  }
-
-  &__clear {
-    position: absolute;
-    right: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    display: none;
-    width: 3.2rem;
-    height: 3.2rem;
-    cursor: pointer;
-
-    &--header {
-      right: 13.2rem;
-
-      @media (max-width: 767px) {
-        right: 1.2rem;
-        width: 2.4rem;
-        height: 2.4rem;
-      }
-    }
-  }
-
-  &__input {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding: 1.5rem 6.4rem;
-    box-sizing: border-box;
-    border: 1px solid var(--light-grey);
-    border-radius: 12px;
-    background: var(--light-grey);
-    transition: 0.3s;
-
-    @media (max-width: 1199px) {
-      padding: 1.5rem 5.2rem;
-    }
-
-    @media (max-width: 767px) {
-      padding: 1rem 4rem;
-      font-size: 1.6rem;
-      border-radius: 0.8rem;
-
-      &::placeholder {
-        font-size: 1.6rem;
-      }
-    }
-  }
-}
-
 .header__user-navigation {
   display: flex;
   justify-content: center;
@@ -290,6 +320,12 @@ export default {
   }
 }
 
+.header__box {
+  transition: 0.3s;
+  border-radius: 0;
+  background-color: #fff;
+}
+
 .header__bottom {
   display: flex;
   justify-content: space-between;
@@ -299,5 +335,53 @@ export default {
   @media (max-width: 767px) {
     padding: 2rem 0;
   }
+}
+
+.header {
+  &.active-search {
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   top: 0;
+    //   width: 100%;
+    //   height: 100vh;
+    //   background: rgba(#1e1e1e, 0.8);
+    //   z-index: 5;
+    //   opacity: 1;
+    // }
+    .header__search-bg {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(#1e1e1e, 0.8);
+      z-index: 5;
+      opacity: 1;
+    }
+    .header__box {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 10;
+      border-radius: 0px 0px 24px 24px;
+    }
+    .header__top {
+      border-bottom: none;
+    }
+    .header__inner {
+      padding-bottom: 24px;
+    }
+  }
+}
+.header__search-box {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  z-index: 10;
+}
+
+.search__variants {
+  z-index: 20;
 }
 </style>
