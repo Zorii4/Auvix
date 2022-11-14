@@ -4,7 +4,7 @@ import Router from 'vue-router'
 // Module and Interactive Pages
 
 import MainPage from '@/views/main-page.vue'
-import NewsPage from '@/views/news-page.vue'
+import InteractiveContentPage from '~/views/interactive-content-page.vue'
 
 // Catalog Pages
 import AllBrands from '@/views/catalog/all-brands.vue'
@@ -45,9 +45,9 @@ export function createRouter() {
         component: BrandItem,
       },
       {
-        path: '/news/:code',
-        name: 'NewsPage',
-        component: NewsPage,
+        path: '(.*)/interactive/:code',
+        name: 'InteractiveContentPage',
+        component: InteractiveContentPage,
       },
       {
         path: '/(.*)',

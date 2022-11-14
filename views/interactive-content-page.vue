@@ -11,14 +11,14 @@
 
 <script>
 export default {
-  name: 'NewsPage',
+  name: 'InteractiveContentPage',
 
   data: () => ({
     newData: null,
   }),
 
   methods: {
-    async getNews() {
+    async getInteractiveContent() {
       const codeItem = this.$route.params.code
       try {
         const itemData = await this.$axios.$get(
@@ -37,7 +37,7 @@ export default {
   },
 
   mounted() {
-    this.getNews()
+    this.getInteractiveContent()
   },
 }
 </script>

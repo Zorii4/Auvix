@@ -13,7 +13,7 @@
           >
             <router-link
               class="product-card-tile__item"
-              :to="`discounts/${el.code}`"
+              :to="`interactive/${el.code}`"
             >
               <!-- <div class="product-card-tile__item-brand">
                 <img src="img/barco.svg" alt="Фото бренда">
@@ -59,7 +59,7 @@
           >
             <router-link
               class="product-card-tile__item"
-              :to="`discounts/${el.code}`"
+              :to="`interactive/${el.code}`"
             >
               <!-- <div class="product-card-tile__item-brand">
                 <img src="img/barco.svg" alt="Фото бренда">

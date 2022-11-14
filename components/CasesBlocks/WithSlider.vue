@@ -62,7 +62,7 @@
                 </div>
                 <router-link
                   class="article__link"
-                  :to="`cases/${item.code}`"
+                  :to="`interactive/${item.code}`"
                 >
                   Подробнее
                   <svg
