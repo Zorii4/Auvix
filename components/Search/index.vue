@@ -109,12 +109,18 @@ export default {
     },
   },
 
+  async updated() {
+    await this.$nextTick()
+    if (this.active) {
+      this.$refs.searchInput.focus()
+    }
+  },
+
   methods: {
     async activateSearchBar() {
       if (!this.active) {
         await this.$nextTick()
         this.$emit('activateSearchBar')
-        this.$refs.searchInput.focus()
       }
     },
 

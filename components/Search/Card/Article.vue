@@ -2,7 +2,7 @@
   <nuxt-link
     class="search-panel__useful-item"
     :class="{'search-panel__useful-item--none-img': !article.preview_image_url}"
-    to=""
+    :to="`interactive/${article.code}`"
   >
     <div class="search-panel__useful-img">
       <img

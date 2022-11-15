@@ -52,7 +52,7 @@
         </ul>
         <ul
           v-if="searchedTempResults.article && searchedTempResults.article.length > 0"
-          class="search-temp-results__products"
+          class="search-temp-results__articles"
         >
           <li
             v-for="article of searchedTempResults.article"
@@ -157,6 +157,17 @@ export default {
   flex-direction: column;
   row-gap: 3.5rem;
   width: 100%;
+}
+.search-temp-results__articles {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  li {
+    padding: 1.75rem 0;
+  }
+  li:not(:last-child) {
+    border-bottom: 1px solid #dbdee6;
+  }
 }
 
 .search-temp-results__loader {
