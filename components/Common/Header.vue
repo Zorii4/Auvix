@@ -78,7 +78,6 @@ export default {
 
   data() {
     return {
-      // search state
       activeSearchBar: false,
       isOpenMenu: false,
       loadingResults: false,
