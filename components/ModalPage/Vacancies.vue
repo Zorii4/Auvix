@@ -12,7 +12,7 @@
           class="career__vacancy-item"
         >
           <router-link
-            :to="`vacancies/${vacancy.code}`"
+            :to="`interactive/${vacancy.code}`"
             class="career__vacancy-link"
           >
             <h3 class="career__vacancy-item-title">{{vacancy.title}}</h3>

@@ -25,7 +25,7 @@
                     </div>
                     <router-link
                       class="article__link"
-                      :to="`decisions/${item.code}`"
+                      :to="`interactive/${item.code}`"
                     >
                       Подробнее
                       <svg
