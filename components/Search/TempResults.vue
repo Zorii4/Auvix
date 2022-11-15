@@ -11,14 +11,14 @@
       class="search-temp-results__box"
     >
       <div v-if="!isHaveResults">
-        Поиск не дал результатов
+        По вашему запросу ничего не найдено
       </div>
       <div
         v-else
         class="search-temp-results__res"
       >
         <ul
-          v-if="searchedTempResults.catalog_brand.length > 0"
+          v-if="searchedTempResults.catalog_brand && searchedTempResults.catalog_brand.length > 0"
           class="search-temp-results__brands"
         >
           <li
@@ -29,7 +29,7 @@
           </li>
         </ul>
         <ul
-          v-if="searchedTempResults.catalog_category.length > 0"
+          v-if="searchedTempResults.catalog_category && searchedTempResults.catalog_category.length > 0"
           class="search-temp-results__category"
         >
           <li
@@ -40,7 +40,7 @@
           </li>
         </ul>
         <ul
-          v-if="searchedTempResults.catalog_product.length > 0"
+          v-if="searchedTempResults.catalog_product && searchedTempResults.catalog_product.length > 0"
           class="search-temp-results__products"
         >
           <li
@@ -48,6 +48,17 @@
             :key="product.id"
           >
             <SearchCardProduct :product="product" />
+          </li>
+        </ul>
+        <ul
+          v-if="searchedTempResults.article && searchedTempResults.article.length > 0"
+          class="search-temp-results__products"
+        >
+          <li
+            v-for="article of searchedTempResults.article"
+            :key="article.id"
+          >
+            <SearchCardArticle :article="article" />
           </li>
         </ul>
       </div>

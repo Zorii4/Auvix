@@ -10,20 +10,42 @@
       v-else
       class="search-variants__categories categories"
     >
-      <ul class="categories__box">
+      <ul class="categories__box top-box">
         <li
           v-for="serchedCategory of serchedCategories"
           :key="serchedCategory.id"
           class="categories__item"
           :class="{active: pickedCategory && pickedCategory.id === serchedCategory.id}"
           @click="pickCategory(serchedCategory)"
-        >{{serchedCategory.name}}<button
+        >
+          {{serchedCategory.name}}
+          <button
             v-if="pickedCategory && pickedCategory.id === serchedCategory.id"
             class="categories__clear"
             @click.stop="clearCategory"
           >
             <SearchIconClear />
-          </button></li>
+          </button>
+        </li>
+      </ul>
+
+      <ul class="categories__box">
+        <li
+          v-for="textCategory of textCategories"
+          :key="textCategory.id"
+          class="categories__item"
+          :class="{active: pickedTextCategory && pickedTextCategory.id === textCategory.id}"
+          @click="pickTextCategory(textCategory)"
+        >
+          {{textCategory.name}}
+          <button
+            v-if="pickedTextCategory && pickedTextCategory.id === textCategory.id"
+            class="categories__clear"
+            @click.stop="clearTextCategory"
+          >
+            <SearchIconClear />
+          </button>
+        </li>
       </ul>
     </div>
   </div>
@@ -43,12 +65,35 @@ export default {
       type: Object,
       default: null,
     },
+    pickedTextCategory: {
+      type: Object,
+      default: null,
+    },
   },
 
   data() {
     return {
       // categories loading state
       loadingCategories: false,
+
+      textCategories: [
+        { id: 1, name: 'Статьи', articleType: 'articles' },
+        { id: 2, name: 'Новости', articleType: 'news' },
+        { id: 3, name: 'Кейсы', articleType: 'cases' },
+        { id: 4, name: 'Типовые решения', articleType: 'standard_solutions' },
+        { id: 5, name: 'Вакансии', articleType: 'vacancies' },
+        {
+          id: 6,
+          name: 'Тренинги и мероприятия',
+          articleType: 'training_n_events',
+        },
+        {
+          id: 7,
+          name: 'Акции и скидки',
+          articleType: 'promotion_and_discounts',
+        },
+        { id: 8, name: 'Истории успеха', articleType: 'success_stories' },
+      ],
     }
   },
 
@@ -74,6 +119,13 @@ export default {
 
     clearCategory() {
       this.$emit('clearCategory')
+    },
+    pickTextCategory(categoryText) {
+      this.$emit('pickTextCategory', categoryText)
+    },
+
+    clearTextCategory() {
+      this.$emit('clearTextCategory')
     },
   },
 }
@@ -167,5 +219,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.top-box {
+  padding-bottom: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e9e9e9;
 }
 </style>

@@ -22,7 +22,7 @@
                 v-model="searchedQuery"
                 :isOpenMenu="isOpenMenu"
                 :active="activeSearchBar"
-                :pickedCategory="pickedCategory"
+                :pickedCategory="calculatedPickedCategory"
                 @openMenu="openSearchMenu"
                 @activateSearchBar='activateSearchBar'
               />
@@ -48,8 +48,11 @@
         v-if="isOpenMenu && !loadingResults"
         class="header__search-box search__variants"
         :pickedCategory="pickedCategory"
+        :pickedTextCategory="pickedTextCategory"
         @pickCategory="pickCategory"
         @clearCategory="clearCategory"
+        @pickTextCategory="pickTextCategory"
+        @clearTextCategory="clearTextCategory"
       />
       <SearchTempResults
         v-if="loadingResults || showResultsView"
@@ -81,6 +84,7 @@ export default {
       loadingResults: false,
 
       pickedCategory: null,
+      pickedTextCategory: null,
       searchedQuery: '',
 
       fetchedSearchResults: {},
@@ -91,6 +95,10 @@ export default {
     showResultsView() {
       return Object.keys(this.fetchedSearchResults).length > 0
     },
+
+    calculatedPickedCategory() {
+      return this.pickedCategory || this.pickedTextCategory || null
+    },
   },
 
   watch: {
@@ -98,8 +106,8 @@ export default {
       this.searchResults(newVal)
     },
     '$route.path'() {
-      this.searchedQuery = ''
-      this.fetchedSearchResults = {}
+      this.clearResultsAndQuery()
+      this.clearTextAndProdtcCategories()
       this.activeSearchBar = false
     },
   },
@@ -113,22 +121,43 @@ export default {
       this.isOpenMenu = !this.isOpenMenu
     },
 
-    pickCategory(category) {
-      this.pickedCategory = category
+    clearTextAndProdtcCategories() {
+      this.pickedCategory = null
+      this.pickedTextCategory = null
+    },
+
+    clearResultsAndQuery() {
       this.searchedQuery = ''
       this.fetchedSearchResults = {}
+    },
+
+    pickCategory(category) {
+      this.pickedTextCategory = null
+      this.pickedCategory = category
+      this.clearResultsAndQuery()
+    },
+
+    pickTextCategory(textCategory) {
+      this.pickedCategory = null
+      this.pickedTextCategory = textCategory
+      this.clearResultsAndQuery()
     },
 
     clearCategory() {
       this.pickedCategory = null
-      this.searchedQuery = ''
-      this.fetchedSearchResults = {}
+      this.clearResultsAndQuery()
+    },
+
+    clearTextCategory() {
+      this.pickedTextCategory = null
+      this.clearResultsAndQuery()
     },
 
     disactiveSearchBar() {
-      this.searchedQuery = ''
-      this.fetchedSearchResults = {}
+      this.clearResultsAndQuery()
+      this.clearTextAndProdtcCategories()
       this.activeSearchBar = false
+      this.isOpenMenu = false
     },
 
     searchResults: debounce(async function (queryString) {
@@ -136,12 +165,21 @@ export default {
       if (queryString.length > 1) {
         this.loadingResults = true
         this.isOpenMenu = false
-        const categoryId =
-          this.pickedCategory === null ? '' : this.pickedCategory.id
+
+        const scopeType =
+          this.pickedTextCategory !== null ? 'article' : 'catalog'
+
+        const categoryIdOrArticleType =
+          this.pickedTextCategory !== null
+            ? this.pickedTextCategory.articleType
+            : this.pickedCategory === null
+            ? ''
+            : this.pickedCategory.id
+
         const [err, results] = await fetchSearchedItems(
           queryString,
-          'catalog',
-          categoryId
+          scopeType,
+          categoryIdOrArticleType
         )
 
         if (results) {
