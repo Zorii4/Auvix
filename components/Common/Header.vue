@@ -25,6 +25,7 @@
                 :pickedCategory="calculatedPickedCategory"
                 @openMenu="openSearchMenu"
                 @activateSearchBar='activateSearchBar'
+                @triggerToPushSearchPage="pushToSearchPage"
               />
             </div>
 
@@ -114,6 +115,22 @@ export default {
   methods: {
     activateSearchBar() {
       this.activeSearchBar = true
+    },
+
+    pushToSearchPage() {
+      if (this.searchedQuery.length > 1 && this.pickedTextCategory === null) {
+        const tempQuery = {}
+        if (this.pickedCategory) {
+          tempQuery.searchedCategory = this.pickedCategory.id
+        }
+        this.$router.push({
+          name: 'SearchPage',
+          query: tempQuery,
+          params: {
+            searchedString: this.searchedQuery,
+          },
+        })
+      }
     },
 
     openSearchMenu() {

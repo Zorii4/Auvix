@@ -2,12 +2,14 @@
   <div class="catalog__content-grid-filter">
     <button
       :class="{'active' : currentLayoutType === 'row'}"
+      :disabled="currentLayoutType === 'row'"
       @click.prevent="changeCatalogLayout('row')"
     >
       <GridFilterRowIcon />
     </button>
     <button
       :class="{'active' : currentLayoutType === 'tile'}"
+      :disabled="currentLayoutType === 'tile'"
       @click.prevent="changeCatalogLayout('tile')"
     >
       <GridFilterTileIcon />
