@@ -26,7 +26,7 @@ export function createRouter() {
         component: AllBrands,
       },
       {
-        path: '/search',
+        path: '/search/:searchedString',
         name: 'SearchPage',
         component: SearchPage,
       },

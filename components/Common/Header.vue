@@ -119,15 +119,16 @@ export default {
 
     pushToSearchPage() {
       if (this.searchedQuery.length > 1 && this.pickedTextCategory === null) {
-        const tempQuery = {
-          searchedString: this.searchedQuery,
-        }
+        const tempQuery = {}
         if (this.pickedCategory) {
           tempQuery.searchedCategory = this.pickedCategory.id
         }
         this.$router.push({
           name: 'SearchPage',
           query: tempQuery,
+          params: {
+            searchedString: this.searchedQuery,
+          },
         })
       }
     },

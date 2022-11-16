@@ -2,12 +2,16 @@
   <section class="search-page">
     <div class="container">
       <div class="search-page__header">
+        <div сlass="search-page__sup">Результаты поиска</div>
         <h2 class="search-page__title section-title">
           {{searchedString}}
           <span>{{ countItems }}</span>
         </h2>
       </div>
-      <div class="search-page__body">
+      <div
+        v-if="!loading && isHaveResults"
+        class="search-page__body"
+      >
         <div class="search-page__content">
           <div class="search-page__content-filter">
             <div class="search-page__content-filter-top">
@@ -48,6 +52,18 @@
           </div>
         </div>
       </div>
+      <div
+        v-if="loading"
+        class="search-page__loader"
+      >
+        <CommonLoader />
+      </div>
+    </div>
+    <div
+      v-if="!loading && !isHaveResults"
+      class="wide-container wide-container--without-max-width"
+    >
+      <SearchEmptyResults />
     </div>
   </section>
 </template>
@@ -55,7 +71,7 @@
 <script>
 import { fetchSearchedItems } from '@/API-services/searchService'
 export default {
-  name: 'ProductsByCategory',
+  name: 'SearchedProducts',
 
   data() {
     return {
@@ -70,7 +86,7 @@ export default {
   },
 
   async fetch() {
-    const querySearchedString = this.$route.query.searchedString
+    const querySearchedString = this.$route.params.searchedString
     const querySearchedCategory = this.$route.query.searchedCategory
     const layoutType = this.$route.query.view
 
@@ -97,6 +113,10 @@ export default {
       const countItems = this.fetchedItems.length
 
       return countItems || ''
+    },
+
+    isHaveResults() {
+      return this.fetchedItems.length > 0
     },
   },
 
@@ -137,56 +157,19 @@ export default {
 .search-page {
   padding: 2rem 0 6rem;
 
-  &__filter-box {
-    grid-column: span 3;
-    padding-right: 3.2rem;
-  }
-
-  @media (max-width: 1599px) {
-    padding-bottom: 5.6rem;
-  }
-
-  @media (max-width: 1199px) {
-    padding-bottom: 5.2rem;
-  }
-
-  @media (max-width: 1023px) {
-    padding-top: 1.6rem;
-    padding-bottom: 4.8rem;
-  }
-
-  @media (max-width: 767px) {
-    padding-top: 0.8rem;
-    padding-bottom: 4rem;
-  }
-
-  .container {
-    @media (max-width: 767px) {
-      padding: 0;
-    }
-  }
-
-  &__breadcrumbs {
-    margin-bottom: 2rem;
-
-    @media (max-width: 1023px) {
-      margin-bottom: 1.2rem;
-    }
-  }
-
   &__header {
-    padding-bottom: 5.2rem;
+    padding-bottom: 1.2rem;
 
     @media (max-width: 1599px) {
-      padding-bottom: 4.8rem;
+      padding-bottom: 0.8rem;
     }
 
     @media (max-width: 1199px) {
-      padding-bottom: 3.2rem;
+      padding-bottom: 0;
     }
 
     @media (max-width: 1023px) {
-      padding-bottom: 2.8rem;
+      padding-bottom: 0;
     }
 
     @media (max-width: 767px) {
@@ -197,6 +180,7 @@ export default {
   }
 
   &__title {
+    margin-top: 2rem;
     display: flex;
     align-items: baseline;
     gap: 2rem;
@@ -260,6 +244,14 @@ export default {
       margin-left: 2rem;
       margin-right: 2rem;
     }
+  }
+
+  &__loader {
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &__content-select-wrapper {
@@ -550,5 +542,11 @@ export default {
 .search-page-list-empty {
   margin-top: 20px;
   font-size: 18px;
+}
+
+.search-page__sup {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
 }
 </style>

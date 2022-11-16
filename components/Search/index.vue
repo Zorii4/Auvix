@@ -39,6 +39,7 @@
       <button
         v-if="active"
         type="button"
+        @click.stop="pushToSearchPage"
         class="search__button"
       >
         <SearchIcon class="search__icon" />
