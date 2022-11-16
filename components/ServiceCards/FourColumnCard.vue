@@ -1,45 +1,48 @@
 <template>
-  <div class="products">
+  <div class="products products--not-slider">
     <div class="products__inner">
 
       <ul
         v-if="!pageProps.use_slider"
         class="products__list"
       >
-        <li
+        <!-- <li
           v-for="item of pageProps.service_items"
           :key="item.id"
           class="products__item-wrapper"
           :style="{backgroundColor: `${item.background_color}`}"
+        > -->
+        <CommonAnchor
+          v-for="item of pageProps.service_items"
+          :key="item.id"
+          :to="item.link_url"
+          :className="'products__item'"
+          :style="{backgroundColor: `${item.background_color}`}"
+          class="products__item-wrapper"
         >
-          <CommonAnchor
-            :className="'service-card-item'"
-            :to="item.link_url"
-            class="service__anchor-link"
-          >
-            <h3 class="products__item-title">{{item.title}}</h3>
-            <span class="products__item-link">
-              {{item.link_name}}
-              <svg
-                width="8"
-                height="10"
-                viewBox="0 0 8 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M8 5L-8.74228e-07 10L0 0L8 5Z"
-                  fill="#202226"
-                />
-              </svg>
-            </span>
-            <div
-              class="products__decor"
-              :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
+          <h3 class="products__item-title">{{item.title}}</h3>
+          <span class="products__item-link">
+            {{item.link_name}}
+            <svg
+              width="8"
+              height="10"
+              viewBox="0 0 8 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-            </div>
-          </CommonAnchor>
-        </li>
+              <path
+                d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+                fill="#202226"
+              />
+            </svg>
+          </span>
+          <div
+            class="products__decor"
+            :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
+          >
+          </div>
+        </CommonAnchor>
+        <!-- </li> -->
       </ul>
     </div>
   </div>
@@ -74,7 +77,6 @@ export default {
   }
 
   &__item-wrapper {
-    width: 36.7rem;
     border-radius: 1.6rem;
 
     @media (max-width: 1199px) {
@@ -90,51 +92,31 @@ export default {
     }
   }
 
-  &__item {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 48.8rem;
-    padding: 4rem 2.8rem 2.8rem;
-
-    border-radius: 1.6rem;
-    overflow: hidden;
-
-    @media (max-width: 1599px) {
-      min-height: 40.8rem;
-      padding: 3.2rem 2.4rem 2.4rem;
+  &--not-slider {
+    .products__inner {
+      margin-right: 0;
     }
 
-    @media (max-width: 1199px) {
-      min-height: 32.4rem;
-      padding: 2.8rem 2.4rem 2.4rem;
-    }
+    .products__list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.4rem;
 
-    @media (max-width: 1023px) {
-      min-height: 36.4rem;
-    }
+      @media (max-width: 1023px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
 
-    @media (max-width: 767px) {
-      min-height: 16rem;
-      padding: 1.2rem;
-    }
+      @media (max-width: 767px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
 
-    &:hover {
-      opacity: 1;
-
-      span {
-        padding-left: 10px;
+      @media (max-width: 550px) {
+        grid-template-columns: 1fr;
       }
     }
 
-    div {
-      transition: 0.4s;
-    }
-
-    &:hover div {
-      transform: scale(1.2);
+    .products__item-wrapper {
+      max-width: none;
     }
   }
 
@@ -185,27 +167,29 @@ export default {
     pointer-events: none;
     background-repeat: no-repeat;
     background-size: cover;
-    width: 300px;
-    height: 300px;
+    width: 29.4rem;
+    height: 29rem;
     right: 0;
     bottom: 0;
-  }
 
-  .service__anchor-link {
-    &:hover {
-      opacity: 1;
-
-      span {
-        padding-left: 10px;
-      }
+    @media (max-width: 1599px) {
+      width: 22.8rem;
+      height: 22.4rem;
     }
 
-    div {
-      transition: 0.4s;
+    @media (max-width: 1199px) {
+      width: 17.8rem;
+      height: 17.6rem;
     }
 
-    &:hover div {
-      transform: scale(1.2);
+    @media (max-width: 1023px) {
+      width: 21.6rem;
+      height: 21.4rem;
+    }
+
+    @media (max-width: 767px) {
+      width: 11.4rem;
+      height: 11.4rem;
     }
   }
 }

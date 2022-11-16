@@ -47,51 +47,45 @@
       </div>
     </div>
 
-    <ul class="products__list">
-      <swiper
-        :options="swiperOptions"
-        class="card-swiper"
+    <swiper
+      :options="swiperOptions"
+      class="products__inner"
+    >
+      <swiper-slide
+        v-for="item of slides.service_items"
+        :key="item.id"
+        class="products__item-wrapper"
+        :style="{backgroundColor: `${item.background_color}`}"
       >
-        <swiper-slide
-          v-for="item of slides.service_items"
-          :key="item.id"
-          class="card-slide"
+        <CommonAnchor
+          :to="item.link_url"
+          :className="'products__item'"
         >
-          <li
-            class="products__item-wrapper"
-            :style="{backgroundColor: `${item.background_color}`}"
-          >
-            <CommonAnchor
-              :to="item.link_url"
-              :className="'products__item'"
+          <h3 class="products__item-title">{{item.title}}</h3>
+          <span class="products__item-link">
+            {{item.link_name}}
+            <svg
+              width="8"
+              height="10"
+              viewBox="0 0 8 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <h3 class="products__item-title">{{item.title}}</h3>
-              <span class="products__item-link">
-                {{item.link_name}}
-                <svg
-                  width="8"
-                  height="10"
-                  viewBox="0 0 8 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8 5L-8.74228e-07 10L0 0L8 5Z"
-                    fill="#202226"
-                  />
-                </svg>
-              </span>
-              <div
-                class="products__decor"
-                :style="{backgroundImage:`url(${$config.baseURLImg}`+`${item.image_url})`}"
-              >
-              </div>
-            </CommonAnchor>
-          </li>
-        </swiper-slide>
+              <path
+                d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+                fill="#202226"
+              />
+            </svg>
+          </span>
+          <div
+            class="products__decor"
+            :style="{backgroundImage:`url(${$config.baseURLImg}`+`${item.image_url})`}"
+          >
+          </div>
+        </CommonAnchor>
+      </swiper-slide>
+    </swiper>
 
-      </swiper>
-    </ul>
   </section>
 </template>
 
@@ -130,15 +124,28 @@ export default {
   position: relative;
   margin-bottom: 30px;
 
+  &__inner {
+    overflow: hidden;
+
+    @media (max-width: 1023px) {
+      margin-right: -2rem;
+    }
+  }
+
   &__item-wrapper {
     border-radius: 1.6rem;
+    max-width: 36.7rem;
+
+    @media (max-width: 1599px) {
+      max-width: 30.3rem;
+    }
 
     @media (max-width: 1199px) {
-      max-width: 27rem;
+      max-width: 24.1rem;
     }
 
     @media (max-width: 1023px) {
-      max-width: 24rem;
+      max-width: 27rem;
     }
 
     @media (max-width: 767px) {
@@ -178,11 +185,6 @@ export default {
     @media (max-width: 767px) {
       opacity: 0;
     }
-
-    svg {
-      width: 0.8rem;
-      height: 1rem;
-    }
   }
 
   &__decor {
@@ -190,13 +192,32 @@ export default {
     pointer-events: none;
     background-repeat: no-repeat;
     background-size: cover;
-    width: 300px;
-    height: 300px;
+    width: 29.4rem;
+    height: 29rem;
     right: 0;
     bottom: 0;
+
+    @media (max-width: 1599px) {
+      width: 22.8rem;
+      height: 22.4rem;
+    }
+
+    @media (max-width: 1199px) {
+      width: 17.8rem;
+      height: 17.6rem;
+    }
+
+    @media (max-width: 1023px) {
+      width: 21.6rem;
+      height: 21.4rem;
+    }
+
+    @media (max-width: 767px) {
+      width: 11.4rem;
+      height: 11.4rem;
+    }
   }
 }
-
 .slider-navigation {
   position: relative;
   display: flex;
