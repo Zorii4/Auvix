@@ -12,6 +12,7 @@ import BrandItem from '@/views/catalog/brands/brand-item.vue'
 import Catalog from '@/views/catalog/index.vue'
 import CatalogByCategory from '@/views/catalog/_category.vue'
 import ProductPage from '@/views/catalog/product/_id.vue'
+import SearchPage from '@/views/search/index.vue'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export function createRouter() {
         path: '/catalog/brands',
         name: 'AllBrands',
         component: AllBrands,
+      },
+      {
+        path: '/search',
+        name: 'SearchPage',
+        component: SearchPage,
       },
       {
         path: '/product/:brandName/:idOrSlug',

@@ -7,10 +7,12 @@
     <form
       class="search__form"
       name="searchForm"
+      @submit.prevent="pushToSearchPage"
     >
       <button
         v-if="active"
         class="search__category"
+        type="button"
         @click="openSearchMenu"
       >
         {{ mappedCategoryName }}
@@ -36,6 +38,7 @@
       >
       <button
         v-if="active"
+        type="button"
         class="search__button"
       >
         <SearchIcon class="search__icon" />
@@ -122,6 +125,10 @@ export default {
         await this.$nextTick()
         this.$emit('activateSearchBar')
       }
+    },
+
+    pushToSearchPage() {
+      this.$emit('triggerToPushSearchPage')
     },
 
     openSearchMenu() {
