@@ -105,6 +105,7 @@ export default {
       slidesPerView: 4,
       spaceBetween: 10,
       speed: 600,
+      loop: true,
       navigation: {
         nextEl: '.slider-button--next',
         prevEl: '.slider-button--prev',
@@ -314,5 +315,11 @@ export default {
 
 .section-lead__title {
   margin: 0;
+}
+
+.swiper-slide {
+  @media (max-width: 1199px) {
+    width: inherit !important;
+  }
 }
 </style>
