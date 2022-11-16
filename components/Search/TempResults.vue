@@ -9,6 +9,7 @@
     <div
       v-else
       class="search-temp-results__box"
+      :class="{'search-temp-results__products-box': isHaveResults && searchedTempResults.catalog_product && searchedTempResults.catalog_product.length > 0}"
     >
       <div v-if="!isHaveResults">
         По вашему запросу ничего не найдено
@@ -63,6 +64,12 @@
         </ul>
       </div>
     </div>
+    <div
+      v-if="isHaveResults && searchedTempResults.catalog_product && searchedTempResults.catalog_product.length > 0"
+      class="search-temp-results__show-all"
+    >
+      <button @click="showAllResultsTrigger">Показать все результаты</button>
+    </div>
   </div>
 </template>
 
@@ -91,7 +98,11 @@ export default {
     },
   },
 
-  methods: {},
+  methods: {
+    showAllResultsTrigger() {
+      this.$emit('showAllResultsTrigger')
+    },
+  },
 }
 </script>
 
@@ -138,6 +149,30 @@ export default {
     width: 100%;
     height: 4rem;
     background: linear-gradient(180deg, #858383 0%, rgba(217, 217, 217, 0) 50%);
+  }
+}
+
+.search-temp-results__products-box {
+  padding: 4.3rem 12rem 8.2rem 12rem;
+}
+.search-temp-results__show-all {
+  position: absolute;
+  bottom: 0;
+  background-color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+
+  button {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 1.6rem 4rem;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 12px;
   }
 }
 .search-temp-results__products {

@@ -4,8 +4,8 @@
     :class="{'active-search': activeSearchBar}"
   >
     <div
-      @click.stop="disactiveSearchBar"
       class="header__search-bg"
+      @click.stop="disactiveSearchBar"
     ></div>
     <div class="header__box">
       <div class="container">
@@ -60,6 +60,15 @@
         class="header__search-box"
         :loadingTempResults="loadingResults"
         :searchedTempResults="fetchedSearchResults"
+        @showAllResultsTrigger="pushToSearchPage"
+      />
+      <SearchHistory
+        v-if="isShowHistoryMenu"
+        class="header__search-box"
+        :historySearchList='searchHistoryService.getHistorySearchList()'
+        @pickItem="pickStringFromHistory"
+        @clearHistory="clearHistory"
+        @deleteItemFromHistory="deleteItem"
       />
     </div>
   </header>
@@ -69,6 +78,7 @@
 import { debounce } from 'debounce'
 import UserIcon from '@/assets/icons/User.svg'
 import { fetchSearchedItems } from '@/API-services/searchService'
+import { SearchHistory } from '~/API-services/searchHistoryService.client'
 
 export default {
   name: 'HeaderMain',
@@ -88,6 +98,7 @@ export default {
       searchedQuery: '',
 
       fetchedSearchResults: {},
+      searchHistoryService: null,
     }
   },
 
@@ -99,6 +110,18 @@ export default {
     calculatedPickedCategory() {
       return this.pickedCategory || this.pickedTextCategory || null
     },
+
+    isShowHistoryMenu() {
+      return (
+        this.searchHistoryService &&
+        !this.loadingResults &&
+        this.searchedQuery.length <= 1 &&
+        this.activeSearchBar &&
+        !this.isOpenMenu &&
+        !this.showResultsView &&
+        this.searchHistoryService.getHistorySearchList().length > 0
+      )
+    },
   },
 
   watch: {
@@ -106,13 +129,29 @@ export default {
       this.searchResults(newVal)
     },
     '$route.path'() {
+      this.loadingResults = false
       this.clearResultsAndQuery()
       this.clearTextAndProdtcCategories()
       this.activeSearchBar = false
     },
   },
 
+  mounted() {
+    this.searchHistoryService = new SearchHistory()
+  },
+
   methods: {
+    clearHistory() {
+      this.searchHistoryService.clearHistoryList()
+    },
+    pickStringFromHistory(srting) {
+      this.searchedQuery = srting
+    },
+
+    deleteItem(string) {
+      this.searchHistoryService.deleteItemFromSearchHistoryList(string)
+    },
+
     activateSearchBar() {
       this.activeSearchBar = true
     },
@@ -123,6 +162,7 @@ export default {
         if (this.pickedCategory) {
           tempQuery.searchedCategory = this.pickedCategory.id
         }
+        this.searchHistoryService.pushToSearchHistoryList(this.searchedQuery)
         this.$router.push({
           name: 'SearchPage',
           query: tempQuery,
