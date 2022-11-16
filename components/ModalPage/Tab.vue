@@ -34,14 +34,16 @@
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 
 export default {
-  /* eslint-disable */
   name: 'Tab',
   components: {
     Swiper,
     SwiperSlide,
   },
   props: {
-    pageProps: Object,
+    pageProps: {
+      type: Object,
+      required: true,
+    },
   },
   data: () => ({
     swiperOptions: {
@@ -53,22 +55,14 @@ export default {
     pageBlocksData: [],
     activeTab: 0,
   }),
-  methods: {
-    async fetchTab(tab, idx) {
-      this.activeTab = idx
-      try {
-        const itemData = await this.$axios.$get(`/modal-pages?uri=${tab.uri}`)
-        if (itemData) {
-          this.pageBlocksData = itemData.data?.config?.blocks
-          return itemData
-        }
-        return
-      } catch (e) {
-        console.error(e)
-        this.$router.push('/')
-      }
-    },
+
+  async fetch() {
+    const firstTabInfo = this.pageProps.data[0]
+    if (firstTabInfo) {
+      return await this.fetchTab(firstTabInfo, 0)
+    }
   },
+
   computed: {
     typeToPageIndentificator() {
       if (this.pageBlocksData.length > 0) {
@@ -87,6 +81,24 @@ export default {
           }))
       }
       return false
+    },
+  },
+
+  methods: {
+    // TODO добавить сохранение в стейт с ключом инфу зафеченую информацию о табе, для того, чтобы не делать запрос каждый раз (кэширование). Подумать над другой обрабокой ошибки)
+    async fetchTab(tab, idx) {
+      this.activeTab = idx
+      try {
+        const itemData = await this.$axios.$get(`/modal-pages?uri=${tab.uri}`)
+        if (itemData) {
+          this.pageBlocksData = itemData.data?.config?.blocks
+          return itemData
+        }
+        return
+      } catch (e) {
+        console.error(e)
+        this.$router.push('/')
+      }
     },
   },
 }

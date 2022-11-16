@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!list">
+  <div>
     <a
       v-if="isExternal"
       :href="to"

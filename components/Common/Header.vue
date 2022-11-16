@@ -239,6 +239,7 @@ export default {
         )
 
         if (results) {
+          this.searchHistoryService.pushToSearchHistoryList(this.searchedQuery)
           this.fetchedSearchResults = results
         }
         // TODO обработка ошибки
@@ -248,7 +249,7 @@ export default {
 
         this.loadingResults = false
       }
-    }, 600),
+    }, 1000),
   },
 }
 </script>
