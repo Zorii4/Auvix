@@ -38,6 +38,7 @@
           >{{item.description}}</p>
         </CommonAnchor>
         <img
+          v-if="item.image_url"
           class="services-list__item-img"
           :src="$config.baseURLImg + item.image_url"
           :alt="`Услуга ${item.image_alt}`"
@@ -82,9 +83,10 @@
           >{{item.description}}</p>
         </CommonAnchor>
         <img
-          class="services-list__item-img"
+          v-if="item.image_url"
           :src="$config.baseURLImg + item.image_url"
           :alt="`Услуга ${item.image_alt}`"
+          class="services-list__item-img"
         >
       </li>
     </ul>
