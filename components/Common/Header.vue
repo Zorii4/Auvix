@@ -41,7 +41,7 @@
             v-if="!activeSearchBar"
             class="header__bottom"
           >
-            <NavMenu />
+            <NavigationMenu />
           </div>
         </div>
       </div>
@@ -71,6 +71,10 @@
         @deleteItemFromHistory="deleteItem"
       />
     </div>
+    <NavigationBottomBlock
+      v-show="hoveredItem"
+      :acitveItem="hoveredItem"
+    />
   </header>
 </template>
 
@@ -425,11 +429,6 @@ export default {
   display: flex;
   justify-content: space-between;
   height: 8rem;
-  padding: 2.7rem 0;
-
-  @media (max-width: 767px) {
-    padding: 2rem 0;
-  }
 }
 
 .header {
