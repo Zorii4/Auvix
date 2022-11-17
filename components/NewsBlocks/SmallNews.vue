@@ -1,5 +1,8 @@
 <template>
-  <ul class="news">
+  <ul
+    :class="{dark: 'news-dark'}"
+    class="news"
+  >
     <li
       class="news__item-wrapper"
       v-for="news of newsData?.data?.slice(0,3)"
@@ -41,6 +44,7 @@ export default {
   name: 'SmallNews',
   props: {
     newsData: Object,
+    dark: Boolean,
   },
 }
 </script>
@@ -298,6 +302,21 @@ export default {
 
     @media (max-width: 767px) {
       display: none;
+    }
+  }
+}
+
+.news-dark {
+  .news__item {
+    background-color: var(--easy-dark);
+    color: #fff;
+  }
+
+  .news__item-time {
+    color: rgba(255, 255, 255, 0.75);
+
+    &::before {
+      border-color: rgba(255, 255, 255, 0.75);
     }
   }
 }

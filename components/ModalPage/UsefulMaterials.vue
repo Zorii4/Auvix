@@ -5,15 +5,15 @@
         <div class="container container--without-padding">
           <UsefulBlocksTrainingEvents
             v-if="pageProps.size === 'training_n_events'"
-            pageProps='pageProps'
+            :pageProps='pageProps'
           />
           <UsefulBlocksNewsArticles
             v-if="pageProps.size === 'news_and_articles'"
-            pageProps='pageProps'
+            :pageProps='pageProps'
           />
           <UsefulBlocksTrainingEventsArticles
             v-if="pageProps.size === 'training_n_events_and_articles'"
-            pageProps='pageProps'
+            :pageProps='pageProps'
           />
         </div>
       </div>
@@ -22,31 +22,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   name: 'UsefulMaterials',
   props: {
     pageProps: Object,
-  },
-  async fetch() {
-    return await this.$store.dispatch(
-      'interactive/getInteractiveData',
-      this.pageProps.id
-    )
-  },
-  computed: {
-    ...mapState({
-      interactiveData: (state) => state.interactive.interactiveData,
-    }),
-    usefulData() {
-      return this.interactiveData[this.pageProps.id]
-    },
-    dateSort() {
-      return this.usefulData?.data
-        .map((el) => el)
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    },
   },
 }
 </script>
