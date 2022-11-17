@@ -8,8 +8,8 @@
         >
           <li class="header__menu-item">
             <NuxtLink
-              class="header__menu-link"
               v-if="item.is_active"
+              class="header__menu-link"
               :to="item.uri"
             >{{item.name}}</NuxtLink>
           </li>
@@ -80,10 +80,9 @@ export default {
 
 .header__menu-item {
   width: auto;
-
+  position: relative;
   font-size: 1.8rem;
   line-height: 1.3;
-
   @media (max-width: 1199px) {
     font-size: 1.6rem;
   }
@@ -91,24 +90,33 @@ export default {
   &:last-child {
     margin-right: 0;
   }
+  &:hover {
+    .header__menu-bottom {
+      display: block;
+    }
+  }
 }
+
 .header__menu-link {
   display: block;
+  padding: 2.7rem 4.8rem 2.7rem 0;
   padding-right: 4.8rem;
-
   transition: 0.4s;
 
   @media (max-width: 1599px) {
-    padding-right: 4rem;
+    padding: 2.7rem 4rem 2.7rem 0;
   }
 
   @media (max-width: 1199px) {
-    padding-right: 3.2rem;
+    padding: 2.7rem 3rem 2.7rem 0;
     font-size: 1.6rem;
   }
 
   @media (max-width: 1023px) {
-    padding-right: 2.4rem;
+    padding: 2.7rem 2.4rem 2.7rem 0;
+  }
+  @media (max-width: 767px) {
+    padding: 2rem 2.4rem 2rem 0;
   }
 }
 
