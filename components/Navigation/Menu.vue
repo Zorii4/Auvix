@@ -6,7 +6,10 @@
           v-for="item in cropMenu"
           :key="item.id"
         >
-          <li class="header__menu-item">
+          <li
+            class="header__menu-item"
+            @mouseenter="$emit('hoverNavItem', item)"
+          >
             <NuxtLink
               v-if="item.is_active"
               class="header__menu-link"

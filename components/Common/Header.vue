@@ -41,7 +41,7 @@
             v-if="!activeSearchBar"
             class="header__bottom"
           >
-            <NavigationMenu />
+            <NavigationMenu @hoverNavItem="hoverItem" />
           </div>
         </div>
       </div>
@@ -72,8 +72,9 @@
       />
     </div>
     <NavigationBottomBlock
-      v-show="hoveredItem"
-      :acitveItem="hoveredItem"
+      v-if="activeItemBav && !activeSearchBar"
+      :acitveItem="activeItemBav"
+      @closeNavBottom="closeNavBottom"
     />
   </header>
 </template>
@@ -103,6 +104,8 @@ export default {
 
       fetchedSearchResults: {},
       searchHistoryService: null,
+
+      activeItemBav: null,
     }
   },
 
@@ -145,6 +148,12 @@ export default {
   },
 
   methods: {
+    hoverItem(item) {
+      this.activeItemBav = item
+    },
+    closeNavBottom() {
+      this.activeItemBav = null
+    },
     clearHistory() {
       this.searchHistoryService.clearHistoryList()
     },
