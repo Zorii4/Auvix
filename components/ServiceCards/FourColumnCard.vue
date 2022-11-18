@@ -193,4 +193,17 @@ export default {
     }
   }
 }
+
+.products__decor {
+  transition: 0.4s;
+}
+
+.products__item:hover {
+  .products__decor {
+    transform: scale(1.2);
+  }
+  .products__item-link {
+    padding-left: 10px;
+  }
+}
 </style>

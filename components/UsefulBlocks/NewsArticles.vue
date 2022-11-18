@@ -35,10 +35,10 @@
         :link_title="pageProps.link_title"
       />
     </div>
-    <NewsBlocksSmallNews
+    <!-- <NewsBlocksSmallNews
       :dark='true'
       :newsData='newsData'
-    />
+    /> -->
     <!-- {{> news mod='news--dark news--large-img-shortened' }} -->
   </section>
 </template>

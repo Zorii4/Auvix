@@ -259,18 +259,6 @@ export default {
 
   &:hover {
     opacity: 1;
-
-    span {
-      padding-left: 10px;
-    }
-  }
-
-  div {
-    transition: 0.4s;
-  }
-
-  &:hover div {
-    transform: scale(1.2);
   }
 }
 </style>
