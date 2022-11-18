@@ -23,34 +23,34 @@ export default {
     const robots = this.pageSeoData?.seo_config?.robots.map((el) => {
       return { name: el.name, content: el.content }
     })
-    if (this.pageSeoData?.seo_config?.robots) {
+    if (this.pageSeoData.seo_config?.robots) {
       return {
-        title: this.pageSeoData?.seo_config?.title || this.pageSeoData?.name,
+        title: this.pageSeoData.seo_config?.title || this.pageSeoData.name,
         meta: [
           {
             hid: 'description',
             name: 'description',
-            content: this.pageSeoData?.seo_config?.description || null,
+            content: this.pageSeoData.seo_config?.description,
           },
           {
             name: 'keywords',
-            content: this.pageSeoData?.seo_config?.keywords || null,
+            content: this.pageSeoData.seo_config?.keywords,
           },
           ...robots,
         ],
       }
     } else {
       return {
-        title: this.pageSeoData?.seo_config?.title || this.pageSeoData?.name,
+        title: this.pageSeoData.seo_config?.title || this.pageSeoData?.name,
         meta: [
           {
             hid: 'description',
             name: 'description',
-            content: this.pageSeoData?.seo_config?.description || null,
+            content: this.pageSeoData.seo_config?.description,
           },
           {
             name: 'keywords',
-            content: this.pageSeoData?.seo_config?.keywords || null,
+            content: this.pageSeoData.seo_config?.keywords,
           },
         ],
       }
