@@ -256,9 +256,5 @@ export default {
     min-height: 16rem;
     padding: 1.2rem;
   }
-
-  &:hover {
-    opacity: 1;
-  }
 }
 </style>

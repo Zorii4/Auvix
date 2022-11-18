@@ -199,6 +199,7 @@ export default {
 }
 
 .products__item:hover {
+  opacity: 1;
   .products__decor {
     transform: scale(1.2);
   }
