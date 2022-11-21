@@ -1,84 +1,80 @@
 <template>
-  <section>
-    <ul
-      class="news"
-      :class="{'large-reversed':pageProps.accent_news === 'right' }"
-    >
-      <li
-        class="news__item-wrapper"
-        v-for="news of newsData?.data"
-        :key="news.id"
+  <ul
+    :class="{dark: 'news-dark'}"
+    class="news"
+  >
+    <li class="news__item-wrapper-pinned">
+      <router-link
+        class="news__item"
+        :to="`interactive/${pageProps?.pinned.code}`"
       >
-        <router-link
-          class="news__item"
-          :to="`interactive/${news.code}`"
+        <div class="news__item-content">
+          <time class="news__item-time">{{pageProps?.pinned.last_published_at | formatData('fullData')}}</time>
+          <p>{{pageProps?.pinned.title}}</p>
+        </div>
+        <div
+          class="news__item-img"
+          v-if="pageProps?.pinned.preview_image_url"
         >
-          <div class="news__item-content">
-            <time class="news__item-time">{{news.last_published_at | formatData('fullData')}}</time>
-            <p>{{news.title}}</p>
-          </div>
-          <div
-            v-if="news.preview_image_url"
-            class="news__item-img"
+          <img
+            :src="$config?.baseURLImg + pageProps?.pinned.preview_image_url"
+            alt="Фото новости"
           >
-            <img
-              :src="($config?.baseURLImg + news.preview_image_url) || '~/assets/img/default.png'"
-              alt="Фото новости"
-            >
-          </div>
-          <div
-            v-if="!news.preview_image_url"
-            class="news__item-img"
+        </div>
+        <div
+          v-if="!pageProps?.pinned.preview_image_url"
+          class="news__item-img"
+        >
+          <img
+            src="~/assets/img/default.png"
+            alt="Фото новости"
           >
-            <img
-              src="~/assets/img/default.png"
-              alt="Фото новости"
-            >
-          </div>
-        </router-link>
-      </li>
-    </ul>
-    <button
-      v-if="pageProps.show_more_button && moreCounter"
-      @click="cardCounter"
-      class="more-button"
-    >Показать еще <span>&nbsp; {{moreBtnCounter}}</span></button>
-  </section>
+        </div>
+      </router-link>
+    </li>
+    <li
+      class="news__item-wrapper"
+      v-for="news of newsData?.data?.slice(1,3)"
+      :key="news.id"
+    >
+      <router-link
+        class="news__item"
+        :to="`interactive/${news.code}`"
+      >
+        <div class="news__item-content">
+          <time class="news__item-time">{{news.last_published_at | formatData('fullData')}}</time>
+          <p>{{news.title}}</p>
+        </div>
+        <div
+          class="news__item-img"
+          v-if="news.preview_image_url"
+        >
+          <img
+            :src="$config?.baseURLImg + news.preview_image_url"
+            alt="Фото новости"
+          >
+        </div>
+        <div
+          v-if="!news.preview_image_url"
+          class="news__item-img"
+        >
+          <img
+            src="~/assets/img/default.png"
+            alt="Фото новости"
+          >
+        </div>
+      </router-link>
+    </li>
+  </ul>
 </template>
 
 <script>
 export default {
-  name: 'LargeNews',
+  name: 'SmallNewsPinned',
   props: {
     newsData: Object,
     pageProps: Object,
-  },
-  data: () => ({
-    counter: 0,
-  }),
-
-  computed: {
-    moreBtnCounter() {
-      const res = this.newsData?.data.length - this.counter
-      return res < this.pageProps.limit ? res : this.pageProps.limit
-    },
-
-    moreCounter() {
-      return (
-        Math.ceil(this.newsData?.data.length / this.pageProps.limit) >
-        this.counter / this.pageProps.limit
-      )
-    },
-  },
-
-  mounted() {
-    this.counter = this.pageProps.limit
-  },
-
-  methods: {
-    cardCounter() {
-      return (this.counter += this.pageProps.limit)
-    },
+    dark: Boolean,
   },
 }
 </script>
@@ -88,13 +84,14 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.4rem;
+  margin-bottom: 5rem;
 
   @media (max-width: 767px) {
     display: flex;
     flex-direction: column;
   }
 
-  &.large-reversed {
+  &--large-reversed {
     li:nth-child(-n + 3) {
       order: -2;
     }
@@ -150,7 +147,7 @@ export default {
     }
   }
 
-  li:nth-child(1) {
+  &__item-wrapper-pinned {
     grid-column: span 2;
 
     @media (max-width: 1023px) {
@@ -302,6 +299,22 @@ export default {
     }
   }
 
+  &__item-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: auto;
+
+    @media (max-width: 1599px) {
+      gap: 1rem;
+    }
+
+    @media (max-width: 1199px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
   &__item-img {
     overflow: hidden;
     border-radius: 1.6rem;
@@ -321,128 +334,20 @@ export default {
       display: none;
     }
   }
-
-  &__item-button {
-    position: absolute;
-    bottom: 1.6rem;
-    left: 2rem;
-
-    width: 5.6rem;
-    height: 3.6rem;
-
-    border-radius: 2rem;
-    // background: var(--grey) url('../img/icons/photo-icon.svg') no-repeat center;
-    background-size: 2.4rem 2.4rem;
-
-    @media (max-width: 767px) {
-      display: none;
-    }
-  }
-
-  &--dark {
-    .news__item {
-      background-color: var(--easy-dark);
-      color: #fff;
-    }
-
-    .news__item-time {
-      color: rgba(255, 255, 255, 0.75);
-
-      &::before {
-        border-color: rgba(255, 255, 255, 0.75);
-      }
-    }
-
-    li:first-child {
-      .news__item {
-        color: var(--dark);
-      }
-
-      .news__item-time {
-        color: var(--jack-grey);
-
-        &::before {
-          border-color: var(--jack-grey);
-        }
-      }
-    }
-  }
-
-  &--large-img-shortened {
-    li:first-child {
-      .news__item {
-        justify-content: flex-end;
-        align-items: stretch;
-        padding-top: 0.8rem;
-        color: #fff;
-      }
-
-      .news__item-content {
-        max-width: none;
-        width: 100%;
-        padding: 2.8rem 2rem 2.4rem;
-        background: var(--easy-dark);
-
-        @media (max-width: 1599px) {
-          padding: 2.8rem 2rem 2rem;
-        }
-
-        @media (max-width: 1199px) {
-          padding: 2rem;
-        }
-
-        @media (max-width: 1023px) {
-          padding: 1.6rem 1.2rem 1.2rem;
-        }
-
-        @media (max-width: 767px) {
-          padding: 0.8rem 0.8rem 1.2rem;
-        }
-
-        p {
-          max-width: 40.3rem;
-        }
-      }
-
-      .news__item-time {
-        color: rgba(255, 255, 255, 0.75);
-
-        &::before {
-          border-color: rgba(255, 255, 255, 0.75);
-        }
-      }
-
-      .news__item-img {
-        position: static;
-
-        order: -1;
-        max-height: 26.4rem;
-
-        border-radius: 1.6rem;
-
-        @media (max-width: 767px) {
-          order: 1;
-          max-height: 13.2rem;
-        }
-      }
-    }
-  }
 }
 
-.more-button {
-  width: 100%;
-  justify-content: center;
-  padding: 1.6rem;
-  margin-top: 1.2rem;
+.news-dark {
+  .news__item {
+    background-color: var(--easy-dark);
+    color: #fff;
+  }
 
-  border: 1px solid var(--border-grey);
-  border-radius: 1.2rem;
+  .news__item-time {
+    color: rgba(255, 255, 255, 0.75);
 
-  font-size: 1.8rem;
-  line-height: 1.3;
-
-  @media (max-width: 1023px) {
-    font-size: 1.6rem;
+    &::before {
+      border-color: rgba(255, 255, 255, 0.75);
+    }
   }
 }
 </style>

@@ -3,11 +3,11 @@
     <div class="container">
       <div class="career__vacancy-header">
         <h2 class="career__vacancy-title section-title">{{pageProps.title}}</h2>
-        <span class="career__vacancy-count">{{vacanciesData?.data.length}}</span>
+        <span class="career__vacancy-count">{{pageProps.news.length}}</span>
       </div>
       <ul class="career__vacancy-list">
         <li
-          v-for="vacancy of vacanciesData?.data"
+          v-for="vacancy of pageProps.news"
           :key="vacancy.id"
           class="career__vacancy-item"
         >
@@ -39,26 +39,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   name: 'Vacancies',
   props: {
     pageProps: Object,
-  },
-  async fetch() {
-    return await this.$store.dispatch(
-      'interactive/getInteractiveData',
-      this.pageProps.id
-    )
-  },
-  computed: {
-    ...mapState({
-      interactiveData: (state) => state.interactive.interactiveData,
-    }),
-    vacanciesData() {
-      return this.interactiveData[this.pageProps.id]
-    },
   },
 }
 </script>

@@ -13,7 +13,7 @@
             <span class="article__position">{{item.short_description}}</span>
             <div class="article__text-content article__text-content--text-bottomed">
               <!-- <h3 class="article__text-lead">{{item}}</h3> ОПИСАНИЕ ДОЛЖНО БЫТЬ-->
-              <h3 class="article__text-lead">тут должно приходить описание с бекенда</h3>
+              <h3 class="article__text-lead">NULL</h3>
               <!-- <CommonAnchor
                 v-if="pageProps.use_button"
                 :to="pageProps.button_link_url"

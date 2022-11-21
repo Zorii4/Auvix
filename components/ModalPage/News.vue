@@ -33,12 +33,18 @@
           </div>
         </div>
         <NewsBlocksSmallNews
-          v-if="pageProps.size === 'small'"
+          v-if="pageProps.size === 'small' && !pageProps.pinned"
           :newsData="newsData"
         />
 
         <NewsBlocksLargeNews
           v-if="pageProps.size === 'large'"
+          :newsData="newsData"
+          :pageProps="pageProps"
+        />
+
+        <NewsBlocksSmallNewsPinned
+          v-if="pageProps.size === 'small' && pageProps.pinned"
           :newsData="newsData"
           :pageProps="pageProps"
         />
