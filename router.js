@@ -26,6 +26,11 @@ export function createRouter() {
         component: AllBrands,
       },
       {
+        path: '/catalog/brands/:slug',
+        name: 'BrandItem',
+        component: BrandItem,
+      },
+      {
         path: '/search/:searchedString',
         name: 'SearchPage',
         component: SearchPage,
@@ -44,11 +49,6 @@ export function createRouter() {
         path: '/catalog',
         name: 'Catalog',
         component: Catalog,
-      },
-      {
-        path: '/catalog/brands/:slug',
-        name: 'BrandItem',
-        component: BrandItem,
       },
       {
         path: '(.*)/interactive/:code',

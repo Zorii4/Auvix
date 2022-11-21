@@ -29,29 +29,28 @@
 </template>
 
 <script>
-import { fetchCategories } from '@/API-services/categoriesService'
 export default {
   name: 'CatalogPage',
 
   data() {
     return {
-      allCategories: [],
       loadingCategories: false,
     }
   },
 
   async fetch() {
-    this.loadingCategories = true
-    const [err, data] = await fetchCategories()
-    if (data) {
-      this.allCategories = data
+    if (!this.allCategories.length) {
+      this.loadingCategories = true
+      await this.$store.dispatch('catalog/fetchCategoriesList')
+      this.loadingCategories = false
     }
-    this.loadingCategories = false
-    // TODO Обработка ошибки в случае если запрос вернул ошику
-    console.error(err)
   },
 
   computed: {
+    allCategories() {
+      return this.$store.state.catalog.categoriesList
+    },
+
     filteredCategories() {
       return this.allCategories.filter((el) => el.count > 0)
     },

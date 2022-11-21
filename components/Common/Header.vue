@@ -10,7 +10,10 @@
     <div class="header__box">
       <div class="container">
         <div class="header__inner">
-          <div class="header__top">
+          <div
+            class="header__top"
+            @mouseenter="closeNavBottom"
+          >
             <div class="header__burger">
               <!-- BURGERS -->
             </div>
@@ -41,7 +44,10 @@
             v-if="!activeSearchBar"
             class="header__bottom"
           >
-            <NavMenu />
+            <NavigationMenu
+              :pickedItem="activeItemBav"
+              @hoverNavItem="hoverItem"
+            />
           </div>
         </div>
       </div>
@@ -71,6 +77,13 @@
         @deleteItemFromHistory="deleteItem"
       />
     </div>
+    <transition name="fade">
+      <NavigationBottomBlock
+        v-if="activeItemBav && (activeItemBav.children.length > 0 || activeItemBav.uri === '/catalog') && !activeSearchBar"
+        :acitveItem="activeItemBav"
+        @closeNavBottom="closeNavBottom"
+      />
+    </transition>
   </header>
 </template>
 
@@ -99,6 +112,8 @@ export default {
 
       fetchedSearchResults: {},
       searchHistoryService: null,
+
+      activeItemBav: null,
     }
   },
 
@@ -132,6 +147,7 @@ export default {
       this.loadingResults = false
       this.clearResultsAndQuery()
       this.clearTextAndProdtcCategories()
+      this.activeItemBav = null
       this.activeSearchBar = false
     },
   },
@@ -141,6 +157,14 @@ export default {
   },
 
   methods: {
+    hoverItem(item) {
+      this.activeItemBav = item
+    },
+    closeNavBottom() {
+      if (this.activeItemBav !== null) {
+        this.activeItemBav = null
+      }
+    },
     clearHistory() {
       this.searchHistoryService.clearHistoryList()
     },
@@ -310,7 +334,6 @@ export default {
   align-items: stretch;
   height: 10.5rem;
   padding: 2.4rem 0;
-  border-bottom: 1px solid var(--border-grey);
 
   @media (max-width: 1024px) {
     height: 10.3rem;
@@ -425,11 +448,6 @@ export default {
   display: flex;
   justify-content: space-between;
   height: 8rem;
-  padding: 2.7rem 0;
-
-  @media (max-width: 767px) {
-    padding: 2rem 0;
-  }
 }
 
 .header {
@@ -478,5 +496,15 @@ export default {
 
 .search__variants {
   z-index: 20;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
