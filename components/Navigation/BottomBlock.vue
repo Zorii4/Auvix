@@ -1,42 +1,51 @@
 <template>
-  <ul
-    class="navigation"
-    @mouseleave="$emit('closeNavBottom')"
-  >
-    <div class="navifation__wrapper">
+  <ul class="navigation">
+    <div
+      class="navigation__wrapper"
+      @mouseleave="$emit('closeNavBottom')"
+    >
       <li
         v-if="acitveItem.uri === '/catalog'"
         class="navigation__item"
       >
-        <!-- <ul class="navigation__category">
-            {{#each category}}
-                <li class="navigation__category-item-wrapper">
-                    <a class="navigation__category-item" href="#">
-                        <div class="navigation__category-item-icon">
-                            <svg>
-                                <use xlink:href="#{{this.icon}}"></use>
-                            </svg>
-                        </div>
-                        <span>{{this.name}}</span>
-                    </a>
-                </li>
-            {{/each}}
-        </ul> -->
+        <ul class="navigation__category">
+          <li class="navigation__category-item-wrapper">
+            <nuxt-link
+              class="navigation__category-item"
+              to="/catalog/brands"
+            >
+              <div class="navigation__category-item-icon">
+                <BrandNavIcon />
+              </div>
+              <span>Бренды</span>
+            </nuxt-link>
+          </li>
+        </ul>
         <ul class="navigation__subcategory">
-          <li>
-            <a
+          <li
+            v-for="category of allCategories"
+            :key="category.id"
+          >
+            <nuxt-link
               class="navigation__subcategory-item"
-              href="/category.html"
-            >Категории</a>
+              :to="{
+                name: 'CatalogByCategory',
+                params: {category: category.slug || category.id}}"
+            >{{ category.name }}</nuxt-link>
           </li>
         </ul>
       </li>
+
       <li
         v-else
         class="navigation__item"
       >
         <div class="navigation__inner">
-          <ul class="navigation__inner-list">
+          <ul
+            class="navigation__inner-list"
+            :class="{'navigation__box': calculateColumn > 1}"
+            :style="{'grid-template-columns': `repeat(${calculateColumn}, 1fr)`}"
+          >
             <li
               v-for="childItem of acitveItem.children"
               :key="childItem.id"
@@ -54,13 +63,28 @@
 </template>
 
 <script>
+import BrandNavIcon from '@/assets/icons/navigation-2.svg'
 export default {
   name: 'NavigationBottomBlock',
+
+  components: {
+    BrandNavIcon,
+  },
 
   props: {
     acitveItem: {
       type: Object,
       default: null,
+    },
+  },
+
+  computed: {
+    allCategories() {
+      return this.$store.state.catalog.categoriesList.slice(0, 23)
+    },
+
+    calculateColumn() {
+      return Math.ceil(this.acitveItem.children.length / 10)
     },
   },
 }
@@ -73,14 +97,9 @@ export default {
   right: 0;
   top: 100%;
   z-index: 999;
-  height: 100%;
-
-  transition: opacity 0.4s;
-
-  &.active {
-    height: auto;
-    z-index: 2000;
-  }
+  height: 100vh;
+  background: rgba(32, 34, 38, 0.7);
+  transition: all 0.4s;
 
   &__item {
     position: absolute;
@@ -92,8 +111,6 @@ export default {
 
     background-color: #fff;
     border-radius: 0 0 2.4rem 2.4rem;
-    // opacity: 0;
-    // visibility: hidden;
 
     transition: opacity 0.4s;
 
@@ -137,6 +154,11 @@ export default {
     }
   }
 
+  &__box {
+    display: grid !important;
+    gap: 1.2rem;
+  }
+
   &__inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -147,7 +169,7 @@ export default {
   &__inner-list {
     display: flex;
     flex-direction: column;
-    gap: 2.8rem;
+    gap: 3.6rem 0.4rem;
 
     @media (max-width: 1199px) {
       gap: 2.4rem;

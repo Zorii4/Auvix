@@ -8,6 +8,10 @@
         >
           <li
             class="header__menu-item"
+            :class="{ 
+              'active-nav-item': pickedItem && item.name === pickedItem.name,
+              'item-blur': pickedItem !== null
+              }"
             @mouseenter="$emit('hoverNavItem', item)"
           >
             <NuxtLink
@@ -35,10 +39,17 @@ export default {
     SwiperSlide,
   },
 
+  props: {
+    pickedItem: {
+      type: Object,
+      default: null,
+    },
+  },
+
   data: () => ({
     swiperOptions: {
       slidesPerView: 'auto',
-      spaceBetween: 30,
+      spaceBetween: 48,
       freeMode: true,
       speed: 600,
     },
@@ -50,7 +61,7 @@ export default {
     }),
 
     cropMenu() {
-      return this.menu.data.filter((item) => item.uri !== '/')
+      return this.menu?.data?.filter((item) => item.uri !== '/')
     },
   },
 }
@@ -59,6 +70,16 @@ export default {
 <style lang="scss" scoped>
 .header__menu {
   width: 100%;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--border-grey);
+  }
   @media (max-width: 767px) {
     position: absolute;
     left: 0;
@@ -98,12 +119,34 @@ export default {
       display: block;
     }
   }
+
+  &.item-blur {
+    color: rgb(219, 222, 229);
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 100%;
+    border-radius: 0.3rem;
+    height: 5px;
+    transition: all 0.3s;
+    background: linear-gradient(90deg, #b659ff 0, #99f5a2 49.42%, #79dfff 100%);
+  }
+
+  &.active-nav-item {
+    color: rgb(32, 34, 38);
+    &:before {
+      right: 0;
+    }
+  }
 }
 
 .header__menu-link {
   display: block;
-  padding: 2.7rem 4.8rem 2.7rem 0;
-  padding-right: 4.8rem;
+  padding: 2.7rem 0;
   transition: 0.4s;
 
   @media (max-width: 1599px) {

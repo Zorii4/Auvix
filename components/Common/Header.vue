@@ -10,7 +10,10 @@
     <div class="header__box">
       <div class="container">
         <div class="header__inner">
-          <div class="header__top">
+          <div
+            class="header__top"
+            @mouseenter="closeNavBottom"
+          >
             <div class="header__burger">
               <!-- BURGERS -->
             </div>
@@ -41,7 +44,10 @@
             v-if="!activeSearchBar"
             class="header__bottom"
           >
-            <NavigationMenu @hoverNavItem="hoverItem" />
+            <NavigationMenu
+              :pickedItem="activeItemBav"
+              @hoverNavItem="hoverItem"
+            />
           </div>
         </div>
       </div>
@@ -71,11 +77,13 @@
         @deleteItemFromHistory="deleteItem"
       />
     </div>
-    <NavigationBottomBlock
-      v-if="activeItemBav && !activeSearchBar"
-      :acitveItem="activeItemBav"
-      @closeNavBottom="closeNavBottom"
-    />
+    <transition name="fade">
+      <NavigationBottomBlock
+        v-if="activeItemBav && (activeItemBav.children.length > 0 || activeItemBav.uri === '/catalog') && !activeSearchBar"
+        :acitveItem="activeItemBav"
+        @closeNavBottom="closeNavBottom"
+      />
+    </transition>
   </header>
 </template>
 
@@ -139,6 +147,7 @@ export default {
       this.loadingResults = false
       this.clearResultsAndQuery()
       this.clearTextAndProdtcCategories()
+      this.activeItemBav = null
       this.activeSearchBar = false
     },
   },
@@ -152,7 +161,9 @@ export default {
       this.activeItemBav = item
     },
     closeNavBottom() {
-      this.activeItemBav = null
+      if (this.activeItemBav !== null) {
+        this.activeItemBav = null
+      }
     },
     clearHistory() {
       this.searchHistoryService.clearHistoryList()
@@ -323,7 +334,6 @@ export default {
   align-items: stretch;
   height: 10.5rem;
   padding: 2.4rem 0;
-  border-bottom: 1px solid var(--border-grey);
 
   @media (max-width: 1024px) {
     height: 10.3rem;
@@ -486,5 +496,15 @@ export default {
 
 .search__variants {
   z-index: 20;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
