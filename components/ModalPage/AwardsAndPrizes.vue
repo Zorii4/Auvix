@@ -14,7 +14,7 @@
             <!-- <div class="three-card-list__item-link"> -->
             <div class="three-card-list__item-content">
               <!-- <time class="three-card-list__item-date">{{el.date | formatData('toYear')}}</time> -->
-              <p>тут должна быть дата с бекенда</p>
+              <p>NULL</p>
               <p>{{el.title}}</p>
             </div>
             <div class="three-card-list__item-img">

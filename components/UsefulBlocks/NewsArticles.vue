@@ -29,11 +29,12 @@
           </svg>
         </CommonAnchor>
       </div>
-      <NewsBlocksHeaderNews
+      <h3>NULL</h3>
+      <!-- <NewsBlocksHeaderNews
         :title="pageProps.title"
         :link_url="pageProps.link_url"
         :link_title="pageProps.link_title"
-      />
+      /> -->
     </div>
     <!-- <NewsBlocksSmallNews
       :dark='true'
