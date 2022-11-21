@@ -37,6 +37,22 @@
             <div class="catalog__content-filter-top">
               <div class="catalog__content-select-wrapper">
                 <!-- TODO Сортировка по Моделям и производителям -->
+                <VueSelect
+                  :key="updateValueFilterKey"
+                  :value="sortType"
+                  :options="sortTypes"
+                  :clearable="false"
+                  :searchable="false"
+                  :reduce="(option) => option.value"
+                  placeholder="Сортировать"
+                  @input="changeSortType"
+                >
+                  <template #open-indicator>
+                    <span>
+                      <SliderArrow />
+                    </span>
+                  </template>
+                </VueSelect>
               </div>
               <CatalogViewChanger
                 :currentLayoutType="layoutType"
@@ -108,7 +124,6 @@
                 nextClass="pagination__button"
                 :clickHandler="pageChangedHandler"
               >
-
               </paginate>
             </client-only>
           </div>
@@ -121,8 +136,14 @@
 <script>
 import { fetchFilteredProducts } from '@/API-services/catalogService'
 import { fetchCategoryById } from '@/API-services/categoriesService'
+import SliderArrow from '@/assets/icons/slider-arrow.svg'
+
 export default {
   name: 'ProductsByCategory',
+
+  components: {
+    SliderArrow,
+  },
 
   data() {
     return {
@@ -134,6 +155,7 @@ export default {
       offset: 0,
       countItems: 0,
       updateValueFilterKey: 0,
+      sortType: 'popular',
 
       filterAttributes: {},
       subCategories: [],
@@ -143,6 +165,13 @@ export default {
       fetchedItems: [],
       currentCategory: null,
       subCategoryId: null,
+
+      sortTypes: [
+        { label: 'Популярные', value: 'popular' },
+        { label: 'Новинки', value: 'new' },
+        { label: 'Сначала дешёвые', value: 'price_cheap' },
+        { label: 'Сначала дорогие', value: 'price_exp' },
+      ],
     }
   },
 
@@ -153,6 +182,7 @@ export default {
     const filterAttributes = this.$route.query.filterAttributes
     const priceFrom = this.$route.query.priceFrom
     const priceTo = this.$route.query.priceTo
+    const sortType = this.$route.query.sortType
     const layoutType = this.$route.query.view
     const [categoryErr, categoryData] = await fetchCategoryById(categoryId)
     console.error(categoryErr)
@@ -170,6 +200,9 @@ export default {
     }
     if (layoutType) {
       this.layoutType = layoutType
+    }
+    if (sortType) {
+      this.sortType = sortType
     }
     if (subCategoryId && String(subCategoryId).includes(',')) {
       this.subCategories = subCategoryId.split(',')
@@ -215,6 +248,9 @@ export default {
       }
       if (this.subCategories.length > 0) {
         tempQueryList.subCategory = this.subCategories.join(',')
+      }
+      if (this.sortType) {
+        tempQueryList.sortType = this.sortType
       }
       if (this.priceFrom) {
         tempQueryList.priceFrom = this.priceFrom
@@ -268,7 +304,8 @@ export default {
         calculatedFilterAtributes,
         calculatedPriceFromTo,
         calculatedOffset,
-        this.limit
+        this.limit,
+        this.sortType
       )
       if (data) {
         this.fetchedItems = data.data
@@ -305,7 +342,14 @@ export default {
       this.pushQueryStateCatalog()
       await this.fetchProducts()
     },
+    async changeSortType(value) {
+      this.sortType = value
+      this.currentPage = 1
+      this.pushQueryStateCatalog()
+      await this.fetchProducts()
+    },
     async clearFilter() {
+      this.sortType = ''
       this.subCategories = []
       this.priceFrom = 0
       this.priceTo = 2000000
@@ -772,6 +816,63 @@ export default {
 
   &__visited {
     padding-bottom: 0.7rem;
+  }
+
+  .vs__selected-options {
+    input {
+      &::placeholder {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .vs__dropdown-toggle {
+    border: none;
+  }
+
+  .vs__actions {
+    transform: rotate(90deg);
+    transition: all 0.3s ease;
+  }
+  .vs--open {
+    .vs__actions {
+      transform: rotate(270deg);
+    }
+  }
+  .vs__selected {
+    font-size: 1.6rem;
+  }
+
+  .vs__dropdown-menu {
+    width: 24.4rem;
+    padding: 0.4rem 0.8rem 0 1.6rem;
+    box-shadow: 0 0.8rem 3.2rem rgba(32, 34, 38, 0.08);
+    border: none;
+  }
+  .vs__dropdown-option {
+    padding: 1.4rem 0;
+    font-size: 1.6rem;
+    position: relative;
+  }
+  .vs__dropdown-option--highlight {
+    color: inherit;
+    background: inherit;
+  }
+  .vs__dropdown-option--selected {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
+      width: 2.4rem;
+      height: 2.4rem;
+      background: url(/images/icons/check-icon-blue.svg) no-repeat center;
+    }
+  }
+  .vs--single.vs--loading .vs__selected,
+  .vs--single.vs--open .vs__selected {
+    position: relative;
   }
 }
 .catalog-list-empty {

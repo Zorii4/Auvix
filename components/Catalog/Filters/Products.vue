@@ -354,7 +354,6 @@ export default {
     display: flex;
     align-items: center;
     gap: 2rem;
-    margin-bottom: 14px;
     font-weight: 400;
     font-size: 2.4rem;
     line-height: 1.2;

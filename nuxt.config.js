@@ -32,6 +32,10 @@ export default {
       src: '@/plugins/vuejs-paginate.js',
       ssr: false,
     },
+    {
+      src: '@/plugins/vue-select.js',
+      ssr: false,
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
