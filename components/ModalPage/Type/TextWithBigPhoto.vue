@@ -6,7 +6,7 @@
         :sub_title="pageProps.sub_title"
         :description="pageProps.description"
       />
-      <div class="container">
+      <div>
         <ul class="services-single__services-list">
           <li
             v-for="item of pageProps.paragraphs"

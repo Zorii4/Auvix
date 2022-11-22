@@ -11,7 +11,7 @@
       >
         <router-link
           class="news__item"
-          :to="`interactive/${news.code}`"
+          :to="`/interactive/${news.code}`"
         >
           <div class="news__item-content">
             <time class="news__item-time">{{news.last_published_at | formatData('fullData')}}</time>

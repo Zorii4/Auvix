@@ -47,11 +47,13 @@
               >
                 <div class="article__text-header">
                   <time class="article__text-date">{{item.date | formatData('toYear')}}</time>
-                  <span
-                    v-for="el of item.rubrics"
-                    :key="el.id"
-                    class="article__category"
-                  >{{el.name}}</span>
+                  <template v-if="pageProps.show_rubric_on_card">
+                    <span
+                      v-for="el of item.rubrics"
+                      :key="el.id"
+                      class="article__category"
+                    >{{el.name}}</span>
+                  </template>
                 </div>
                 <div class="article__text-content article__text-content--text-bottomed article__text-content--title-bottomed">
                   <h3
@@ -62,7 +64,7 @@
                 </div>
                 <router-link
                   class="article__link"
-                  :to="`interactive/${item.code}`"
+                  :to="`/interactive/${item.code}`"
                 >
                   Подробнее
                   <svg
@@ -93,8 +95,8 @@
         <div class="article__slider-navigation">
           <div class="slider-navigation slider-navigation--dark">
             <button
-              ref="sliderPrev"
-              class="slider-button slider-button--prev"
+              ref="sliderPrevBtn"
+              class="slider-button slider-cases-button--prev"
               title="Листнуть влево"
             >
               <svg
@@ -112,9 +114,9 @@
 
             </button>
             <button
-              ref="sliderNext"
+              ref="sliderNextBtn"
               title="Листнуть вправо"
-              class="slider-button slider-button--next"
+              class="slider-button slider-cases-button--next"
             >
               <svg
                 width="9"
@@ -156,15 +158,15 @@ export default {
         spaceBetween: 10,
         speed: 600,
         navigation: {
-          nextEl: '.slider-button--next',
-          prevEl: '.slider-button--prev',
+          nextEl: '.slider-cases-button--next',
+          prevEl: '.slider-cases-button--prev',
         },
       },
     }
   },
   mounted() {
-    this.swiperOptions.navigation.nextEl = this.$refs.sliderNext
-    this.swiperOptions.navigation.prevEl = this.$refs.sliderPrev
+    this.swiperOptions.navigation.nextEl = this.$refs.sliderNextBtn
+    this.swiperOptions.navigation.prevEl = this.$refs.sliderPrevBtn
     this.sliderLoad = true
   },
 }
@@ -587,17 +589,13 @@ export default {
         height: 1.2rem;
       }
     }
-
-    &--prev {
-      transform: rotate(180deg);
-    }
   }
 
   &--dark {
     background-color: var(--dark);
     border-radius: 6.6rem;
 
-    .slider-button {
+    .slider-cases-button {
       border: 0;
       background-color: var(--dark);
 
@@ -611,6 +609,12 @@ export default {
     &::before {
       background-color: #fff;
     }
+  }
+}
+
+.slider-cases-button {
+  &--prev {
+    transform: rotate(180deg);
   }
 }
 

@@ -6,7 +6,7 @@
     <li class="news__item-wrapper-pinned">
       <router-link
         class="news__item"
-        :to="`interactive/${pageProps?.pinned.code}`"
+        :to="`/interactive/${pageProps?.pinned.code}`"
       >
         <div class="news__item-content">
           <time class="news__item-time">{{pageProps?.pinned.last_published_at | formatData('fullData')}}</time>
@@ -39,7 +39,7 @@
     >
       <router-link
         class="news__item"
-        :to="`interactive/${news.code}`"
+        :to="`/interactive/${news.code}`"
       >
         <div class="news__item-content">
           <time class="news__item-time">{{news.last_published_at | formatData('fullData')}}</time>
