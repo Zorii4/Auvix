@@ -24,7 +24,7 @@
                       <p>{{item.short_description}}</p>
                     </div>
                     <router-link
-                      :to="`interactive/${item.code}`"
+                      :to="`/interactive/${item.code}`"
                       class="article__link"
                     >
                       Подробнее

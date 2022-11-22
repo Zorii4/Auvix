@@ -3,7 +3,7 @@
     <router-link
       v-for="item of solutionsData"
       :key="item.id"
-      :to="`interactive/${item.code}`"
+      :to="`/interactive/${item.code}`"
       class="decisions__item"
     >
       <div class="decisions__item-img">

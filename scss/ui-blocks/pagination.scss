@@ -139,10 +139,6 @@
     height: 8px;
     right: 120%;
   }
-
-  @media (max-width: 480px) {
-    margin-left: 5px;
-  }
 }
 
 .pagination__button-next {
@@ -156,9 +152,5 @@
     width: 10px;
     height: 8px;
     left: 120%;
-  }
-
-  @media (max-width: 480px) {
-    margin-right: 5px;
   }
 }

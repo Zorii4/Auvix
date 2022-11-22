@@ -1,33 +1,35 @@
 <template>
   <section class="index__decisions">
     <div class="wide-container">
-      <div class="section-header">
-        <h2
-          v-if="pageProps.title"
-          class="section-header__title section-title"
-        >
-          {{pageProps.title}}
-        </h2>
-        <CommonAnchor
-          v-if="pageProps.link_url"
-          :to="pageProps.link_url"
-          :className="'header-link'"
-          class="header-link__text"
-        >
-          {{pageProps.link_title}}
-          <svg
-            width="8"
-            height="10"
-            viewBox="0 0 8 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+      <div class="academy__news-header">
+        <div class="section-header">
+          <h2
+            v-if="pageProps.title"
+            class="section-header__title section-title"
           >
-            <path
-              d="M8 5L-8.74228e-07 10L0 0L8 5Z"
-              fill="#202226"
-            />
-          </svg>
-        </CommonAnchor>
+            {{pageProps.title}}
+          </h2>
+          <CommonAnchor
+            v-if="pageProps.link_url"
+            :to="pageProps.link_url"
+            :className="'header-link'"
+            class="header-link__text"
+          >
+            {{pageProps.link_title}}
+            <svg
+              width="8"
+              height="10"
+              viewBox="0 0 8 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+                fill="#202226"
+              />
+            </svg>
+          </CommonAnchor>
+        </div>
       </div>
       <SolutionsBlocksRubrics
         v-if="pageProps.size === 'rubrics'"
@@ -96,23 +98,64 @@ export default {
     padding-bottom: 4rem;
   }
 }
-.section-header {
-  margin-bottom: 4rem;
+
+.academy__news-header {
+  padding: 0 0 4rem;
 
   @media (max-width: 1599px) {
-    margin-bottom: 3.6rem;
+    padding-bottom: 3.6rem;
   }
 
   @media (max-width: 1199px) {
-    margin-bottom: 3.2rem;
+    padding-bottom: 3.2rem;
   }
 
   @media (max-width: 1023px) {
-    margin-bottom: 2.8rem;
+    padding-bottom: 2.8rem;
   }
 
   @media (max-width: 767px) {
-    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  &__title {
+    margin: 0;
+    width: 24rem;
+  }
+}
+
+.header-link__text {
+  span:last-child {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    span:first-child {
+      display: none;
+    }
+
+    span:last-child {
+      display: block;
+    }
+  }
+
+  svg {
+    width: 0.8rem;
+    height: 1rem;
+  }
+
+  &:hover {
+    color: var(--jack-grey) !important;
+  }
+
+  &:active {
+    color: var(--easy-dark) !important;
   }
 }
 </style>

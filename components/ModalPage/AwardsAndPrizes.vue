@@ -8,7 +8,7 @@
           class="three-card-list__wrapper"
         >
           <router-link
-            :to="`interactive/${el.code}`"
+            :to="`/interactive/${el.code}`"
             class="three-card-list__item"
           >
             <!-- <div class="three-card-list__item-link"> -->

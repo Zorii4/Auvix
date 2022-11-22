@@ -51,7 +51,7 @@ export function createRouter() {
         component: Catalog,
       },
       {
-        path: '(.*)/interactive/:code',
+        path: '/interactive/:code',
         name: 'InteractiveContentPage',
         component: InteractiveContentPage,
       },

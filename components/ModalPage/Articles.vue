@@ -1,25 +1,38 @@
 <template>
   <section>
-    <h2>Тут будет блок Статьи</h2>
-    <!--<div class="academy__articles">
+    <div class="academy__articles">
       <div class="container">
-        <div class="academy__articles-header">
+        <div class="academy__news-header">
           <div class="section-header">
-            <h2 class="section-header__title section-title">{{pageProps.title}}</h2>
-             {{#if allLink}}
-        <a class="header-link{{#if linkMod}} {{linkMod}}{{/if}}" href="{{link}}">
-            <span class="header-link__text" >
-                <span>{{{linkText}}}</span>
-                <span>Все</span>
-            </span>
-            <svg>
-                <use xlink:href="#slider-arrow"/>
-            </svg>
-        </a>
-    {{/if}} 
-                </div>
-                <div class="articles">
-    <ul class="articles__list">
+            <h2
+              v-if="pageProps.title"
+              class="section-header__title section-title"
+            >
+              {{pageProps.title}}
+            </h2>
+            <CommonAnchor
+              :to="'#'"
+              :className="'header-link'"
+              class="header-link__text"
+            > NULL
+              <!-- {{pageProps.link_title}} -->
+              <svg
+                width="8"
+                height="10"
+                viewBox="0 0 8 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 5L-8.74228e-07 10L0 0L8 5Z"
+                  fill="#202226"
+                />
+              </svg>
+            </CommonAnchor>
+          </div>
+        </div>
+        <div class="articles">
+          <!--   <ul class="articles__list">
         {{#each data}}
             <li>
                 <a class="articles__item" href="/articles-single.html">
@@ -36,18 +49,34 @@
                 </a>
             </li>
         {{/each}}
-    </ul>
-</div> 
-            </div>
-        </div> -->
+    </ul> -->
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'Articles',
   props: {
     pageProps: Object,
+  },
+  async fetch() {
+    return await this.$store.dispatch(
+      'interactive/getInteractiveData',
+      this.pageProps.id
+    )
+  },
+  computed: {
+    ...mapState({
+      interactiveData: (state) => state.interactive.interactiveData,
+    }),
+    articlesData() {
+      return this.interactiveData[this.pageProps.id]
+    },
   },
 }
 </script>
