@@ -1,9 +1,20 @@
 @import './../node_modules/swiper/swiper.scss';
 @import './../node_modules/swiper/css/swiper.css';
 
+@import './ui-blocks/pagination.scss';
 @import './global/fonts';
 @import './global/mixins';
 @import './global/variables';
 @import './global/extends';
 @import './global/global';
 @import './global/layout';
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+  transform: translateY(10px);
+}

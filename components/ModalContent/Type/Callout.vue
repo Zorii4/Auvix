@@ -1,24 +1,26 @@
   <template>
-  <div>
-    <div
-      v-if="pageProps.callout_background === 'off'"
-      class="articles-single__emphasis"
-    >
-      <div class="emphasis">
-        <p>
-          {{pageProps.textarea_description}}
-        </p>
+  <section class="callout-section">
+    <div class="narrow-container">
+      <div
+        v-if="pageProps.callout_background === 'off'"
+        class="articles-single__emphasis"
+      >
+        <div class="emphasis">
+          <p>
+            {{pageProps.textarea_description}}
+          </p>
+        </div>
+      </div>
+      <div
+        v-if="pageProps.callout_background === 'on'"
+        class="articles-single__notation"
+      >
+        <div class="notation">
+          <p>{{pageProps.textarea_description}}</p>
+        </div>
       </div>
     </div>
-    <div
-      v-if="pageProps.callout_background === 'on'"
-      class="articles-single__notation"
-    >
-      <div class="notation">
-        <p>{{pageProps.textarea_description}}</p>
-      </div>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -31,6 +33,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.callout-section {
+  margin-bottom: 5rem;
+}
+
 .articles-single {
   margin-bottom: 4rem;
   &__emphasis {

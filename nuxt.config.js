@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   server: {
-    port: 3006
+    port: process.env.SERVER_PORT,
   },
   head: {
     title: 'auvix',
@@ -18,10 +18,25 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ["~scss/styles.scss"],
+  css: [
+    '~scss/styles.scss',
+    '~node_modules/nouislider/dist/nouislider.min.css',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/filters/formatData.js'],
+  plugins: [
+    '@/filters/formatData.js',
+    '@/filters/numberWord.js',
+    '@/filters/numberParse.js',
+    {
+      src: '@/plugins/vuejs-paginate.js',
+      ssr: false,
+    },
+    {
+      src: '@/plugins/vue-select.js',
+      ssr: false,
+    },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -30,13 +45,14 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@braid/vue-formulate/nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    "@nuxtjs/style-resources",
+    '@nuxtjs/style-resources',
     '@nuxtjs/router',
     'nuxt-svg-loader',
   ],
@@ -44,7 +60,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://auvix-back.bikdev.ru/api/v1/',
+    baseURL: process.env.IMAGES_DOMAIN + '/api/v1/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -55,11 +71,10 @@ export default {
   },
 
   styleResources: {
-    scss: ["./scss/*.scss"]
+    scss: ['./scss/*.scss'],
   },
 
   publicRuntimeConfig: {
-    baseURLImg: process.env.IMAGES_DOMAIN_DEVELOP
-  }
+    baseURLImg: process.env.IMAGES_DOMAIN,
+  },
 }
-

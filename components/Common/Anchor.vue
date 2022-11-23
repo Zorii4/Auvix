@@ -13,6 +13,7 @@
       v-if="!isExternal"
       :to="to || '#'"
       :class="className"
+      :style="color"
     >
       <slot></slot>
     </NuxtLink>
@@ -169,31 +170,91 @@ export default {
 .accent-photo-button {
   align-self: flex-start;
   padding: 1.6rem 4rem;
-
   border-radius: 1.2rem;
-
   font-size: 1.8rem;
   line-height: 1.3;
 
-  @media (max-width: 1599px) {
-  }
-
-  @media (max-width: 1199px) {
-  }
-
   @media (max-width: 1023px) {
     padding: 1.6rem 3.2rem;
-
     border-radius: 0.8rem;
-
     font-size: 1.6rem;
     line-height: 1.25;
   }
 
   @media (max-width: 767px) {
+    display: block;
+    text-align: center;
     align-self: stretch;
     justify-content: center;
     padding: 1.6rem;
+  }
+}
+
+.services-list__item-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 4rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+}
+
+.header-link {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  font-size: 1.8rem;
+  line-height: 1.3;
+
+  transition: 0.3s;
+
+  @media (max-width: 1199px) {
+    font-size: 1.6rem;
+    gap: 1.6rem;
+  }
+
+  @media (max-width: 767px) {
+    gap: 1.2rem;
+  }
+}
+
+.products__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 48.8rem;
+  padding: 4rem 2.8rem 2.8rem;
+  border-radius: 1.6rem;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  @media (max-width: 1599px) {
+    min-height: 40.8rem;
+    padding: 3.2rem 2.4rem 2.4rem;
+  }
+
+  @media (max-width: 1199px) {
+    min-height: 32.4rem;
+    padding: 2.8rem 2.4rem 2.4rem;
+  }
+
+  @media (max-width: 1023px) {
+    min-height: 36.4rem;
+  }
+
+  @media (max-width: 767px) {
+    min-height: 16rem;
+    padding: 1.2rem;
   }
 }
 </style>

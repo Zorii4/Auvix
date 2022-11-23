@@ -1,10 +1,7 @@
 <template>
   <div class="two-columns-grid">
     <div class="two-columns-grid__left">
-      <h2
-        v-if="pageProps.use_link"
-        class="two-columns-grid__title section-title"
-      >{{pageProps.link_title}}</h2>
+      <h2 class="two-columns-grid__title section-title">{{pageProps.title}}</h2>
       <div
         v-if="pageProps.content_position === 'left'"
         class="two-columns-grid__digits"
@@ -98,7 +95,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.4rem;
-  margin-bottom: 50px;
+  margin-bottom: 5rem;
 
   @media (max-width: 1023px) {
     grid-template-columns: 1fr;
@@ -107,6 +104,10 @@ export default {
 
   @media (max-width: 767px) {
     gap: 2.4rem;
+  }
+
+  @media (max-width: 479px) {
+    gap: 0;
   }
 
   &__digits {
@@ -162,6 +163,7 @@ export default {
 
     @media (max-width: 767px) {
       padding: 1.2rem 0 3rem 1.2rem;
+      align-self: flex-start;
     }
 
     &:nth-child(2) {
@@ -211,6 +213,10 @@ export default {
     display: flex;
     flex-direction: column;
 
+    @media (max-width: 767px) {
+      align-items: center;
+    }
+
     h3 {
       margin-bottom: 4rem;
 
@@ -243,22 +249,22 @@ export default {
     margin-bottom: 2rem;
 
     @media (max-width: 1599px) {
-      margin-bottom: 5.6rem;
+      margin-bottom: 4.8rem;
     }
 
     @media (max-width: 1199px) {
       gap: 2.4rem;
-      margin-bottom: 4.8rem;
+      margin-bottom: 3.5rem;
     }
 
     @media (max-width: 1023px) {
       gap: 2rem;
-      margin-bottom: 4rem;
+      margin-bottom: 2.5rem;
     }
 
     @media (max-width: 767px) {
       gap: 1.6rem;
-      margin-bottom: 3.2rem;
+      margin-bottom: 0rem;
     }
 
     &--bottom-none {

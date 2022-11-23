@@ -60,6 +60,7 @@ export default {
   border-radius: 2rem;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center center;
   height: 480px;
   box-sizing: border-box;
 
@@ -108,7 +109,6 @@ export default {
   margin: 0 0 5.2rem;
   font-size: 1.8rem;
   line-height: 1.3;
-  color: var(--jack-grey);
   padding: 5px 25px;
   background-color: #fff;
   border-radius: 16px;
@@ -127,6 +127,7 @@ export default {
   }
 
   @media (max-width: 767px) {
+    padding: 3px 12px;
     margin-bottom: 1.6rem;
     font-size: 1.4rem;
   }
@@ -140,6 +141,7 @@ export default {
 
   p {
     max-width: 47rem;
+    opacity: 0.75;
 
     @extend %fs-t2;
     color: var(--jack-grey);

@@ -191,7 +191,7 @@ export default {
   p {
     font-size: 2rem;
     line-height: 1.2;
-
+    opacity: 0.75;
     @media (max-width: 1199px) {
       font-size: 1.8rem;
     }

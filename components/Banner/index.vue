@@ -4,7 +4,7 @@
       <div
         v-for="item of pageBanners"
         :key="item.id"
-        class="banner-slide"
+        class="banner-slide one-slide"
       >
         <component
           :is="bannerTypes[item.type.code]"
@@ -14,13 +14,13 @@
     </div>
 
     <div
-      class="banner-swiper-container"
       v-if="pageBanners.length > 1"
+      class="banner-swiper-container"
     >
       <swiper
+        ref="mySwiper"
         :options="swiperOptions"
         class="banner-swiper"
-        ref="mySwiper"
         @slide-change="onSwipe"
       >
         <swiper-slide
@@ -95,7 +95,10 @@ export default {
     SwiperSlide,
   },
   props: {
-    pageBanners: Array,
+    pageBanners: {
+      type: Array,
+      required: true,
+    },
   },
   data: () => ({
     bannerTypes: {
@@ -126,12 +129,6 @@ export default {
     currentSlide: null,
   }),
 
-  mounted() {
-    this.$nextTick(() => {
-      this.onSwipe()
-    })
-  },
-
   computed: {
     buttonColorCssVariable() {
       return this.pageBanners[this.currentSlide]?.slider_btn_color === 'black'
@@ -151,6 +148,12 @@ export default {
         (item) => item.type.code === 'mini_with_cover_image'
       )[this.currentSlide]
     },
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.onSwipe()
+    })
   },
 
   methods: {
@@ -183,10 +186,14 @@ export default {
   position: relative;
   border-radius: 2rem;
   overflow: hidden;
-  margin-bottom: 60px;
+  margin-bottom: 5rem;
 
   @media (max-width: 1023px) {
     border-radius: 0;
+  }
+
+  @media (max-width: 479px) {
+    margin-bottom: 3rem;
   }
 }
 
@@ -194,13 +201,21 @@ export default {
   // min-height: 48rem;
   display: flex;
   flex-direction: column;
+
+  &.one-slide {
+    margin-bottom: 5rem;
+
+    @media (max-width: 479px) {
+      margin-bottom: 3rem;
+    }
+  }
 }
 
 .promotion__slider-control {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 5.2rem;
+  bottom: 5rem;
   display: flex;
   align-items: flex-end;
   justify-content: center;

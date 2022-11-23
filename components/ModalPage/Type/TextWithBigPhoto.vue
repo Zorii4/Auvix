@@ -1,27 +1,29 @@
 <template>
   <section>
-    <SectionLead
-      :title="pageProps.title"
-      :sub_title="pageProps.sub_title"
-      :description="pageProps.description"
-    />
     <div class="container">
-      <ul class="services-single__services-list">
-        <li
-          v-for="item of pageProps.paragraphs"
-          :key="item.id"
-          class="services-single__services-item"
+      <SectionLead
+        :title="pageProps.title"
+        :sub_title="pageProps.sub_title"
+        :description="pageProps.description"
+      />
+      <div>
+        <ul class="services-single__services-list">
+          <li
+            v-for="item of pageProps.paragraphs"
+            :key="item.id"
+            class="services-single__services-item"
+          >
+            <h3 class="services-single__services-item-title">{{item.title}}</h3>
+            <p class="services-single__services-item-text">{{item.description}}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="services-single__img">
+        <img
+          :src="$config.baseURLImg + pageProps.image_url"
+          :alt="pageProps.image_alt || 'Фото'"
         >
-          <h3 class="services-single__services-item-title">{{item.title}}</h3>
-          <p class="services-single__services-item-text">{{item.description}}</p>
-        </li>
-      </ul>
-    </div>
-    <div class="services-single__img">
-      <img
-        :src="$config.baseURLImg + pageProps.image_url"
-        :alt="pageProps.image_alt || 'Фото'"
-      >
+      </div>
     </div>
   </section>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="narrow-container">
     <div
       v-for="video of pageProps.video_cards"
       :key="video.id"
@@ -23,6 +23,11 @@ export default {
   props: {
     pageProps: Object,
   },
+  // computed: {
+  //   link() {
+  //     return this.pageProps.videos_cards.filter((el) => el.includes))
+  //   }
+  // }
 }
 </script>
 

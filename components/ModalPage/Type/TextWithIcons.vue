@@ -1,31 +1,33 @@
 <template>
   <section class="dealer__section">
-    <div class="dealer__partner-lead">
-      <div>
-        <div class="services-single__warranty-header">
-          <SectionLead
-            :title="pageProps.title"
-            :sub_title="pageProps.sub_title"
-            :description="pageProps.description"
-          />
+    <div class="container">
+      <div class="dealer__partner-lead">
+        <div>
+          <div class="services-single__warranty-header">
+            <SectionLead
+              :title="pageProps.title"
+              :sub_title="pageProps.sub_title"
+              :description="pageProps.description"
+            />
+          </div>
         </div>
       </div>
-    </div>
 
-    <ul class="dealer__partner-list">
-      <li
-        class="dealer__partner-item-wrapper"
-        v-for="item of pageProps.paragraphs"
-        :key="item.id"
-      >
-        <div class="dealer__partner-item">
-          <div class="dealer__partner-icon">
-            <img :src="$config.baseURLImg + item.image_url">
+      <ul class="dealer__partner-list">
+        <li
+          class="dealer__partner-item-wrapper"
+          v-for="item of pageProps.paragraphs"
+          :key="item.id"
+        >
+          <div class="dealer__partner-item">
+            <div class="dealer__partner-icon">
+              <img :src="$config.baseURLImg + item.image_url">
+            </div>
+            <p class="dealer__partner-text">{{item.description}}</p>
           </div>
-          <p class="dealer__partner-text">{{item.description}}</p>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -41,7 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 .dealer__section {
-  margin-bottom: 50px;
+  margin-bottom: 5rem;
 }
 
 .dealer {
@@ -99,11 +101,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 10.4rem;
+    width: 10.5rem;
     aspect-ratio: 1 / 1;
-
-    border-radius: 50%;
-    background: linear-gradient(212.35deg, #f0f1f5 7.66%, #ffffff 75.91%);
 
     @media (max-width: 1199px) {
       width: 8.8rem;
@@ -114,16 +113,8 @@ export default {
     }
 
     img {
-      width: 5.6rem;
+      width: 10rem;
       aspect-ratio: 1 / 1;
-
-      @media (max-width: 1199px) {
-        width: 4.8rem;
-      }
-
-      @media (max-width: 767px) {
-        width: 4rem;
-      }
     }
   }
 

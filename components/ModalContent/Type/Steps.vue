@@ -1,7 +1,6 @@
 <template>
   <div class="narrow-container">
     <div class="stocks-single__event-schedule">
-      <h3 class="stocks-single__event-schedule-title"></h3>
       <ol class="digits">
         <li
           v-for="item of pageProps.steps"
@@ -11,13 +10,10 @@
           <div class="digits__item-content">
             <span class="digits__text">{{item.description}}</span>
           </div>
-
-          <!-- <svg class="digits__icon">
-            <use xlink:href="#{{svg1}}"></use>
-        </svg> 
-        
-        ТУТ ПОКА ЧТО НЕПРАВИЛЬНЫЙ URL НА КАРТИНКУ!!! -->
-
+          <svg
+            :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
+            class="digits__icon"
+          ></svg>
         </li>
       </ol>
     </div>
@@ -37,6 +33,7 @@ export default {
 .stocks-single {
   &__event-schedule {
     margin-top: 6rem;
+    margin-bottom: 5rem;
 
     @media (max-width: 1599px) {
       margin-top: 5.6rem;
@@ -95,7 +92,6 @@ export default {
 
   &__item {
     position: relative;
-
     padding-left: 4rem;
     min-height: 14.6rem;
 
@@ -173,10 +169,14 @@ export default {
   }
 
   &__icon {
+    width: 21.7rem;
+    height: 20.5rem;
     position: absolute;
     left: 0;
-    top: 0;
+    top: -1.5rem;
     z-index: -1;
+    background-repeat: no-repeat;
+    background-size: contain;
 
     @media (max-width: 767px) {
       display: none;

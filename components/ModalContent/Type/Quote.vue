@@ -185,7 +185,7 @@ export default {
   &__author-position {
     font-size: 1.6rem;
     line-height: 1.25;
-    color: var(--jack-grey);
+    color: var(--jack-grey) !important;
 
     @media (max-width: 1199px) {
       font-size: 1.4rem;

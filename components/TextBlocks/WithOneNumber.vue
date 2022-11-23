@@ -6,6 +6,7 @@
       v-for="item of pageProps.numbers"
       :key="item.id"
       :class="{'center': textCenterPosition}"
+      :style="{backgroundImage: `url(${$config.baseURLImg}`+`${item.image_url})`}"
     >
       <span
         class="career__stats-number"
@@ -16,7 +17,10 @@
         :class="{'center': textCenterPosition}"
       >{{item.description}}</p>
     </div>
-    <div class="career__stats-content">
+    <div
+      class="career__stats-content"
+      :class="{'center': textCenterPosition}"
+    >
       <h3>
         {{pageProps.sub_title}}
       </h3>
@@ -56,7 +60,8 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 3.6rem 0.4rem;
-    margin-bottom: 50px;
+    margin-bottom: 5rem;
+    min-height: 25rem;
 
     @media (max-width: 1023px) {
       grid-template-columns: 1fr;
@@ -74,82 +79,103 @@ export default {
     gap: 1.2rem;
     max-width: 65rem;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: auto;
+    background-position: 60px top;
     justify-content: flex-start;
     position: relative;
 
     &.center {
+      background-position: left center;
       align-items: flex-start;
       justify-content: center;
-    }
-
-    &::before {
-      content: '';
-
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: -1;
-
-      width: 24.4rem;
-      height: 24.4rem;
-      background: linear-gradient(
-        89.98deg,
-        #f0e2dd 27.14%,
-        rgba(255, 255, 255, 0) 80%
-      );
-
-      border-radius: 50%;
 
       @media (max-width: 1199px) {
-        width: 22rem;
-        height: 22rem;
+        max-width: 45rem;
       }
 
       @media (max-width: 1023px) {
-        left: auto;
-        right: -2rem;
-
-        width: 18rem;
-        height: 18rem;
-
-        background: linear-gradient(
-          -89.98deg,
-          #f0e2dd 27.14%,
-          rgba(255, 255, 255, 0) 80%
-        );
+        background-position: right center;
       }
 
       @media (max-width: 767px) {
-        left: 0;
-        right: 0;
-
-        width: 15.8rem;
-        height: 15.8rem;
-
-        background: linear-gradient(
-          89.98deg,
-          #f0e2dd 27.14%,
-          rgba(255, 255, 255, 0) 80%
-        );
+        background-position: left center;
+        min-height: 16rem;
+        max-width: 30rem;
+        margin-left: 0;
       }
     }
 
+    // &::before {
+    //   content: '';
+
+    //   position: absolute;
+    //   left: 0;
+    //   top: 0;
+    //   z-index: -1;
+
+    //   width: 24.4rem;
+    //   height: 24.4rem;
+    //   background: linear-gradient(
+    //     89.98deg,
+    //     #f0e2dd 27.14%,
+    //     rgba(255, 255, 255, 0) 80%
+    //   );
+
+    //   border-radius: 50%;
+
+    //   @media (max-width: 1199px) {
+    //     width: 22rem;
+    //     height: 22rem;
+    //   }
+
+    //   @media (max-width: 1023px) {
+    //     left: auto;
+    //     right: -2rem;
+
+    //     width: 18rem;
+    //     height: 18rem;
+
+    //     background: linear-gradient(
+    //       -89.98deg,
+    //       #f0e2dd 27.14%,
+    //       rgba(255, 255, 255, 0) 80%
+    //     );
+    //   }
+
+    //   @media (max-width: 767px) {
+    //     left: 0;
+    //     right: 0;
+
+    //     width: 15.8rem;
+    //     height: 15.8rem;
+
+    //     background: linear-gradient(
+    //       89.98deg,
+    //       #f0e2dd 27.14%,
+    //       rgba(255, 255, 255, 0) 80%
+    //     );
+    //   }
+    // }
+
     @media (max-width: 1199px) {
       max-width: 32.1rem;
-      padding-bottom: 3.6rem;
+      // padding-bottom: 3.6rem;
+      background-position: top center;
     }
 
     @media (max-width: 1023px) {
-      max-width: 36.2rem;
+      max-width: 38rem;
+      min-height: 18rem;
+      background-position: top right;
+      background-size: contain;
     }
 
     @media (max-width: 767px) {
       gap: 0.8rem;
       max-width: 26.6rem;
+      min-height: 14rem;
       margin-left: auto;
       margin-right: auto;
-      padding-bottom: 4rem;
     }
   }
 
@@ -159,6 +185,14 @@ export default {
 
     &.center {
       margin-left: 12rem;
+
+      @media (max-width: 1199px) {
+        margin-left: 10rem;
+      }
+
+      @media (max-width: 767px) {
+        margin-left: 5rem;
+      }
     }
 
     @media (max-width: 1199px) {
@@ -178,6 +212,15 @@ export default {
 
     &.center {
       margin-left: 12rem;
+
+      @media (max-width: 1199px) {
+        margin-left: 10rem;
+        max-width: 30rem;
+      }
+
+      @media (max-width: 767px) {
+        margin-left: 5rem;
+      }
     }
 
     @media (max-width: 1199px) {
@@ -188,7 +231,8 @@ export default {
     }
 
     @media (max-width: 767px) {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
+      line-height: 1.25;
     }
   }
 
@@ -196,6 +240,17 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 4rem;
+
+    &.center {
+      @media (max-width: 1023px) {
+        max-width: 55.5rem;
+        padding-left: 9.2rem;
+      }
+
+      @media (max-width: 767px) {
+        padding-left: 0;
+      }
+    }
 
     @media (max-width: 1199px) {
       gap: 3.2rem;

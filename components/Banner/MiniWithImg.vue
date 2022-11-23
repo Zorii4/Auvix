@@ -41,6 +41,7 @@ export default {
   color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center center;
   height: 258px;
   box-sizing: border-box;
   display: flex;

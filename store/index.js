@@ -1,6 +1,7 @@
-
-export const actions =  {
+export const actions = {
   async nuxtServerInit({ dispatch }) {
     await dispatch('menu/getMainMenu')
-  }
+    await dispatch('catalog/fetchOptionsList')
+    await dispatch('catalog/fetchCategoriesList')
+  },
 }

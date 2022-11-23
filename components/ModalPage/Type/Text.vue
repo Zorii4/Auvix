@@ -1,6 +1,6 @@
 <template>
   <section class="services-single__warranty">
-    <div class="container--without-padding">
+    <div class="container">
       <div class="services-single__warranty-header">
         <SectionLead
           :title="pageProps.title"
@@ -97,18 +97,18 @@ export default {
     grid-column: 2 / -1;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2.8rem 0.4rem;
+    gap: 2.8rem 1.5rem;
 
     @media (max-width: 1599px) {
     }
 
     @media (max-width: 1199px) {
-      gap: 2.4rem 0.4rem;
+      gap: 2.4rem 1.5rem;
     }
 
     @media (max-width: 1023px) {
       grid-column: 1 / -1;
-      gap: 2rem 0.4rem;
+      gap: 2rem 1.5rem;
     }
 
     @media (max-width: 767px) {

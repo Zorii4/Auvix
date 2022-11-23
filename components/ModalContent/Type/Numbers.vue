@@ -1,12 +1,14 @@
 <template>
-  <div class="post-two-columns">
-    <div class="post-two-columns__left">
-      <div class="post-two-columns__large-text"><span>{{pageProps.number}}</span></div>
-      <div class="post-two-columns__large-text-caption"><span>{{pageProps.number_description}}</span>
+  <div class="container">
+    <div class="post-two-columns">
+      <div class="post-two-columns__left">
+        <div class="post-two-columns__large-text"><span>{{pageProps.number}}</span></div>
+        <div class="post-two-columns__large-text-caption"><span>{{pageProps.number_description}}</span>
+        </div>
       </div>
-    </div>
-    <div class="post-two-columns__right">
-      <p>{{pageProps.textarea_description}}</p>
+      <div class="post-two-columns__right">
+        <p>{{pageProps.textarea_description}}</p>
+      </div>
     </div>
   </div>
 </template>

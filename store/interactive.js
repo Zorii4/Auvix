@@ -1,20 +1,20 @@
-import { getData } from '@/components/API-services/interactiveService.js'
+import { set } from 'vue'
+import { getData } from '@/API-services/interactiveService.js'
 
 export const state = () => ({
-  interactiveData: {}
+  interactiveData: {},
 })
 
 export const mutations = {
-  setInteractiveData (state, array) {
-    state.interactiveData = array
-  }
+  setInteractiveData(state, { id, data }) {
+    set(state.interactiveData, id, data)
+  },
 }
 
 export const actions = {
   async getInteractiveData(ctx, id) {
     const [data, err] = await getData(id)
-    if(err) console.error(err)
-    else 
-    ctx.commit("setInteractiveData", data);
-  }
+    if (err) console.error(err)
+    else ctx.commit('setInteractiveData', { id, data })
+  },
 }
